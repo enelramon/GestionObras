@@ -18,6 +18,12 @@ namespace GestionObras.Api.DAL
         {
             base.OnModelCreating(modelBuilder);
             //modelBuilder.Entity<Proyectos>().HasData(new Proyectos { });
+            modelBuilder.Entity<Personas>().HasData(new Personas {
+                PersonaId = 1,
+                Nombres = "Manuel",
+                Telefono = "829-811-4569"
+             });
+            
         }
     }
 }
