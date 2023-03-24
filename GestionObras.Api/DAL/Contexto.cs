@@ -17,7 +17,12 @@ namespace GestionObras.Api.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<Proyectos>().HasData(new Proyectos { });
+        
+            modelBuilder.Entity<Proyectos>().HasData(new Proyectos {
+                ProyectoId = 1,
+                Descripcion = "Casa de Enel",
+             });
+  
             modelBuilder.Entity<Personas>().HasData(
                new Personas
                {
@@ -50,6 +55,7 @@ namespace GestionObras.Api.DAL
                    Telefono = "849-789-1290"
                }
              );
+
         }
     }
 }
