@@ -7,5 +7,9 @@ namespace GestionObras.Api.Models
         [Key]
         public int TipoTrabajoId { get; set; }
 
+        public string descripcion { get; set; }
+
+        public double precio { get; set; }
+
     }
 }

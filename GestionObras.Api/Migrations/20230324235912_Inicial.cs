@@ -7,7 +7,7 @@
 namespace GestionObras.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class Personas : Migration
+    public partial class Inicial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,8 @@ namespace GestionObras.Api.Migrations
                 columns: table => new
                 {
                     ProyectoId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Descripcion = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,7 +44,9 @@ namespace GestionObras.Api.Migrations
                 columns: table => new
                 {
                     TipoTrabajoId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    descripcion = table.Column<string>(type: "TEXT", nullable: false),
+                    precio = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,6 +63,20 @@ namespace GestionObras.Api.Migrations
                     { 3, "Juan", "809-578-1978" },
                     { 4, "Ana", "849-678-6719" },
                     { 5, "Josefa", "849-789-1290" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Proyectos",
+                columns: new[] { "ProyectoId", "Descripcion" },
+                values: new object[] { 1, "Casa de Enel" });
+
+            migrationBuilder.InsertData(
+                table: "TiposTrabajos",
+                columns: new[] { "TipoTrabajoId", "descripcion", "precio" },
+                values: new object[,]
+                {
+                    { 1, "Carpinteria x dia", 2000.0 },
+                    { 2, "Ayudante Carpintero", 1000.0 }
                 });
         }
 

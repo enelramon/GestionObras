@@ -56,6 +56,20 @@ namespace GestionObras.Api.DAL
                }
              );
 
+            modelBuilder.Entity<TiposTrabajos>().HasData(
+                new TiposTrabajos
+                {
+                    TipoTrabajoId = 1,
+                    descripcion = "Carpinteria x dia",
+                    precio = 2000
+                },
+                new TiposTrabajos
+                {
+                    TipoTrabajoId = 2,
+                    descripcion = "Ayudante Carpintero",
+                    precio = 1000
+                }                
+                );
         }
     }
 }
