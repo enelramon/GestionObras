@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionObras.Api.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20230324011015_Personas")]
-    partial class Personas
+    [Migration("20230324235912_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,9 +74,19 @@ namespace GestionObras.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Descripcion")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("ProyectoId");
 
                     b.ToTable("Proyectos");
+
+                    b.HasData(
+                        new
+                        {
+                            ProyectoId = 1,
+                            Descripcion = "Casa de Enel"
+                        });
                 });
 
             modelBuilder.Entity("GestionObras.Api.Models.TiposTrabajos", b =>
@@ -85,9 +95,30 @@ namespace GestionObras.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("descripcion")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("precio")
+                        .HasColumnType("REAL");
+
                     b.HasKey("TipoTrabajoId");
 
                     b.ToTable("TiposTrabajos");
+
+                    b.HasData(
+                        new
+                        {
+                            TipoTrabajoId = 1,
+                            descripcion = "Carpinteria x dia",
+                            precio = 2000.0
+                        },
+                        new
+                        {
+                            TipoTrabajoId = 2,
+                            descripcion = "Ayudante Carpintero",
+                            precio = 1000.0
+                        });
                 });
 #pragma warning restore 612, 618
         }
