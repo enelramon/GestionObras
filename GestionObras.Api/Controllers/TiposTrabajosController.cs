@@ -25,10 +25,10 @@ namespace GestionObras.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TiposTrabajos>>> GetTiposTrabajos()
         {
-          if (_context.TiposTrabajos == null)
-          {
-              return NotFound();
-          }
+            if (_context.TiposTrabajos == null)
+            {
+                return NotFound();
+            }
             return await _context.TiposTrabajos.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace GestionObras.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TiposTrabajos>> GetTiposTrabajos(int id)
         {
-          if (_context.TiposTrabajos == null)
-          {
-              return NotFound();
-          }
+            if (_context.TiposTrabajos == null)
+            {
+                return NotFound();
+            }
             var tiposTrabajos = await _context.TiposTrabajos.FindAsync(id);
 
             if (tiposTrabajos == null)
@@ -86,10 +86,10 @@ namespace GestionObras.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<TiposTrabajos>> PostTiposTrabajos(TiposTrabajos tiposTrabajos)
         {
-          if (_context.TiposTrabajos == null)
-          {
-              return Problem("Entity set 'Contexto.TiposTrabajos'  is null.");
-          }
+            if (_context.TiposTrabajos == null)
+            {
+                return Problem("Entity set 'Contexto.TiposTrabajos'  is null.");
+            }
             _context.TiposTrabajos.Add(tiposTrabajos);
             await _context.SaveChangesAsync();
 

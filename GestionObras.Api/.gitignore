@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/GestionObras.Api/obj/**
+/GestionObras.Api/bin/**
+/GestionObras.Api/.vs/**

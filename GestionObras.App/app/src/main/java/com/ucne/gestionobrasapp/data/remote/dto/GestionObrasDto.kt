@@ -1,31 +1,40 @@
 package com.ucne.gestionobrasapp.data.remote.dto
 
-data class GestionObrasDto(
-
+data class ProyectoDto(
     val proyectoId: Int? = null,
-    val descripcionProyecto: String,
+    val descripcion: String
+)
 
+data class PersonasDto(
     val personaId: Int,
-    val nombresPersona: String,
-    val telefonoPersona: String,
+    val nombres: String,
+    val telefono: String
+)
 
+data class TiposDto(
     val tipoId: Int,
-    val descripcionTipo: String,
-    val precioTipo: Int,
+    val descripcion: String,
+    val precio: Int
+)
 
+data class NominasDto(
     val nominaId: Int,
-    val fechaNomina: String,
-    val totalNomina: Double,
-    val estadoNomina: String,
+    val fecha: String,
+    val total: Double,
+    val estado: String
+)
 
+data class AdelantosDto(
     val adelantoId: Int,
-    val fechaAdelanto: String,
-    val montoAdelanto: Double,
-    val balanceAdelanto: Double,
+    val fecha: String,
+    val monto: Double,
+    val balance: Double
+)
 
+data class PagosDto(
     val pagoId: Int,
-    val fechaPago: String,
-    val montoPago: Double,
-    val adelantoPago: Double,
-    val totalPago: Double,
+    val fecha: String,
+    val monto: Double,
+    val adelanto: Double,
+    val total: Double
 )
