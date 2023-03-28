@@ -25,10 +25,10 @@ namespace GestionObras.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Proyectos>>> GetProyectos()
         {
-          if (_context.Proyectos == null)
-          {
-              return NotFound();
-          }
+            if (_context.Proyectos == null)
+            {
+                return NotFound();
+            }
             return await _context.Proyectos.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace GestionObras.Api.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Proyectos>> GetProyectos(int id)
         {
-          if (_context.Proyectos == null)
-          {
-              return NotFound();
-          }
+            if (_context.Proyectos == null)
+            {
+                return NotFound();
+            }
             var proyectos = await _context.Proyectos.FindAsync(id);
 
             if (proyectos == null)
@@ -86,10 +86,10 @@ namespace GestionObras.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Proyectos>> PostProyectos(Proyectos proyectos)
         {
-          if (_context.Proyectos == null)
-          {
-              return Problem("Entity set 'Contexto.Proyectos'  is null.");
-          }
+            if (_context.Proyectos == null)
+            {
+                return Problem("Entity set 'Contexto.Proyectos'  is null.");
+            }
             _context.Proyectos.Add(proyectos);
             await _context.SaveChangesAsync();
 

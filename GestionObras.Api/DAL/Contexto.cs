@@ -10,6 +10,10 @@ namespace GestionObras.Api.DAL
 
         }
 
+        public DbSet<Adelantos> Adelantos => Set<Adelantos>();
+        public DbSet<Nominas> Nominas => Set<Nominas>();
+        public DbSet<NominasDetalle> NominasDetalle => Set<NominasDetalle>();
+        public DbSet<Pagos> Pagos => Set<Pagos>();
         public DbSet<Personas> Personas => Set<Personas>();
         public DbSet<Proyectos> Proyectos => Set<Proyectos>();
         public DbSet<TiposTrabajos> TiposTrabajos => Set<TiposTrabajos>();
@@ -17,12 +21,15 @@ namespace GestionObras.Api.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-        
-            modelBuilder.Entity<Proyectos>().HasData(new Proyectos {
-                ProyectoId = 1,
-                Descripcion = "Casa de Enel",
-             });
-  
+
+            modelBuilder.Entity<Proyectos>().HasData(
+                new Proyectos
+                {
+                    ProyectoId = 1,
+                    Descripcion = "Casa de Enel",
+                }
+            );
+
             modelBuilder.Entity<Personas>().HasData(
                new Personas
                {
@@ -54,7 +61,7 @@ namespace GestionObras.Api.DAL
                    Nombres = "Josefa",
                    Telefono = "849-789-1290"
                }
-             );
+            );
 
             modelBuilder.Entity<TiposTrabajos>().HasData(
                 new TiposTrabajos
@@ -68,8 +75,8 @@ namespace GestionObras.Api.DAL
                     TipoTrabajoId = 2,
                     descripcion = "Ayudante Carpintero",
                     precio = 1000
-                }                
-                );
+                }
+            );
         }
     }
 }

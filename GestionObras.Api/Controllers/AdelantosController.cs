@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,55 +12,55 @@ namespace GestionObras.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonasController : ControllerBase
+    public class AdelantosController : ControllerBase
     {
         private readonly Contexto _context;
 
-        public PersonasController(Contexto context)
+        public AdelantosController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: api/Personas
+        // GET: api/Adelantos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Personas>>> GetPersonas()
+        public async Task<ActionResult<IEnumerable<Adelantos>>> GetAdelantos()
         {
-            if (_context.Personas == null)
+            if (_context.Adelantos == null)
             {
                 return NotFound();
             }
-            return await _context.Personas.ToListAsync();
+            return await _context.Adelantos.ToListAsync();
         }
 
-        // GET: api/Personas/5
+        // GET: api/Adelantos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Personas>> GetPersonas(int id)
+        public async Task<ActionResult<Adelantos>> GetAdelantos(int id)
         {
-            if (_context.Personas == null)
+            if (_context.Adelantos == null)
             {
                 return NotFound();
             }
-            var personas = await _context.Personas.FindAsync(id);
+            var adelantos = await _context.Adelantos.FindAsync(id);
 
-            if (personas == null)
+            if (adelantos == null)
             {
                 return NotFound();
             }
 
-            return personas;
+            return adelantos;
         }
 
-        // PUT: api/Personas/5
+        // PUT: api/Adelantos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPersonas(int id, Personas personas)
+        public async Task<IActionResult> PutAdelantos(int id, Adelantos adelantos)
         {
-            if (id != personas.PersonaId)
+            if (id != adelantos.AdelantoId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(personas).State = EntityState.Modified;
+            _context.Entry(adelantos).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace GestionObras.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonasExists(id))
+                if (!AdelantosExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace GestionObras.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Personas
+        // POST: api/Adelantos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Proyectos>> PostProyectos(Personas personas)
+        public async Task<ActionResult<Adelantos>> PostAdelantos(Adelantos adelantos)
         {
-            if (_context.Personas == null)
+            if (_context.Adelantos == null)
             {
-                return Problem("Entity set 'Contexto.Personas'  is null.");
+                return Problem("Entity set 'Contexto.Adelantos'  is null.");
             }
-            _context.Personas.Add(personas);
+            _context.Adelantos.Add(adelantos);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPersonas", new { id = personas.PersonaId }, personas);
+            return CreatedAtAction("GetAdelantos", new { id = adelantos.AdelantoId }, adelantos);
         }
 
-        // DELETE: api/Personas/5
+        // DELETE: api/Adelantos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePersonas(int id)
+        public async Task<IActionResult> DeleteAdelantos(int id)
         {
-            if (_context.Personas == null)
+            if (_context.Adelantos == null)
             {
                 return NotFound();
             }
-            var personas = await _context.Personas.FindAsync(id);
-            if (personas == null)
+            var adelantos = await _context.Adelantos.FindAsync(id);
+            if (adelantos == null)
             {
                 return NotFound();
             }
 
-            _context.Personas.Remove(personas);
+            _context.Adelantos.Remove(adelantos);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PersonasExists(int id)
+        private bool AdelantosExists(int id)
         {
-            return (_context.Personas?.Any(p => p.PersonaId == id)).GetValueOrDefault();
+            return (_context.Adelantos?.Any(a => a.AdelantoId == id)).GetValueOrDefault();
         }
     }
 }

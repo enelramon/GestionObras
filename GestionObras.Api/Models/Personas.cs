@@ -6,9 +6,7 @@ namespace GestionObras.Api.Models
     {
         [Key]
         public int PersonaId { get; set; }
-
         public string? Nombres { get; set; }
-
         public string? Telefono { get; set; }
     }
 }

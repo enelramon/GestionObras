@@ -2,72 +2,115 @@ package com.ucne.gestionobrasapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.ucne.gestionobrasapp.data.remote.dto.GestionObrasDto
+import com.ucne.gestionobrasapp.data.remote.dto.*
 
-@Entity(tableName = "GestionObras")
-data class GestionObrasEntity(
-
+@Entity(tableName = "Proyectos")
+data class ProyectosEntity(
     @PrimaryKey(autoGenerate = true)
     val proyectoId: Int? = null,           // Proyecto
-    val descripcionProyecto: String,
-
-    val personaId: Int,
-    val nombresPersona: String,            // Persona
-    val telefonoPersona: String,
-
-    val tipoId: Int,
-    val descripcionTipo: String,           // Tipo
-    val precioTipo: Int,
-
-    val nominaId: Int,
-    val fechaNomina: String,
-    val totalNomina: Double,               // Nomina
-    val estadoNomina: String,
-
-    val adelantoId: Int,
-    val fechaAdelanto: String,
-    val montoAdelanto: Double,             // Adelanto
-    val balanceAdelanto: Double,
-
-    val pagoId: Int,
-    val fechaPago: String,
-    val montoPago: Double,                 // Pago
-    val adelantoPago: Double,
-    val totalPago: Double,
-
-
+    val descripcion: String,
     val enviado: Boolean = false
 )
 
-fun GestionObrasEntity.toGestionObrasDto(): GestionObrasDto {
-    return GestionObrasDto(
+@Entity(tableName = "Personas")
+data class PersonasEntity(
+    @PrimaryKey(autoGenerate = true)
+    val personaId: Int?= null,
+    val nombres: String,            // Persona
+    val telefono: String,
+    val enviado: Boolean = false
+)
 
+@Entity(tableName = "Tipos")
+data class TiposEntity(
+    @PrimaryKey(autoGenerate = true)
+    val tipoId: Int? = null,
+    val descripcion: String,           // Tipo
+    val precio: Int,
+    val enviado: Boolean = false
+)
+
+
+@Entity(tableName = "Nominas")
+data class NominasEntity(
+    @PrimaryKey(autoGenerate = true)
+    val nominaId: Int? = null,
+    val fecha: String,
+    val total: Double,               // Nomina
+    val estado: String,
+    val enviado: Boolean = false
+)
+
+@Entity(tableName = "Adelatos")
+data class AdelantosEntity(
+    @PrimaryKey(autoGenerate = true)
+    val adelantoId: Int? = 0,
+    val fecha: String,
+    val monto: Double,             // Adelanto
+    val balance: Double,
+    val enviado: Boolean = false
+)
+
+@Entity(tableName = "Pagos")
+data class PagosEntity(
+    @PrimaryKey(autoGenerate = true)
+    val pagoId: Int,
+    val fecha: String,
+    val monto: Double,                 // Pago
+    val adelanto: Double,
+    val total: Double,
+    val enviado: Boolean = false
+)
+
+
+
+fun ProyectosEntity.toGestionObrasDto(): ProyectoDto {
+    return ProyectoDto(
         proyectoId = this.proyectoId ?: 0,
-        descripcionProyecto = this.descripcionProyecto,
+        descripcion = this.descripcion,
+    )
+}
 
-        personaId = this.personaId,
-        nombresPersona = this.nombresPersona,
-        telefonoPersona = this.telefonoPersona,
+fun PersonasEntity.toGestionObrasDto(): PersonasDto {
+    return PersonasDto(
+        personaId = this.personaId ?: 0,
+        nombres = this.nombres,
+        telefono = this.telefono,
+    )
+}
 
-        tipoId = this.tipoId,
-        descripcionTipo = this.descripcionTipo,
-        precioTipo = this.precioTipo,
+fun TiposEntity.toGestionObrasDto(): TiposDto {
+    return TiposDto(
+        tipoId = this.tipoId ?: 0,
+        descripcion = this.descripcion,
+        precio = this.precio
+    )
+}
 
-        nominaId = this.nominaId,
-        fechaNomina = this.fechaNomina,
-        totalNomina = this.totalNomina,
-        estadoNomina = this.estadoNomina,
+fun NominasEntity.toGestionObrasDto(): NominasDto {
+    return NominasDto(
+        nominaId = this.nominaId ?: 0,
+        fecha = this.fecha,
+        total = this.total,
+        estado = this.estado,
+    )
+}
 
-        adelantoId = this.adelantoId,
-        fechaAdelanto = this.fechaAdelanto,
-        montoAdelanto = this.montoAdelanto,
-        balanceAdelanto = this.balanceAdelanto,
+fun AdelantosEntity.toGestionObrasDto(): AdelantosDto {
+    return AdelantosDto(
+        adelantoId = this.adelantoId ?: 0,
+        fecha = this.fecha,
+        monto = this.monto,
+        balance = this.balance
+    )
+}
 
-        pagoId = this.pagoId,
-        fechaPago = this.fechaPago,
-        montoPago = this.montoPago,
-        adelantoPago = this.adelantoPago,
-        totalPago = this.totalPago
-
+fun PagosEntity.toGestionObrasDto(): PagosDto {
+    return PagosDto(
+        pagoId = this.pagoId ?: 0,
+        fecha = this.fecha,
+        monto = this.monto,
+        adelanto = this.adelanto,
+        total = this.total
     )
 }

@@ -3,6 +3,7 @@ using System;
 using GestionObras.Api.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestionObras.Api.Migrations
 {
     [DbContext(typeof(Contexto))]
-    partial class ContextoModelSnapshot : ModelSnapshot
+    [Migration("20230327203430_Inicial")]
+    partial class Inicial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.4");
@@ -120,7 +123,7 @@ namespace GestionObras.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AdelantoId")
+                    b.Property<int?>("AdelantosAdelantoId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("Fecha")
@@ -136,6 +139,8 @@ namespace GestionObras.Api.Migrations
                         .HasColumnType("REAL");
 
                     b.HasKey("PagoId");
+
+                    b.HasIndex("AdelantosAdelantoId");
 
                     b.ToTable("Pagos");
                 });
@@ -285,6 +290,15 @@ namespace GestionObras.Api.Migrations
                     b.Navigation("proyectos");
 
                     b.Navigation("tiposTrabajos");
+                });
+
+            modelBuilder.Entity("GestionObras.Api.Models.Pagos", b =>
+                {
+                    b.HasOne("GestionObras.Api.Models.Adelantos", "Adelantos")
+                        .WithMany()
+                        .HasForeignKey("AdelantosAdelantoId");
+
+                    b.Navigation("Adelantos");
                 });
 
             modelBuilder.Entity("GestionObras.Api.Models.Nominas", b =>

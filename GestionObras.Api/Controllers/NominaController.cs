@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,55 +12,56 @@ namespace GestionObras.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonasController : ControllerBase
+    public class NominasController : ControllerBase
     {
         private readonly Contexto _context;
 
-        public PersonasController(Contexto context)
+        public NominasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: api/Personas
+        // GET: api/Nominas
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Personas>>> GetPersonas()
+        public async Task<ActionResult<IEnumerable<Nominas>>> GetNominas()
         {
-            if (_context.Personas == null)
+            if (_context.Nominas == null)
             {
                 return NotFound();
             }
-            return await _context.Personas.ToListAsync();
+            return await _context.Nominas.ToListAsync();
         }
 
-        // GET: api/Personas/5
+        // GET: api/Nominas/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Personas>> GetPersonas(int id)
+        public async Task<ActionResult<Nominas>> GetNominas(int id)
         {
-            if (_context.Personas == null)
-            {
-                return NotFound();
-            }
-            var personas = await _context.Personas.FindAsync(id);
-
-            if (personas == null)
+            if (_context.Nominas == null)
             {
                 return NotFound();
             }
 
-            return personas;
+            var nominas = await _context.Nominas.FindAsync(id);
+
+            if (nominas == null)
+            {
+                return NotFound();
+            }
+
+            return nominas;
         }
 
-        // PUT: api/Personas/5
+        // PUT: api/Nominas/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPersonas(int id, Personas personas)
+        public async Task<IActionResult> PutNominas(int id, Nominas Nominas)
         {
-            if (id != personas.PersonaId)
+            if (id != Nominas.NominaId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(personas).State = EntityState.Modified;
+            _context.Entry(Nominas).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +69,7 @@ namespace GestionObras.Api.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PersonasExists(id))
+                if (!NominasExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +82,44 @@ namespace GestionObras.Api.Controllers
             return NoContent();
         }
 
-        // POST: api/Personas
+        // POST: api/Nominas
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Proyectos>> PostProyectos(Personas personas)
+        public async Task<ActionResult<Nominas>> PostNominas(Nominas nominas)
         {
-            if (_context.Personas == null)
+            if (_context.Nominas == null)
             {
-                return Problem("Entity set 'Contexto.Personas'  is null.");
+                return Problem("Entity set 'Contexto.Nominas'  is null.");
             }
-            _context.Personas.Add(personas);
+            _context.Nominas.Add(nominas);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPersonas", new { id = personas.PersonaId }, personas);
+            return CreatedAtAction("GetNominas", new { id = nominas.NominaId }, nominas);
         }
 
-        // DELETE: api/Personas/5
+        // DELETE: api/Nominas/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePersonas(int id)
+        public async Task<IActionResult> DeleteNominas(int id)
         {
-            if (_context.Personas == null)
+            if (_context.Nominas == null)
             {
                 return NotFound();
             }
-            var personas = await _context.Personas.FindAsync(id);
-            if (personas == null)
+            var nominas = await _context.Nominas.FindAsync(id);
+            if (nominas == null)
             {
                 return NotFound();
             }
 
-            _context.Personas.Remove(personas);
+            _context.Nominas.Remove(nominas);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PersonasExists(int id)
+        private bool NominasExists(int id)
         {
-            return (_context.Personas?.Any(p => p.PersonaId == id)).GetValueOrDefault();
+            return (_context.Nominas?.Any(n => n.NominaId == id)).GetValueOrDefault();
         }
     }
 }
