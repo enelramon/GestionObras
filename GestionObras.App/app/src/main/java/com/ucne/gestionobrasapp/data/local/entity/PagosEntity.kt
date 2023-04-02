@@ -1,0 +1,26 @@
+package com.ucne.gestionobrasapp.data.local.entity
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.ucne.gestionobrasapp.data.remote.dto.PagosDto
+
+@Entity(tableName = "Pagos")
+data class PagosEntity(
+    @PrimaryKey(autoGenerate = true)
+    val pagoId: Int,
+    val fecha: String,
+    val monto: Double,                 // Pago
+    val adelanto: Double,
+    val total: Double,
+    val enviado: Boolean = false
+)
+
+fun PagosEntity.toPagosDto(): PagosDto {
+    return PagosDto(
+        pagoId = this.pagoId,
+        fecha = this.fecha,
+        monto = this.monto,
+        adelanto = this.adelanto,
+        total = this.total
+    )
+}

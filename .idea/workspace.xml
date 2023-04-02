@@ -4,7 +4,41 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3fb38e5-1166-49fe-b129-c4539bfc5d89" name="Changes" comment="" />
+    <list default="true" id="d3fb38e5-1166-49fe-b129-c4539bfc5d89" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/AdelantosDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/NominasDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/PagosDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/PersonasDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/TiposDao.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/AdelantosEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/NominasEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/PagosEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/PersonasEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/TiposEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/AdelantosApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/NominasApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/PagosApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/PersonasApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/ProyectosApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/TiposApi.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/AdelantosDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/NominasDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/PagosDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/PersonasDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/TiposDto.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/repositoy/personas/PersonasApiRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/repositoy/personas/PersonasApiRepositoryImp.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/repositoy/personas/PersonasRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/repositoy/proyectos/ProyectosApiRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/repositoy/proyectos/ProyectosApiRepositoryImp.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/repositoy/proyectos/ProyectosRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/GestionObrasDb.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/RoomGestionObrasDb.kt" beforeDir="false" afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/RoomGestionObrasDb.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/GestionObrasDao.kt" beforeDir="false" afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/dao/ProyectosDao.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/GestionObrasEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/local/entity/ProyectosEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/GestionObrasDto.kt" beforeDir="false" afterPath="$PROJECT_DIR$/GestionObras.App/app/src/main/java/com/ucne/gestionobrasapp/data/remote/dto/ProyectosDto.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GestionObras.App/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/GestionObras.App/build.gradle" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,7 +61,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "cidr.known.project.marker": "true",
-    "last_opened_file_path": "C:/GestionObras/GestionObras.App"
+    "last_opened_file_path": "C:/MyProyects/GestionObras"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
