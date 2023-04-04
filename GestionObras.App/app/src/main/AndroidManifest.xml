@@ -8,8 +8,8 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/ic_launcher_foreground"
-        android:label="GestionObrasApp"
+        android:icon="@mipmap/icon_lauch_round"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.GestionObrasApp"
         tools:targetApi="31">
