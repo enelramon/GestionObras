@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.ucne.gestionobrasapp.R
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
 import com.ucne.gestionobrasapp.ui.theme.GestionObrasAppTheme
+import com.ucne.gestionobrasapp.ui.theme.Shapes
 import kotlin.math.PI
 import kotlin.math.sin
 
@@ -181,8 +182,7 @@ fun FabGroup(
         Modifier
             .fillMaxSize()
             .graphicsLayer { this.renderEffect = renderEffect }
-            .padding(bottom = DEFAULT_PADDING.dp)
-            .clip(CircleShape),
+            .padding(bottom = DEFAULT_PADDING.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
 
@@ -230,12 +230,10 @@ fun FabGroup(
                 .rotate(
                     225 * FastOutSlowInEasing
                         .transform(0.35f, 0.65f, animationProgress)
-                )
-                .clip(CircleShape),
+                ),
             onClick = toggleAnimation,
             backgroundColor = Color.Transparent
         )
-
     }
 }
 
@@ -251,7 +249,7 @@ fun AnimatedFab(
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
         containerColor = backgroundColor,
-        modifier = modifier.scale(1.25f)
+        modifier = modifier.scale(1.25f).clip(Shapes.extraLarge)
     ) {
         icon?.let {
             Icon(
