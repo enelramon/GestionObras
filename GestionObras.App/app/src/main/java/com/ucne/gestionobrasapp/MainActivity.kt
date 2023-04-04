@@ -7,9 +7,11 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
@@ -19,7 +21,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 import com.ucne.gestionobrasapp.ui.theme.GestionObrasAppTheme
-import com.ucne.gestionobrasapp.util.navigation.ScreenModulePersonas
+import com.ucne.gestionobrasapp.util.MainScreen
+import com.ucne.gestionobrasapp.util.navigation.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,8 +40,12 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = ScreenModulePersonas.PersonasList.route
+                        startDestination = ScreenModuleProyectos.Start.route
                     ) {
+                        composable(ScreenModuleProyectos.Start.route) {
+                            MainScreen()
+                        }
+
                         composable(ScreenModulePersonas.PersonasList.route) {
                             PersonasListScreen(navController = navController) {
                                 navController.navigate(ScreenModulePersonas.Personas.route)
