@@ -10,8 +10,7 @@ namespace GestionObras.Api.Models
         [Key]
         public int NominaId { get; set; }
 
-        [DataType(DataType.Date)] 
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
         public int ProyectoId { get; set; }
         public double Total { get; set; }
         public string Estado { get; set; }
@@ -25,7 +24,7 @@ namespace GestionObras.Api.Models
         public Nominas()
         {
             NominaId = 0;
-            Fecha = DateTime.Now;
+            Fecha = string.Empty;
             ProyectoId = 0;
             Total = 0;
             Estado = string.Empty;

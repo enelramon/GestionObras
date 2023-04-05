@@ -9,7 +9,7 @@ namespace GestionObras.Api.Models
         public int NominaId { get; set; }
         
         [DataType(DataType.Date)] 
-        public DateTime Fecha { get; set; }
+        public string Fecha { get; set; }
         public string? TipoTrabajo { get; set; }
         public double Cantidad { get; set; }
         public double Precio { get; set; }
@@ -20,11 +20,11 @@ namespace GestionObras.Api.Models
         public TiposTrabajos tiposTrabajos { get; set; } = new TiposTrabajos();
         public Proyectos proyectos { get; set; } = new Proyectos();
 
-        public NominasDetalle(int id, int nominaId, DateTime fecha, string tipoTrabajo, double cantidad, double precio, int personaId, double balance)
+        public NominasDetalle(int id, int nominaId, string fecha, string tipoTrabajo, double cantidad, double precio, int personaId, double balance)
         {
             Id = id = 0;
             NominaId = nominaId = 0;
-            Fecha = fecha = DateTime.Now;
+            Fecha = fecha = string.Empty;
             TipoTrabajo = tipoTrabajo = string.Empty;
             Cantidad = cantidad = 0;
             Precio = precio = 0;

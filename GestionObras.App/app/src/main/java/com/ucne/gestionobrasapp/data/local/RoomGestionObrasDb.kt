@@ -17,7 +17,7 @@ import com.ucne.gestionobrasapp.data.remote.dto.TiposDto
         NominasEntity::class,
         TiposEntity::class
     ],
-    version = 1
+    version = 2
 )
 abstract class RoomGestionObrasDb : RoomDatabase() {
     abstract val proyectosDao: ProyectosDao
