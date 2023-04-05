@@ -19,15 +19,15 @@ interface TiposDao {
         """
         SELECT *
         FROM Tipos
-        WHERE TipoId=:tipoId
+        WHERE TipoTrabajoId=:tipoTrabajoId
         LIMIT 1
     """)
-    suspend fun find(tipoId: Int): TiposEntity?
+    suspend fun find(tipoTrabajoId: Int): TiposEntity?
 
     @Query(
         """SELECT *
         FROM Tipos
-        ORDER BY tipoId desc
+        ORDER BY tipoTrabajoId desc
     """)
     fun getListTipos(): Flow<List<TiposEntity>>
 

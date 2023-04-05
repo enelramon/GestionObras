@@ -11,17 +11,15 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -34,14 +32,24 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.R
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
-import com.ucne.gestionobrasapp.ui.theme.GestionObrasAppTheme
 import com.ucne.gestionobrasapp.ui.theme.Shapes
+import com.ucne.gestionobrasapp.util.navigation.ScreenModulePersonas
+import kotlinx.coroutines.launch
 import kotlin.math.PI
 import kotlin.math.sin
+
+private val colorMatrix = ColorMatrix(
+    floatArrayOf(
+        1f, 0f, 0f, 0f, 0f,
+        0f, 1f, 0f, 0f, 0f,
+        0f, 0f, 1f, 0f, 0f,
+        0f, 0f, 0f, 50f, -5000f
+    )
+)
 
 @RequiresApi(Build.VERSION_CODES.S)
 private fun getRenderEffect(): RenderEffect {
@@ -49,25 +57,30 @@ private fun getRenderEffect(): RenderEffect {
         .createBlurEffect(80f, 80f, Shader.TileMode.MIRROR)
 
     val alphaMatrix = RenderEffect.createColorFilterEffect(
-        ColorMatrixColorFilter(
-            ColorMatrix(
-                floatArrayOf(
-                    1f, 0f, 0f, 0f, 0f,
-                    0f, 1f, 0f, 0f, 0f,
-                    0f, 0f, 1f, 0f, 0f,
-                    0f, 0f, 0f, 50f, -5000f
-                )
-            )
-        )
+        ColorMatrixColorFilter(colorMatrix)
     )
 
     return RenderEffect
         .createChainEffect(alphaMatrix, blurEffect)
 }
 
+
 @Composable
-fun MainScreen() {
+fun MainScreen(navController: NavController) {
     val isMenuExtended = remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.work_icon),
+            contentDescription = null,
+            modifier = Modifier.size(200.dp, 200.dp)
+        )
+    }
+
 
     val fabAnimationProgress by animateFloatAsState(
         targetValue = if (isMenuExtended.value) 1f else 0f,
@@ -94,6 +107,7 @@ fun MainScreen() {
     MainScreen(
         renderEffect = renderEffect,
         fabAnimationProgress = fabAnimationProgress,
+        navController = navController,
         clickAnimationProgress = clickAnimationProgress
     ) {
         isMenuExtended.value = isMenuExtended.value.not()
@@ -105,6 +119,7 @@ fun MainScreen(
     renderEffect: androidx.compose.ui.graphics.RenderEffect?,
     fabAnimationProgress: Float = 0f,
     clickAnimationProgress: Float = 0f,
+    navController: NavController,
     toggleAnimation: () -> Unit = { }
 ) {
     Box(
@@ -115,16 +130,21 @@ fun MainScreen(
     ) {
         CustomBottomNavigation()
         Circle(
-            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
             animationProgress = 0.5f
         )
 
-        FabGroup(renderEffect = renderEffect, animationProgress = fabAnimationProgress)
+        FabGroup(
+            renderEffect = renderEffect,
+            animationProgress = fabAnimationProgress,
+            navController = navController
+        )
 
         FabGroup(
             renderEffect = null,
             animationProgress = fabAnimationProgress,
-            toggleAnimation = toggleAnimation
+            toggleAnimation = toggleAnimation,
+            navController = navController
         )
 
         Circle(
@@ -176,8 +196,13 @@ fun CustomBottomNavigation() {
 fun FabGroup(
     animationProgress: Float = 0f,
     renderEffect: androidx.compose.ui.graphics.RenderEffect? = null,
+    navController: NavController,
     toggleAnimation: () -> Unit = { }
 ) {
+
+    val fastOutSlowIn = remember { FastOutSlowInEasing }
+    val linear = remember { LinearEasing }
+
     Box(
         Modifier
             .fillMaxSize()
@@ -185,7 +210,6 @@ fun FabGroup(
             .padding(bottom = DEFAULT_PADDING.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
-
         AnimatedFab(
             icon = Icons.Default.PhotoCamera,
             modifier = Modifier
@@ -193,42 +217,47 @@ fun FabGroup(
                     PaddingValues(
                         bottom = 72.dp,
                         end = 210.dp
-                    ) * FastOutSlowInEasing.transform(0f, 0.8f, animationProgress)
+                    ) * fastOutSlowIn.transform(0f, 0.5f, animationProgress)
+                )
+                .clickable {},
+            opacity = linear.transform(0.2f, 0.7f, animationProgress)
+        )
+
+        AnimatedFab(
+            icon = Icons.Default.Newspaper,
+            modifier = Modifier
+                .padding(
+                    PaddingValues(
+                        bottom = 88.dp,
+                    ) * fastOutSlowIn.transform(0.1f, 0.9f, animationProgress)
                 ),
-            opacity = LinearEasing.transform(0.2f, 0.7f, animationProgress)
+            onClick = {
+                navController.navigate(ScreenModulePersonas.PersonasList.route)
+            },
+            opacity = linear.transform(0.3f, 0.8f, animationProgress)
         )
 
         AnimatedFab(
-            icon = Icons.Default.Settings,
-            modifier = Modifier.padding(
-                PaddingValues(
-                    bottom = 88.dp,
-                ) * FastOutSlowInEasing.transform(0.1f, 0.9f, animationProgress)
-            ),
-            opacity = LinearEasing.transform(0.3f, 0.8f, animationProgress)
-        )
-
-        AnimatedFab(
-            icon = Icons.Default.ShoppingCart,
+            icon = Icons.Default.Newspaper,
             modifier = Modifier.padding(
                 PaddingValues(
                     bottom = 72.dp,
                     start = 210.dp
-                ) * FastOutSlowInEasing.transform(0.2f, 1.0f, animationProgress)
+                ) * fastOutSlowIn.transform(0.2f, 1.0f, animationProgress)
             ),
-            opacity = LinearEasing.transform(0.4f, 0.9f, animationProgress)
+            opacity = linear.transform(0.4f, 0.9f, animationProgress)
         )
 
         AnimatedFab(
             modifier = Modifier
-                .scale(1f - LinearEasing.transform(0.5f, 0.85f, animationProgress)),
+                .scale(1f - linear.transform(0.5f, 0.85f, animationProgress))
         )
 
         AnimatedFab(
             icon = Icons.Default.Menu,
             modifier = Modifier
                 .rotate(
-                    225 * FastOutSlowInEasing
+                    225 * fastOutSlowIn
                         .transform(0.35f, 0.65f, animationProgress)
                 ),
             onClick = toggleAnimation,
@@ -249,7 +278,9 @@ fun AnimatedFab(
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp),
         containerColor = backgroundColor,
-        modifier = modifier.scale(1.25f).clip(Shapes.extraLarge)
+        modifier = modifier
+            .scale(1.25f)
+            .clip(Shapes.extraLarge)
     ) {
         icon?.let {
             Icon(

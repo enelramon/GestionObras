@@ -6,7 +6,7 @@ namespace GestionObras.Api.Models
     {
         [Key]
         public int PagoId { get; set; }
-        public DateTime Fecha { get; set; } = DateTime.Now;
+        public string? Fecha { get; set; }
         public string? PersonaId { get; set; }
         public double Monto { get; set; } = 0.0;
         public int AdelantoId { get; set; }

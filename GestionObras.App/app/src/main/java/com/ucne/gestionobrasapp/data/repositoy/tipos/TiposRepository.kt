@@ -14,11 +14,11 @@ class TiposRepository @Inject constructor
 
         tiposDao.insert(tipos)
 
-        tiposApiRepository.putTipos(tipos.tipoId!!, tipos.toTiposDto())
+        tiposApiRepository.putTipos(tipos.tipoTrabajoId!!, tipos.toTiposDto())
     }
 
     suspend fun delete(tipos: TiposEntity){
         tiposDao.delete(tipos)
-        tiposApiRepository.deleteTipos(tipos.tipoId!!, tipos.toTiposDto())
+        tiposApiRepository.deleteTipos(tipos.tipoTrabajoId!!, tipos.toTiposDto())
     }
 }

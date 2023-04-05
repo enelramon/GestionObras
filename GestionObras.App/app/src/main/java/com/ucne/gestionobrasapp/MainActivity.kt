@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
+import com.ucne.gestionobrasapp.ui.personas.PersonasScreen
 import com.ucne.gestionobrasapp.ui.theme.GestionObrasAppTheme
 import com.ucne.gestionobrasapp.util.MainScreen
 import com.ucne.gestionobrasapp.util.navigation.*
@@ -43,12 +44,23 @@ class MainActivity : ComponentActivity() {
                         startDestination = ScreenModuleProyectos.Start.route
                     ) {
                         composable(ScreenModuleProyectos.Start.route) {
-                            MainScreen()
+                            MainScreen(navController = navController)
                         }
 
                         composable(ScreenModulePersonas.PersonasList.route) {
                             PersonasListScreen(navController = navController) {
-                                navController.navigate(ScreenModulePersonas.Personas.route)
+                                    id -> navController.navigate(ScreenModulePersonas.PersonasList.route + "/${id}")
+                            }
+                        }
+
+                        composable(
+                            ScreenModulePersonas.Personas.route + "/{id}",
+                            arguments = listOf(navArgument("id") { type = NavType.IntType })
+                        ) { capturar ->
+                            var personaId = capturar.arguments?.getInt("id") ?: 0
+
+                            PersonasScreen(personaId = personaId, navController = navController) {
+                                navController.navigate(ScreenModulePersonas.PersonasList.route)
                             }
                         }
                     }
