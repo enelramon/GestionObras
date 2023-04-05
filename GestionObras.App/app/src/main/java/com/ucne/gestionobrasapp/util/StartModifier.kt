@@ -16,16 +16,14 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.draw.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
@@ -183,13 +181,7 @@ fun CustomBottomNavigation() {
                 contentScale = ContentScale.FillHeight
             )
             .padding(horizontal = 40.dp)
-    ) {
-        listOf(Icons.Filled.CalendarToday, Icons.Filled.Group).map { image ->
-            IconButton(onClick = { }) {
-                Icon(imageVector = image, contentDescription = null, tint = Color.White)
-            }
-        }
-    }
+    ) {}
 }
 
 @Composable
@@ -211,7 +203,7 @@ fun FabGroup(
         contentAlignment = Alignment.BottomCenter
     ) {
         AnimatedFab(
-            icon = Icons.Default.PhotoCamera,
+            icon = Icons.Default.DomainAdd,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -224,7 +216,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.Newspaper,
+            icon = Icons.Default.ReceiptLong,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -238,7 +230,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.Newspaper,
+            icon = Icons.Default.Engineering,
             modifier = Modifier.padding(
                 PaddingValues(
                     bottom = 72.dp,
