@@ -31,10 +31,33 @@ class ProyectosApiViewModel @Inject constructor(
     private val proyectosApiRepositoryImp: ProyectosApiRepositoryImp
 ) : ViewModel() {
 
+    var proyectoId by mutableStateOf(0)
+
+    var descripcion by mutableStateOf("")
+    var descripcionError by mutableStateOf("")
+
     var uiState = MutableStateFlow(ProyectosListState())
         private set
     var uiStateProyectos = MutableStateFlow(ProyectosState())
         private set
+
+    fun onDescripcionChanged(descripcion: String) {
+        this.descripcion = descripcion
+        HayErroresRegistrando()
+    }
+
+    fun HayErroresRegistrando(): Boolean {
+
+        var hayError = false
+
+        descripcionError = ""
+        if (descripcion.isBlank()) {
+            hayError = true
+        }
+
+        return hayError
+    }
+
 
     init {
         proyectosApiRepositoryImp.getProyectos().onEach { result ->
