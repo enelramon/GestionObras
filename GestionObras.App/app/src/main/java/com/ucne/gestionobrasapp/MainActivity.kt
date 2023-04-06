@@ -7,20 +7,18 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.ucne.gestionobrasapp.ui.personas.NuevaPersonaScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
-import com.ucne.gestionobrasapp.ui.personas.PersonasScreen
+import com.ucne.gestionobrasapp.ui.proyectos.DetallesProyectoScreen
+import com.ucne.gestionobrasapp.ui.proyectos.NuevoProyectoScreen
+import com.ucne.gestionobrasapp.ui.proyectos.ProyectosListScreen
 import com.ucne.gestionobrasapp.ui.theme.GestionObrasAppTheme
 import com.ucne.gestionobrasapp.util.MainScreen
 import com.ucne.gestionobrasapp.util.navigation.*
@@ -41,26 +39,22 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = ScreenModuleProyectos.Start.route
+                        startDestination = ScreenModuleProyectos.ProyectoList.route
                     ) {
-                        composable(ScreenModuleProyectos.Start.route) {
-                            MainScreen(navController = navController)
+                        composable(ScreenModuleProyectos.ProyectoList.route) {
+                            ProyectosListScreen(navController = navController)
                         }
 
-                        composable(ScreenModulePersonas.PersonasList.route) {
-                            PersonasListScreen(navController = navController) {
-                                    id -> navController.navigate(ScreenModulePersonas.PersonasList.route + "/${id}")
-                            }
+                        composable(ScreenModuleProyectos.Proyectos.route) {
+                            NuevoProyectoScreen(navController = navController)
                         }
 
-                        composable(
-                            ScreenModulePersonas.Personas.route + "/{id}",
-                            arguments = listOf(navArgument("id") { type = NavType.IntType })
-                        ) { capturar ->
-                            var personaId = capturar.arguments?.getInt("id") ?: 0
+                        composable(ScreenModuleProyectos.DetallesProyecto.route) {
+                            DetallesProyectoScreen(navController = navController) // Le falta asignarle el id
+                        }
 
-                            PersonasScreen(personaId = personaId, navController = navController) {
-                                navController.navigate(ScreenModulePersonas.PersonasList.route)
+                            composable(ScreenModulePersonas.Personas.route) {
+                                NuevaPersonaScreen(navController = navController)
                             }
                         }
                     }
@@ -68,4 +62,3 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-}

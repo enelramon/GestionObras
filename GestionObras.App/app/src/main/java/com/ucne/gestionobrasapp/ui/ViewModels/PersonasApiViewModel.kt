@@ -51,6 +51,7 @@ class PersonasApiViewModel @Inject constructor(
     /* Creación de metodos para optener datos de la persona*/
 
     var personaId by mutableStateOf(0)
+    var tipoTrabajoId by mutableStateOf("")
 
     var nombres by mutableStateOf("")
     var nombresError by mutableStateOf("")
@@ -59,6 +60,8 @@ class PersonasApiViewModel @Inject constructor(
     var telefonoError by mutableStateOf("")
 
     var tiposTrabajo by mutableStateOf("")
+    var tiposTrabajoError by mutableStateOf("")
+    val tiposDeTrabajo = listOf("Carpintero", "Ingeniero Civil", "Arquitecto", "Proveedor de materiales", "")
 
     var precio by mutableStateOf("")
     var precioError by mutableStateOf("")
@@ -91,6 +94,31 @@ class PersonasApiViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun setPersona(id: Int) {
+        personaId = id
+        tipoTrabajoId = ""
+        Limpiar()
+        personasApiRepositoryImp.getPersonasId(personaId).onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    uiStatePersonas.update { it.copy(isLoading = true) }
+                }
+                is Resource.Success -> {
+                    uiStatePersonas.update {
+                        it.copy(personas = result.data)
+                    }
+                    nombres = uiStatePersonas.value.personas!!.nombres
+                    telefono = uiStatePersonas.value.personas!!.telefono
+                    tiposTrabajo
+                    precio = uiStatePersonas.value.personas!!.precio.toString()
+                }
+                is Resource.Error -> {
+                    uiStatePersonas.update { it.copy(error = result.message ?: "Error desconocido") }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
     fun PersonasbyId(id: Int) {
         personaId = id
         Limpiar()
@@ -115,27 +143,19 @@ class PersonasApiViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun putPersonas(id: Int) {
+    fun putPersonas() {
         viewModelScope.launch {
-            personaId = id!!
-            try {
-                if (personaId != null) {
                     personasApiRepositoryImp.putPersonas(
                         personaId, PersonasDto(
                             personaId = personaId,
                             nombres = nombres,
-                            tipoTrabajoId = tiposTrabajo.toIntOrNull()?:0,
+                            uiStatePersonas.value.personas!!.tipoTrabajoId,
                             precio = precio.toDoubleOrNull()?:0.0,
-                            telefono = telefono
+                            telefono = telefono,
+                                    tiposTrabajo = tiposTrabajo
                         )
                     )
-                    Limpiar()
-                } else {
-                    throw NullPointerException("Value is null")
-                }
-            } catch (e: NullPointerException) {
-                e.printStackTrace()
-            }
+
         }
     }
 
@@ -145,16 +165,17 @@ class PersonasApiViewModel @Inject constructor(
                 PersonasDto(
                     personaId = personaId,
                     nombres = nombres,
-                    tipoTrabajoId = uiStatePersonas.value.tipos!!.tipoTrabajoId,
+                    tipoTrabajoId  =  tipoTrabajoId.toIntOrNull() ?: 0,
                     precio = precio.toDoubleOrNull()?:0.0,
-                    telefono = telefono
+                    telefono = telefono,
+                    tiposTrabajo = tiposTrabajo
                 )
             )
             Limpiar()
         }
     }
 
-    private fun Limpiar() {
+     fun Limpiar() {
         nombres = ""
         tiposTrabajo = ""
         precio = ""
@@ -165,39 +186,47 @@ class PersonasApiViewModel @Inject constructor(
     /* -------------------------------------- Validaciones --------------------------------------- */
     fun onNombresChanged(nombres: String) {
         this.nombres = nombres
-        HayErrores()
-    }
-
-    fun onPrecioChanged(precio: String) {
-        this.precio = precio
-        HayErrores()
+        HayErroresRegistrando()
     }
 
     fun onTelefonoChanged(telefono: String) {
         this.telefono = telefono
-        HayErrores()
+        HayErroresRegistrando()
     }
 
-    fun HayErrores(): Boolean {
+    fun onTrabajosChanged(tiposTrabajo: String) {
+        this.tiposTrabajo = tiposTrabajo
+        HayErroresRegistrando()
+    }
+
+    fun onPrecioChanged(precio: String) {
+        this.precio = precio
+        HayErroresRegistrando()
+    }
+
+
+
+    fun HayErroresRegistrando(): Boolean {
 
         var hayError = false
 
         nombresError = ""
-
-        if (nombres.isNullOrBlank()) {
-            nombresError = "Ingrese el nombre de la persona"
-            hayError = true
-        }
-
-        precioError = ""
-        if (precio.isNullOrBlank()) {
-            precioError = "Ingrese un precio"
+        if (nombres.isBlank()) {
             hayError = true
         }
 
         telefonoError = ""
-        if(telefono.isNullOrBlank()){
-            telefonoError = "Ingrese un numero telefonico"
+        if (telefono.isBlank()) {
+            hayError = true
+        }
+
+        fun onTrabajosChanged(tiposTrabajo: String) {
+            this.tiposTrabajo = tiposTrabajo
+            HayErroresRegistrando()
+        }
+
+        precioError = ""
+        if (precio.isBlank()) {
             hayError = true
         }
 

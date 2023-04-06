@@ -11,6 +11,7 @@ data class PersonasEntity(
     val nombres: String,            // Persona
     val telefono: String,
     val tipoTrabajoId: Int,
+    val tiposTrabajo: String,
     val precio: Double,
     val enviado: Boolean = false
 )
@@ -21,6 +22,7 @@ fun PersonasEntity.toPersonasDto(): PersonasDto {
         nombres = this.nombres,
         telefono = this.telefono,
         tipoTrabajoId = this.tipoTrabajoId,
-        precio = this.precio
+        precio = this.precio,
+        tiposTrabajo = this.tiposTrabajo
     )
 }
