@@ -5,5 +5,6 @@ data class PagosDto(
     val fecha: String,
     val monto: Double,
     val adelanto: Double,
-    val total: Double
+    val total: Double,
+    val proyectoId: Int,
 )
