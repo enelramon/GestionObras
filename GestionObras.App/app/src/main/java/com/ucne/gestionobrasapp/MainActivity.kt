@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.ucne.gestionobrasapp.ui.adelantos.AdelantosScreen
 import com.ucne.gestionobrasapp.ui.personas.NuevaPersonaScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 import com.ucne.gestionobrasapp.ui.proyectos.DetallesProyectoScreen
@@ -53,10 +54,23 @@ class MainActivity : ComponentActivity() {
                             DetallesProyectoScreen(navController = navController) // Le falta asignarle el id
                         }
 
-                            composable(ScreenModulePersonas.Personas.route) {
-                                NuevaPersonaScreen(navController = navController)
-                            }
+                        composable(ScreenModulePersonas.Personas.route) {
+                            NuevaPersonaScreen(navController = navController) // Le falta asignarle el id
                         }
+
+                        composable(ScreenModuleAdelantos.Adelantos.route) {
+                            AdelantosScreen(navController = navController) // Le falta asignarle el id
+                        }
+
+                     /*   composable(ScreenModulePagos.Pagos.route) {
+                            PagosScreen(navController = navController) // Le falta asignarle el id
+                        }
+
+                        composable(ScreenModuleNominas.Nominas.route) {
+                            NominasScreen(navController = navController) // Le falta asignarle el id
+                        } */
+
+                       }
                     }
                 }
             }

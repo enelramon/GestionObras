@@ -6,5 +6,6 @@ data class PersonasDto(
     val tipoTrabajoId: Int,
     val tiposTrabajo: String,
     val precio: Double,
-    val telefono: String
+    val telefono: String,
+    val proyectoId: Int
 )
