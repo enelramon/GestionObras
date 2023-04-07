@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.ucne.gestionobrasapp.ui.proyectos.ProyectosApiViewModel
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
 import kotlinx.coroutines.launch
 
