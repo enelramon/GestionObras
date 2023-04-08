@@ -13,6 +13,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
 import com.ucne.gestionobrasapp.data.remote.dto.ProyectosDto
+import com.ucne.gestionobrasapp.ui.theme.Shapes
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +39,7 @@ fun ProyectosListScreen(navController: NavController, viewModel: ProyectosApiVie
 
         floatingActionButton = {
             FloatingActionButton(
-                modifier = Modifier,
+                modifier = Modifier.clip(Shapes.extraLarge),
                 containerColor = Color(0xFF4479C7),
                 onClick = {
                     navController.navigate(ScreenModuleProyectos.Proyectos.route)
@@ -120,7 +122,6 @@ fun TicketRow(
                     tint = Color(0xFFDA4B4B),
                     contentDescription = "Icon",
                     modifier = Modifier
-
                         .size(40.dp, 40.dp)
                 )
 

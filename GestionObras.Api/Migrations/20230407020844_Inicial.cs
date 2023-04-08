@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -19,8 +18,9 @@ namespace GestionObras.Api.Migrations
                 {
                     AdelantoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Fecha = table.Column<string>(type: "TEXT", nullable: true),
                     PersonaId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProyectoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Monto = table.Column<double>(type: "REAL", nullable: false),
                     Balance = table.Column<double>(type: "REAL", nullable: false)
                 },
@@ -30,13 +30,34 @@ namespace GestionObras.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pagos",
+                columns: table => new
+                {
+                    PagoId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Fecha = table.Column<string>(type: "TEXT", nullable: true),
+                    PersonaId = table.Column<string>(type: "TEXT", nullable: true),
+                    ProyectoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Monto = table.Column<double>(type: "REAL", nullable: false),
+                    AdelantoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Total = table.Column<double>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pagos", x => x.PagoId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Personas",
                 columns: table => new
                 {
                     PersonaId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Nombres = table.Column<string>(type: "TEXT", nullable: true),
-                    Telefono = table.Column<string>(type: "TEXT", nullable: true)
+                    TipoTrabajoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProyectoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Telefono = table.Column<string>(type: "TEXT", nullable: true),
+                    Precio = table.Column<double>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,6 +83,7 @@ namespace GestionObras.Api.Migrations
                 {
                     TipoTrabajoId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
+                    ProyectoId = table.Column<int>(type: "INTEGER", nullable: false),
                     descripcion = table.Column<string>(type: "TEXT", nullable: true),
                     precio = table.Column<double>(type: "REAL", nullable: false)
                 },
@@ -71,34 +93,13 @@ namespace GestionObras.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pagos",
-                columns: table => new
-                {
-                    PagoId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PersonaId = table.Column<string>(type: "TEXT", nullable: true),
-                    Monto = table.Column<double>(type: "REAL", nullable: false),
-                    AdelantosAdelantoId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Total = table.Column<double>(type: "REAL", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pagos", x => x.PagoId);
-                    table.ForeignKey(
-                        name: "FK_Pagos_Adelantos_AdelantosAdelantoId",
-                        column: x => x.AdelantosAdelantoId,
-                        principalTable: "Adelantos",
-                        principalColumn: "AdelantoId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Nominas",
                 columns: table => new
                 {
                     NominaId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Fecha = table.Column<string>(type: "TEXT", nullable: true),
+                    PersonaId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProyectoId = table.Column<int>(type: "INTEGER", nullable: false),
                     Total = table.Column<double>(type: "REAL", nullable: false),
                     Estado = table.Column<string>(type: "TEXT", nullable: true)
@@ -121,10 +122,11 @@ namespace GestionObras.Api.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     NominaId = table.Column<int>(type: "INTEGER", nullable: false),
-                    Fecha = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Fecha = table.Column<string>(type: "TEXT", nullable: false),
                     TipoTrabajo = table.Column<string>(type: "TEXT", nullable: true),
                     Cantidad = table.Column<double>(type: "REAL", nullable: false),
                     Precio = table.Column<double>(type: "REAL", nullable: false),
+                    ProyectoId = table.Column<int>(type: "INTEGER", nullable: false),
                     PersonaId = table.Column<int>(type: "INTEGER", nullable: false),
                     Balance = table.Column<double>(type: "REAL", nullable: false),
                     personasPersonaId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -162,14 +164,14 @@ namespace GestionObras.Api.Migrations
 
             migrationBuilder.InsertData(
                 table: "Personas",
-                columns: new[] { "PersonaId", "Nombres", "Telefono" },
+                columns: new[] { "PersonaId", "Nombres", "Precio", "ProyectoId", "Telefono", "TipoTrabajoId" },
                 values: new object[,]
                 {
-                    { 1, "Manuel", "829-811-4569" },
-                    { 2, "Samuel", "829-846-5619" },
-                    { 3, "Juan", "809-578-1978" },
-                    { 4, "Ana", "849-678-6719" },
-                    { 5, "Josefa", "849-789-1290" }
+                    { 1, "Manuel", 0.0, 0, "829-811-4569", 0 },
+                    { 2, "Samuel", 0.0, 0, "829-846-5619", 0 },
+                    { 3, "Juan", 0.0, 0, "809-578-1978", 0 },
+                    { 4, "Ana", 0.0, 0, "849-678-6719", 0 },
+                    { 5, "Josefa", 0.0, 0, "849-789-1290", 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -179,11 +181,11 @@ namespace GestionObras.Api.Migrations
 
             migrationBuilder.InsertData(
                 table: "TiposTrabajos",
-                columns: new[] { "TipoTrabajoId", "descripcion", "precio" },
+                columns: new[] { "TipoTrabajoId", "ProyectoId", "descripcion", "precio" },
                 values: new object[,]
                 {
-                    { 1, "Carpinteria x dia", 2000.0 },
-                    { 2, "Ayudante Carpintero", 1000.0 }
+                    { 1, 0, "Carpinteria x dia", 2000.0 },
+                    { 2, 0, "Ayudante Carpintero", 1000.0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -210,16 +212,14 @@ namespace GestionObras.Api.Migrations
                 name: "IX_NominasDetalle_tiposTrabajosTipoTrabajoId",
                 table: "NominasDetalle",
                 column: "tiposTrabajosTipoTrabajoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pagos_AdelantosAdelantoId",
-                table: "Pagos",
-                column: "AdelantosAdelantoId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Adelantos");
+
             migrationBuilder.DropTable(
                 name: "NominasDetalle");
 
@@ -234,9 +234,6 @@ namespace GestionObras.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "TiposTrabajos");
-
-            migrationBuilder.DropTable(
-                name: "Adelantos");
 
             migrationBuilder.DropTable(
                 name: "Proyectos");

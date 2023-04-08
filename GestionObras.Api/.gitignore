@@ -4,4 +4,4 @@
 
 /GestionObras.Api/obj/**
 /GestionObras.Api/bin/**
-/GestionObras.Api/.vs/**
+/GestionObras.Api/.vscode/**

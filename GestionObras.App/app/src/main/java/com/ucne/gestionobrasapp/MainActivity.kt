@@ -15,7 +15,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.adelantos.AdelantosScreen
-import com.ucne.gestionobrasapp.ui.personas.NuevaPersonaScreen
+import com.ucne.gestionobrasapp.ui.nominas.NominaScreen
+import com.ucne.gestionobrasapp.ui.pagos.PagosScreen
+import com.ucne.gestionobrasapp.ui.personas.PersonaScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 import com.ucne.gestionobrasapp.ui.proyectos.DetallesProyectoScreen
 import com.ucne.gestionobrasapp.ui.proyectos.NuevoProyectoScreen
@@ -40,8 +42,13 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = ScreenModuleProyectos.ProyectoList.route
+                        startDestination = ScreenModuleProyectos.DetallesProyecto.route
                     ) {
+
+                        composable(ScreenModuleStart.Start.route) {
+                            MainScreen(navController = navController)
+                        }
+
                         composable(ScreenModuleProyectos.ProyectoList.route) {
                             ProyectosListScreen(navController = navController)
                         }
@@ -55,24 +62,23 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(ScreenModulePersonas.Personas.route) {
-                            NuevaPersonaScreen(navController = navController) // Le falta asignarle el id
+                            PersonaScreen(navController = navController) // Le falta asignarle el id
                         }
 
                         composable(ScreenModuleAdelantos.Adelantos.route) {
                             AdelantosScreen(navController = navController) // Le falta asignarle el id
                         }
 
-                     /*   composable(ScreenModulePagos.Pagos.route) {
+                        composable(ScreenModulePagos.Pagos.route) {
                             PagosScreen(navController = navController) // Le falta asignarle el id
                         }
 
                         composable(ScreenModuleNominas.Nominas.route) {
-                            NominasScreen(navController = navController) // Le falta asignarle el id
-                        } */
-
-                       }
+                            NominaScreen(navController = navController) // Le falta asignarle el id
+                        }
                     }
                 }
             }
         }
     }
+}

@@ -10,6 +10,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -17,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ucne.gestionobrasapp.ui.theme.Shapes
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
 import kotlinx.coroutines.launch
 
@@ -42,8 +44,6 @@ private fun ProyectosBody(
     var expanded by remember {
         mutableStateOf(false)
     }
-
-
 
     Column(modifier = Modifier.fillMaxWidth())
     {
@@ -104,6 +104,12 @@ private fun ProyectosBody(
             )
         }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
             ExtendedFloatingActionButton(
                 modifier = Modifier
                     .size(124.dp, 124.dp)
@@ -124,11 +130,9 @@ private fun ProyectosBody(
                     } else {
                         viewModel.postProyectos()
                         navController.navigate(ScreenModuleProyectos.ProyectoList.route)
-
                     }
-
                 }
             )
-
         }
     }
+}

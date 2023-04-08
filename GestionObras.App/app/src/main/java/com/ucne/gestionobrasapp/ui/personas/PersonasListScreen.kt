@@ -81,9 +81,7 @@ fun PersonasListScreen(
             }
         }
     }
-
 }
-
 
 @Composable
 fun PersonasListBody(personasList: List<PersonasDto>, onPersonasClick: (Int) -> Unit) {
