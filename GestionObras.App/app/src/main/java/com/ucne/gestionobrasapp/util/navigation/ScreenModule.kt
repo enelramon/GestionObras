@@ -4,6 +4,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
+sealed class ScreenModuleStart(val route: String) { // Proyecto
+    object Start : ScreenModuleProyectos("start")
+}
 sealed class ScreenModuleProyectos(val route: String) { // Proyecto
 
     object Proyectos : ScreenModuleProyectos("proyectos")

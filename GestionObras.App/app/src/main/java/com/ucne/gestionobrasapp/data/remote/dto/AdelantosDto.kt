@@ -6,6 +6,7 @@ data class AdelantosDto(
     val monto: Double,
     val balance: Double,
     val pagoId: Int,
+    val personaId: Int,
     val proyectoId: Int,
 )
 

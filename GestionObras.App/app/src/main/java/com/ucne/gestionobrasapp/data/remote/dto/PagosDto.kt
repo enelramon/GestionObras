@@ -7,4 +7,5 @@ data class PagosDto(
     val adelanto: Double,
     val total: Double,
     val proyectoId: Int,
+    val personaId: Int
 )

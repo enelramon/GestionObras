@@ -11,6 +11,7 @@ data class NominasEntity(
     val fecha: String,
     val total: Double,               // Nomina
     val estado: String,
+    val proyectoId: Int,
     val enviado: Boolean = false
 )
 
@@ -19,6 +20,7 @@ fun NominasEntity.toNominasDto(): NominasDto {
         nominaId = this.nominaId ?: 0,
         fecha = this.fecha,
         total = this.total,
-        estado = this.estado
+        estado = this.estado,
+        proyectoId = this.proyectoId
     )
 }

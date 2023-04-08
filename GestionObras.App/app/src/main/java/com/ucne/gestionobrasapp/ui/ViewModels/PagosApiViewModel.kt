@@ -5,11 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ucne.gestionobrasapp.data.remote.dto.AdelantosDto
 import com.ucne.gestionobrasapp.data.remote.dto.PagosDto
-import com.ucne.gestionobrasapp.data.remote.dto.TiposDto
-import com.ucne.gestionobrasapp.data.repositoy.adelantos.AdelantosApiRepositoryImp
-import com.ucne.gestionobrasapp.data.repositoy.tipos.TiposApiRepositoryImp
+import com.ucne.gestionobrasapp.data.remote.dto.PersonasDto
+import com.ucne.gestionobrasapp.data.repositoy.pagos.PagosApiRepositoryImp
 import com.ucne.gestionobrasapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,23 +17,25 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class AdelantosListState(
+data class PagosListState(
     val isLoading: Boolean = false,
-    val adelantos: List<AdelantosDto> = emptyList(),
+    val pagos: List<PagosDto> = emptyList(),
     val error: String = ""
 )
-data class AdelantosState(
+
+data class PagosState(
     val isLoading: Boolean = false,
-    val adelantos: AdelantosDto? = null,
+    val pagos: PagosDto? = null,
     val error: String = ""
 )
+
 @HiltViewModel
-class AdelantosApiViewModel @Inject constructor(
-    private val adelantosApiRepositoryImp: AdelantosApiRepositoryImp
+class PagosApiViewModel @Inject constructor(
+    private val pagosApiRepositoryImp: PagosApiRepositoryImp
 ) : ViewModel() {
 
-    var adelantoId by mutableStateOf(0)
-    var adelantoIdError by mutableStateOf("")
+    var pagoId by mutableStateOf(0)
+    var pagoIdError by mutableStateOf("")
 
     var fecha by mutableStateOf("")
     var fechaError by mutableStateOf("")
@@ -46,23 +46,30 @@ class AdelantosApiViewModel @Inject constructor(
     var monto by mutableStateOf("")
     var montoError by mutableStateOf("")
 
-    var balance by mutableStateOf("")
-    var balanceError by mutableStateOf("")
+    var adelanto by mutableStateOf("")
+    var adelantoError by mutableStateOf("")
 
-    var uiState = MutableStateFlow(AdelantosListState())
+    var total by mutableStateOf("")
+    var totalError by mutableStateOf("")
+
+    val proyectoId by mutableStateOf("")
+    var proyectoIdError by mutableStateOf("")
+
+
+    var uiState = MutableStateFlow(PagosListState())
         private set
-    var uiStateAdelantos = MutableStateFlow(AdelantosState())
+    var uiStatePagos = MutableStateFlow(PagosState())
         private set
 
     init {
-        adelantosApiRepositoryImp.getAdelantos().onEach { result ->
+        pagosApiRepositoryImp.getPagos().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     uiState.update { it.copy(isLoading = true) }
                 }
                 is Resource.Success -> {
                     uiState.update {
-                        it.copy(adelantos = result.data ?: emptyList())
+                        it.copy(pagos = result.data ?: emptyList())
                     }
                 }
                 is Resource.Error -> {
@@ -72,44 +79,45 @@ class AdelantosApiViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun AdelantosbyId(id: Int) {
-        adelantoId = id
+    fun PagosbyId(id: Int) {
+        pagoId = id
         Limpiar()
-        adelantosApiRepositoryImp.getAdelantosId(adelantoId).onEach { result ->
+        pagosApiRepositoryImp.getPagosId(pagoId).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    uiStateAdelantos.update { it.copy(isLoading = true) }
+                    uiStatePagos.update { it.copy(isLoading = true) }
                 }
                 is Resource.Success -> {
-                    uiStateAdelantos.update {
-                        it.copy(adelantos = result.data)
+                    uiStatePagos.update {
+                        it.copy(pagos = result.data)
                     }
-                    fecha = uiStateAdelantos.value.adelantos!!.fecha
-                    personaId = uiStateAdelantos.value.adelantos!!.personaId.toString()
-                    monto = uiStateAdelantos.value.adelantos!!.monto.toString()
-                    balance = uiStateAdelantos.value.adelantos!!.balance.toString()
+                    fecha = uiStatePagos.value.pagos!!.fecha
+                    personaId = uiStatePagos.value.pagos!!.personaId.toString()
+                    monto = uiStatePagos.value.pagos!!.monto.toString()
+                    adelanto = uiStatePagos.value.pagos!!.adelanto.toString()
+                    total = uiStatePagos.value.pagos!!.total.toString()
                 }
                 is Resource.Error -> {
-                    uiStateAdelantos.update { it.copy(error = result.message ?: "Error desconocido") }
+                    uiStatePagos.update { it.copy(error = result.message ?: "Error desconocido") }
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun putAdelantos(id: Int) {
+    fun putPagos(id: Int) {
         viewModelScope.launch {
-            adelantoId = id!!
+            pagoId = id!!
             try {
-                if (adelantoId != null) {
-                    adelantosApiRepositoryImp.putAdelantos(
-                        adelantoId, AdelantosDto(
-                            adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
+                if (pagoId != null) {
+                    pagosApiRepositoryImp.putPagos(
+                        pagoId, PagosDto(
+                            pagoId = pagoId,
                             fecha = fecha,
                             personaId = personaId.toIntOrNull() ?: 0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
-                            balance = balance.toDoubleOrNull() ?: 0.0,
-                            proyectoId = uiStateAdelantos.value.adelantos!!.proyectoId
+                            adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                            total = total.toDoubleOrNull() ?: 0.0,
+                            proyectoId = uiStatePagos.value.pagos!!.proyectoId
                         )
                     )
                     Limpiar()
@@ -122,20 +130,20 @@ class AdelantosApiViewModel @Inject constructor(
         }
     }
 
-    fun deleteAdelantos(id: Int) {
+    fun deletePagos(id: Int) {
         viewModelScope.launch {
-            adelantoId = id!!
+            pagoId = id!!
             try {
-                if (adelantoId != null) {
-                    adelantosApiRepositoryImp.deleteAdelantos(
-                        adelantoId, AdelantosDto(
-                            adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
+                if (pagoId != null) {
+                    pagosApiRepositoryImp.deletePagos(
+                        pagoId, PagosDto(
+                            pagoId = pagoId,
                             fecha = fecha,
                             personaId = personaId.toIntOrNull() ?: 0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
-                            balance = balance.toDoubleOrNull() ?: 0.0,
-                            proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
+                            adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                            total = total.toDoubleOrNull() ?: 0.0,
+                            proyectoId = uiStatePagos.value.pagos!!.proyectoId
                         )
                     )
                     Limpiar()
@@ -148,18 +156,18 @@ class AdelantosApiViewModel @Inject constructor(
         }
     }
 
-    fun postAdelantos() {
+    fun postPagos() {
         viewModelScope.launch {
             try {
-                adelantosApiRepositoryImp.postAdelantos(
-                    AdelantosDto(
-                        adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                        pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
+                pagosApiRepositoryImp.postPagos(
+                    PagosDto(
+                        pagoId = pagoId,
                         fecha = fecha,
                         personaId = personaId.toIntOrNull() ?: 0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
-                        balance = balance.toDoubleOrNull() ?: 0.0,
-                        proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
+                        adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                        total = total.toDoubleOrNull() ?: 0.0,
+                        proyectoId = uiStatePagos.value.pagos!!.proyectoId
                     )
                 )
                 Limpiar()
@@ -172,7 +180,8 @@ class AdelantosApiViewModel @Inject constructor(
     private fun Limpiar() {
         fecha = ""
         monto = ""
-        balance = ""
+        adelanto = ""
+        total = ""
     }
 
 
@@ -192,8 +201,13 @@ class AdelantosApiViewModel @Inject constructor(
         HayErroresRegistrando()
     }
 
-    fun onBalanceChanged(balance: String) {
-        this.balance = balance
+    fun onAdelantosChanged(adelantos: String) {
+        this.adelanto = adelantos
+        HayErroresRegistrando()
+    }
+
+    fun onTotalChanged(total: String) {
+        this.total = total
         HayErroresRegistrando()
     }
 
@@ -204,6 +218,12 @@ class AdelantosApiViewModel @Inject constructor(
         fechaError = ""
         if (fecha.isNullOrBlank()) {
             fechaError = "Seleccione una fecha"
+            hayError = false
+        }
+
+        pagoIdError = ""
+        if (pagoId == null) {
+            pagoIdError = "Ingrese un Id"
             hayError = false
         }
 
@@ -219,9 +239,9 @@ class AdelantosApiViewModel @Inject constructor(
             hayError = false
         }
 
-        balanceError = ""
-        if (balance.isNullOrBlank()) {
-            balanceError = "El balance es nulo"
+        adelantoError = ""
+        if (total.isNullOrBlank()) {
+            adelantoError = "El total es nulo"
             hayError = false
         }
 

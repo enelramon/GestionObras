@@ -11,6 +11,9 @@ data class AdelantosEntity(
     val fecha: String,
     val monto: Double,             // Adelanto
     val balance: Double,
+    val pagoId: Int,
+    val personaId: Int,
+    val proyectoId: Int,
     val enviado: Boolean = false
 )
 
@@ -19,6 +22,9 @@ fun AdelantosEntity.toAdelantosDto(): AdelantosDto {
         adelantoId = this.adelantoId ?: 0,
         fecha = this.fecha,
         monto = this.monto,
-        balance = this.balance
+        balance = this.balance,
+        pagoId = this.pagoId,
+        personaId = this.personaId,
+        proyectoId = this.proyectoId
     )
 }

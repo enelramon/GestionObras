@@ -5,11 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ucne.gestionobrasapp.data.local.entity.TiposEntity
 import com.ucne.gestionobrasapp.data.remote.dto.PersonasDto
 import com.ucne.gestionobrasapp.data.remote.dto.TiposDto
 import com.ucne.gestionobrasapp.data.repositoy.personas.PersonasApiRepositoryImp
-import com.ucne.gestionobrasapp.data.repositoy.tipos.TiposApiRepositoryImp
 import com.ucne.gestionobrasapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -94,31 +92,6 @@ class PersonasApiViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun setPersona(id: Int) {
-        personaId = id
-        tipoTrabajoId = ""
-        Limpiar()
-        personasApiRepositoryImp.getPersonasId(personaId).onEach { result ->
-            when (result) {
-                is Resource.Loading -> {
-                    uiStatePersonas.update { it.copy(isLoading = true) }
-                }
-                is Resource.Success -> {
-                    uiStatePersonas.update {
-                        it.copy(personas = result.data)
-                    }
-                    nombres = uiStatePersonas.value.personas!!.nombres
-                    telefono = uiStatePersonas.value.personas!!.telefono
-                    tiposTrabajo
-                    precio = uiStatePersonas.value.personas!!.precio.toString()
-                }
-                is Resource.Error -> {
-                    uiStatePersonas.update { it.copy(error = result.message ?: "Error desconocido") }
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
     fun PersonasbyId(id: Int) {
         personaId = id
         Limpiar()
@@ -137,41 +110,84 @@ class PersonasApiViewModel @Inject constructor(
                     precio = uiStatePersonas.value.personas!!.precio.toString()
                 }
                 is Resource.Error -> {
-                    uiStatePersonas.update { it.copy(error = result.message ?: "Error desconocido") }
+                    uiStatePersonas.update {
+                        it.copy(
+                            error = result.message ?: "Error desconocido"
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
     }
 
-    fun putPersonas() {
+    fun putPersonas(id: Int) {
         viewModelScope.launch {
+            personaId = id!!
+            try {
+                if (personaId != null) {
                     personasApiRepositoryImp.putPersonas(
                         personaId, PersonasDto(
                             personaId = personaId,
                             nombres = nombres,
                             uiStatePersonas.value.personas!!.tipoTrabajoId,
-                            precio = precio.toDoubleOrNull()?:0.0,
+                            precio = precio.toDoubleOrNull() ?: 0.0,
                             telefono = telefono,
-                                    tiposTrabajo = tiposTrabajo
+                            tiposTrabajo = tiposTrabajo,
+                            proyectoId = 0
                         )
                     )
+                } else {
+                    throw NullPointerException("Value is null")
+                }
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
+        }
+    }
 
+    fun deletePersonas(id: Int) {
+        viewModelScope.launch {
+            personaId = id!!
+            try {
+                if (personaId != null) {
+                    personasApiRepositoryImp.deletePersonas(
+                        personaId, PersonasDto(
+                            personaId = personaId,
+                            nombres = nombres,
+                            uiStatePersonas.value.personas!!.tipoTrabajoId,
+                            precio = precio.toDoubleOrNull() ?: 0.0,
+                            telefono = telefono,
+                            tiposTrabajo = tiposTrabajo,
+                            proyectoId = 0
+                        )
+                    )
+                } else {
+                    throw NullPointerException("Value is null")
+                }
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
         }
     }
 
     fun postPersonas() {
         viewModelScope.launch {
-            personasApiRepositoryImp.postPersonas(
-                PersonasDto(
-                    personaId = personaId,
-                    nombres = nombres,
-                    tipoTrabajoId  =  tipoTrabajoId.toIntOrNull() ?: 0,
-                    precio = precio.toDoubleOrNull()?:0.0,
-                    telefono = telefono,
-                    tiposTrabajo = tiposTrabajo
+            try {
+                personasApiRepositoryImp.deletePersonas(
+                    personaId, PersonasDto(
+                        personaId = personaId,
+                        nombres = nombres,
+                        tipoTrabajoId = tipoTrabajoId.toIntOrNull() ?: 0,
+                        precio = precio.toDoubleOrNull() ?: 0.0,
+                        telefono = telefono,
+                        tiposTrabajo = tiposTrabajo,
+                        proyectoId = 0
+                    )
                 )
-            )
-            Limpiar()
+                Limpiar()
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -203,8 +219,6 @@ class PersonasApiViewModel @Inject constructor(
         this.precio = precio
         HayErroresRegistrando()
     }
-
-
 
     fun HayErroresRegistrando(): Boolean {
 

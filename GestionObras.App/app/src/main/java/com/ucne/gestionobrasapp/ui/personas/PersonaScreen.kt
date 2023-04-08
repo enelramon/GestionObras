@@ -20,17 +20,13 @@ import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
 import kotlinx.coroutines.launch
 
-import java.util.*
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NuevaPersonaScreen(
+fun PersonaScreen(
     viewModel: PersonasApiViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
     PersonasBody(viewModel, Modifier.fillMaxWidth(), navController)
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,14 +35,10 @@ private fun PersonasBody(
     viewModel: PersonasApiViewModel, modifier: Modifier, navController: NavController
 ) {
 
-
-
     val scope = rememberCoroutineScope()
     var expanded by remember {
         mutableStateOf(false)
     }
-
-
 
     Column(modifier = Modifier.fillMaxWidth())
     {
@@ -64,7 +56,6 @@ private fun PersonasBody(
                     }
                 }
         )
-
 
         Spacer(modifier = Modifier.padding(20.dp))
         Text(
@@ -256,7 +247,6 @@ private fun PersonasBody(
             containerColor = Color(0xFF3992CC),
             icon = { Icon(imageVector = Icons.TwoTone.Save, contentDescription = "Save") },
             onClick = {
-
                 if (viewModel.HayErroresRegistrando()) {
                     viewModel.nombresError = ""
                     if (viewModel.nombres.isBlank()) {
@@ -277,17 +267,12 @@ private fun PersonasBody(
                     if (viewModel.precio.isBlank()) {
                         viewModel.precioError = "  Debe indicar el precio del trabajo"
                     }
-
-
                 } else {
                     viewModel.postPersonas()
                     viewModel.Limpiar()
-
                 }
-
             }
         )
 
     }
 }
-

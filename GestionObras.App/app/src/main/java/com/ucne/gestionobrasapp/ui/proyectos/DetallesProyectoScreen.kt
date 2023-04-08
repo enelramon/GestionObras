@@ -1,7 +1,18 @@
-package com.ucne.gestionobrasapp.util
+package com.ucne.gestionobrasapp.ui.proyectos
 
 
-import android.graphics.ColorMatrix
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.twotone.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
+import com.ucne.gestionobrasapp.ui.theme.Shapes
+import kotlinx.coroutines.launch
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.RenderEffect
 import android.graphics.Shader
@@ -11,41 +22,28 @@ import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.*
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.ucne.gestionobrasapp.R
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
-import com.ucne.gestionobrasapp.ui.theme.Shapes
-import com.ucne.gestionobrasapp.util.navigation.ScreenModulePersonas
-import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
+import com.ucne.gestionobrasapp.util.colorMatrix
+import com.ucne.gestionobrasapp.util.navigation.*
+import com.ucne.gestionobrasapp.util.times
+import com.ucne.gestionobrasapp.util.transform
+import java.util.*
 import kotlin.math.PI
 import kotlin.math.sin
-
-val colorMatrix = ColorMatrix(
-    floatArrayOf(
-        1f, 0f, 0f, 0f, 0f,
-        0f, 1f, 0f, 0f, 0f,
-        0f, 0f, 1f, 0f, 0f,
-        0f, 0f, 0f, 50f, -5000f
-    )
-)
 
 @RequiresApi(Build.VERSION_CODES.S)
 fun getRenderEffect(): RenderEffect {
@@ -61,52 +59,96 @@ fun getRenderEffect(): RenderEffect {
 }
 
 @Composable
-fun MainScreen(navController: NavController) {
+fun DetallesProyectoScreen(navController: NavController) {
     val isMenuExtended = remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.work_icon),
+        Spacer(modifier = Modifier.padding(20.dp))
+        Icon(
+            imageVector = Icons.TwoTone.ArrowCircleLeft,
             contentDescription = null,
-            modifier = Modifier.size(200.dp, 200.dp)
+            tint = Color(0xCDFFA185),
+            modifier = Modifier
+                .size(50.dp, 50.dp)
+                .clickable {
+                    scope.launch {
+                        navController.navigate(ScreenModuleProyectos.ProyectoList.route)
+                    }
+                }
         )
+        Spacer(modifier = Modifier.padding(20.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Nombres",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color(0xFF000000),
+                    modifier = Modifier.weight(7f)
+                )
+                Text(
+                    text = "Adelanto",
+                    //text = proyecto_Adelanto,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color(0xFF000000),
+                    modifier = Modifier.weight(7f)
+                )
+                Text(
+                    text = "Pago",
+                    //text = proyecto_Pago,
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color(0xFF000000),
+                    modifier = Modifier.weight(7f)
+                )
+            }
+        }
+        val fabAnimationProgress by animateFloatAsState(
+            targetValue = if (isMenuExtended.value) 1f else 0f,
+            animationSpec = tween(
+                durationMillis = 1000,
+                easing = LinearEasing
+            )
+        )
+
+        val clickAnimationProgress by animateFloatAsState(
+            targetValue = if (isMenuExtended.value) 1f else 0f,
+            animationSpec = tween(
+                durationMillis = 400,
+                easing = LinearEasing
+            )
+        )
+
+        val renderEffect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            getRenderEffect().asComposeRenderEffect()
+        } else {
+            null
+        }
+
+        MainScreen(
+            renderEffect = renderEffect,
+            fabAnimationProgress = fabAnimationProgress,
+            navController = navController,
+            clickAnimationProgress = clickAnimationProgress
+        ) {
+            isMenuExtended.value = isMenuExtended.value.not()
+        }
     }
 
-
-    val fabAnimationProgress by animateFloatAsState(
-        targetValue = if (isMenuExtended.value) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = 1000,
-            easing = LinearEasing
-        )
-    )
-
-    val clickAnimationProgress by animateFloatAsState(
-        targetValue = if (isMenuExtended.value) 1f else 0f,
-        animationSpec = tween(
-            durationMillis = 400,
-            easing = LinearEasing
-        )
-    )
-
-    val renderEffect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        getRenderEffect().asComposeRenderEffect()
-    } else {
-        null
-    }
-
-    MainScreen(
-        renderEffect = renderEffect,
-        fabAnimationProgress = fabAnimationProgress,
-        navController = navController,
-        clickAnimationProgress = clickAnimationProgress
-    ) {
-        isMenuExtended.value = isMenuExtended.value.not()
-    }
 }
 
 @Composable
@@ -123,7 +165,7 @@ fun MainScreen(
             .padding(bottom = 24.dp),
         contentAlignment = Alignment.BottomCenter
     ) {
-        CustomBottomNavigation()
+
         Circle(
             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
             animationProgress = 0.5f
@@ -167,28 +209,12 @@ fun Circle(color: Color, animationProgress: Float) {
 }
 
 @Composable
-fun CustomBottomNavigation() {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .height(80.dp)
-            .paint(
-                painter = painterResource(R.drawable.bottom_navigation),
-                contentScale = ContentScale.FillHeight
-            )
-            .padding(horizontal = 40.dp)
-    ) {}
-}
-
-@Composable
 fun FabGroup(
     animationProgress: Float = 0f,
     renderEffect: androidx.compose.ui.graphics.RenderEffect? = null,
     navController: NavController,
     toggleAnimation: () -> Unit = { }
 ) {
-
     val fastOutSlowIn = remember { FastOutSlowInEasing }
     val linear = remember { LinearEasing }
 
@@ -197,10 +223,26 @@ fun FabGroup(
             .fillMaxSize()
             .graphicsLayer { this.renderEffect = renderEffect }
             .padding(bottom = DEFAULT_PADDING.dp),
-        contentAlignment = Alignment.BottomCenter
+        contentAlignment = Alignment.BottomCenter,
     ) {
+
         AnimatedFab(
-            icon = Icons.Default.DomainAdd,
+            icon = Icons.Default.StickyNote2,
+            modifier = Modifier
+                .padding(
+                    PaddingValues(
+                        bottom = 180.dp,
+                    ) * fastOutSlowIn.transform(0.1f, 0.9f, animationProgress)
+                ),
+            onClick = {
+                navController.navigate(ScreenModuleNominas.Nominas.route)
+            },
+            opacity = linear.transform(0.3f, 0.8f, animationProgress),
+            backgroundColor = Color.Cyan
+        )
+
+        AnimatedFab(
+            icon = Icons.Default.Person,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -209,13 +251,14 @@ fun FabGroup(
                     ) * fastOutSlowIn.transform(0f, 0.5f, animationProgress)
                 ),
             onClick = {
-                navController.navigate(ScreenModuleProyectos.ProyectoList.route)
+                navController.navigate(ScreenModulePersonas.Personas.route)
             },
-            opacity = linear.transform(0.2f, 0.7f, animationProgress)
+            opacity = linear.transform(0.2f, 0.7f, animationProgress),
+            backgroundColor = Color.Yellow
         )
 
         AnimatedFab(
-            icon = Icons.Default.ReceiptLong,
+            icon = Icons.Default.PriceChange,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -223,20 +266,24 @@ fun FabGroup(
                     ) * fastOutSlowIn.transform(0.1f, 0.9f, animationProgress)
                 ),
             onClick = {
-                navController.navigate(ScreenModulePersonas.PersonasList.route)
+                navController.navigate(ScreenModuleAdelantos.Adelantos.route)
             },
-            opacity = linear.transform(0.3f, 0.8f, animationProgress)
+            opacity = linear.transform(0.3f, 0.8f, animationProgress),
+            backgroundColor = Color.Green
         )
 
         AnimatedFab(
-            icon = Icons.Default.Engineering,
-            modifier = Modifier.padding(
+            icon = Icons.Default.LocalAtm,
+            modifier = Modifier
+                .padding(
                 PaddingValues(
                     bottom = 72.dp,
                     start = 210.dp
                 ) * fastOutSlowIn.transform(0.2f, 1.0f, animationProgress)
             ),
-            opacity = linear.transform(0.4f, 0.9f, animationProgress)
+            onClick = { navController.navigate(ScreenModulePagos.Pagos.route) },
+            opacity = linear.transform(0.4f, 0.9f, animationProgress),
+            backgroundColor = Color.Blue
         )
 
         AnimatedFab(
@@ -245,7 +292,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.Menu,
+            icon = Icons.Default.RadioButtonChecked,
             modifier = Modifier
                 .rotate(
                     225 * fastOutSlowIn
@@ -263,6 +310,7 @@ fun AnimatedFab(
     icon: ImageVector? = null,
     opacity: Float = 1f,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary,
+    tint: Color = LocalContentColor.current,
     onClick: () -> Unit = {}
 ) {
     FloatingActionButton(
@@ -282,4 +330,3 @@ fun AnimatedFab(
         }
     }
 }
-

@@ -12,6 +12,8 @@ data class PagosEntity(
     val monto: Double,                 // Pago
     val adelanto: Double,
     val total: Double,
+    val proyectoId: Int,
+    val personaId: Int,
     val enviado: Boolean = false
 )
 
@@ -21,6 +23,8 @@ fun PagosEntity.toPagosDto(): PagosDto {
         fecha = this.fecha,
         monto = this.monto,
         adelanto = this.adelanto,
-        total = this.total
+        total = this.total,
+        proyectoId = this.proyectoId,
+        personaId = this.personaId
     )
 }

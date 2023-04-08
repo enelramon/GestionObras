@@ -2,6 +2,7 @@ package com.ucne.gestionobrasapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.Json
 import com.ucne.gestionobrasapp.data.remote.dto.PersonasDto
 
 @Entity(tableName = "Personas")
@@ -10,9 +11,10 @@ data class PersonasEntity(
     val personaId: Int?= null,
     val nombres: String,            // Persona
     val telefono: String,
-    val tipoTrabajoId: Int,
-    val tiposTrabajo: String,
-    val precio: Double,
+    val tipoTrabajoId: Int?,
+    val tiposTrabajo: String?,
+    val precio: Double?,
+    val proyectoId: Int?,
     val enviado: Boolean = false
 )
 
@@ -22,7 +24,8 @@ fun PersonasEntity.toPersonasDto(): PersonasDto {
         nombres = this.nombres,
         telefono = this.telefono,
         tipoTrabajoId = this.tipoTrabajoId,
-        precio = this.precio,
-        tiposTrabajo = this.tiposTrabajo
+        precio = this.precio?:0.0,
+        tiposTrabajo = this.tiposTrabajo.orEmpty(),
+        proyectoId = this.proyectoId?:0
     )
 }
