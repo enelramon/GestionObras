@@ -177,7 +177,9 @@ class PagosApiViewModel @Inject constructor(
         }
     }
 
-    private fun Limpiar() {
+     fun Limpiar() {
+
+         personaId =""
         fecha = ""
         monto = ""
         adelanto = ""
@@ -201,48 +203,25 @@ class PagosApiViewModel @Inject constructor(
         HayErroresRegistrando()
     }
 
-    fun onAdelantosChanged(adelantos: String) {
-        this.adelanto = adelantos
-        HayErroresRegistrando()
-    }
-
-    fun onTotalChanged(total: String) {
-        this.total = total
-        HayErroresRegistrando()
-    }
 
     fun HayErroresRegistrando(): Boolean {
 
-        var hayError = true
+        var hayError = false
 
         fechaError = ""
-        if (fecha.isNullOrBlank()) {
-            fechaError = "Seleccione una fecha"
-            hayError = false
+        if (fecha.isBlank()) {
+            hayError = true
         }
 
-        pagoIdError = ""
-        if (pagoId == null) {
-            pagoIdError = "Ingrese un Id"
-            hayError = false
-        }
 
         personaIdError = ""
-        if (personaId.isNullOrBlank()) {
-            personaIdError = "Ingrese un Id"
-            hayError = false
+        if (personaId.isBlank()) {
+            hayError = true
         }
 
         montoError = ""
-        if (monto.isNullOrBlank()) {
-            montoError = "Ingrese un monto"
-            hayError = false
-        }
-
-        adelantoError = ""
-        if (total.isNullOrBlank()) {
-            adelantoError = "El total es nulo"
-            hayError = false
+        if (monto.isBlank()) {
+            hayError = true
         }
 
         return hayError

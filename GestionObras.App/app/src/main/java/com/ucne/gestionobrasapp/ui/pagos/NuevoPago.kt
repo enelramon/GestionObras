@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Save
@@ -70,7 +71,7 @@ fun PagosScreen(
         Icon(
             imageVector = Icons.TwoTone.ArrowCircleLeft,
             contentDescription = null,
-            tint = Color(0xCD8595FF),
+            tint = Color(0xCDFFA185),
             modifier = Modifier
                 .align(Alignment.Start)
                 .size(50.dp, 50.dp)
@@ -92,115 +93,96 @@ fun PagosScreen(
 
         OutlinedTextField(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .clip(Shapes.large)
-                .wrapContentSize(Alignment.Center),
+                .padding(7.dp)
+                .fillMaxWidth(),
             value = viewModel.fecha,
             onValueChange = viewModel::onFechaChanged,
-            label = { Text(text = "Fecha") },
-            isError = viewModel.fechaError.isNotBlank(),
+            singleLine = true,
             readOnly = false,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.DateRange,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(33.dp)
+                        .padding(4.dp)
+                        .wrapContentSize(Alignment.CenterEnd)
+                        .clickable {
+                            mDatePickerDialog.show()
+                        }
+                )
+            },
+            label = { Text("Fecha") },
+            isError = viewModel.fechaError.isNotBlank(),
             trailingIcon = {
                 if (viewModel.fechaError.isNotBlank()) {
-                    Icon(
-                        imageVector = Icons.Filled.DateRange,
-                        contentDescription = "error",
-                        modifier = Modifier
-                            .size(33.dp)
-                            .padding(4.dp)
-                            .wrapContentSize(Alignment.CenterEnd)
-                            .clickable {
-                                mDatePickerDialog.show()
-                            }
-                    )
-                }else{
-                    Icon(
-                        imageVector = Icons.Filled.DateRange,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(33.dp)
-                            .padding(4.dp)
-                            .wrapContentSize(Alignment.CenterEnd)
-                            .clickable {
-                                mDatePickerDialog.show()
-                            }
-                    )
+                    Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
                 }
             }
         )
         if (viewModel.fechaError.isNotBlank()) {
             Text(
                 text = viewModel.fechaError,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center)
-                    .align(Alignment.CenterHorizontally)
-            )
-        } else {
-            Text(
-                text = viewModel.fechaError,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.wrapContentSize(Alignment.Center)
+                color = MaterialTheme.colorScheme.error
             )
         }
 
         OutlinedTextField(
             modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
+                .padding(7.dp)
+                .fillMaxWidth(),
             value = viewModel.personaId,
             onValueChange = viewModel::onPersonaIdChanged,
             singleLine = true,
-            readOnly = false,
-            label = { Text("Persona") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.TwoTone.Person,
+                    contentDescription = null,
+                    tint = Color(0xFF94B4F5),
+                    modifier = Modifier
+                        .size(33.dp)
+                        .padding(4.dp)
+                )
+            },
             isError = viewModel.personaIdError.isNotBlank(),
+            label = { Text("Persona") },
             trailingIcon = {
                 if (viewModel.personaIdError.isNotBlank()) {
                     Icon(
-                        imageVector = Icons.TwoTone.Person,
-                        contentDescription = "error"
-                    )
-                }else{
-                    Icon(
-                        imageVector = Icons.TwoTone.Person,
-                        contentDescription = null
+                        imageVector = Icons.TwoTone.ArrowDropDown, contentDescription = "error",
+                        tint = MaterialTheme.colorScheme.error
                     )
                 }
+                if (viewModel.personaIdError.isBlank()) {
+                    Icon(
+                        imageVector = Icons.TwoTone.ArrowDropDown, contentDescription = "error",
+                        tint = Color(0xFF8A8A8A)
+                    )
+                }
+
             }
         )
+
         if (viewModel.personaIdError.isNotBlank()) {
             Text(
                 text = viewModel.personaIdError,
                 color = MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center)
-                    .align(Alignment.CenterHorizontally)
-            )
-        } else {
-            Text(
-                text = viewModel.personaIdError,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.wrapContentSize(Alignment.Center)
-            )
+
+                )
         }
 
         OutlinedTextField(
             modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
+                .padding(7.dp)
+                .fillMaxWidth(),
             value = viewModel.monto,
             onValueChange = viewModel::onMontoChanged,
             singleLine = true,
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.TwoTone.Money,
+                    imageVector = Icons.TwoTone.Paid,
                     contentDescription = null,
-                    tint = Color(0xFF94B4F5),
+                    tint = Color(0xFF85A773),
                     modifier = Modifier
                         .size(33.dp)
                         .padding(4.dp)
@@ -217,125 +199,70 @@ fun PagosScreen(
         if (viewModel.montoError.isNotBlank()) {
             Text(
                 text = viewModel.montoError,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center)
-                    .align(Alignment.CenterHorizontally)
-            )
-        } else {
-            Text(
-                text = viewModel.montoError,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.wrapContentSize(Alignment.Center)
+                color = MaterialTheme.colorScheme.error
             )
         }
 
         OutlinedTextField(
             modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
+                .padding(7.dp)
+                .fillMaxWidth(),
             value = viewModel.adelanto,
-            onValueChange = viewModel::onAdelantosChanged,
-            singleLine = true,
+            onValueChange = { viewModel.adelanto = it }, // Debe rellenarse cuando seleccionen la persona
+            label = { Text("Adelanto") },
             enabled = false,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.TwoTone.Money,
-                    contentDescription = null,
-                    tint = Color(0xFF94B4F5),
-                    modifier = Modifier
-                        .size(33.dp)
-                        .padding(4.dp)
-                )
-            },
-            label = { Text("Adelantos") },
-            isError = viewModel.adelantoError.isNotBlank(),
-            trailingIcon = {
-                if (viewModel.adelantoError.isNotBlank()) {
-                    Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
-                }
-            }
         )
-        if (viewModel.adelantoError.isNotBlank()) {
-            Text(
-                text = viewModel.adelantoError,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center)
-                    .align(Alignment.CenterHorizontally)
-            )
-        } else {
-            Text(
-                text = viewModel.adelantoError,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.wrapContentSize(Alignment.Center)
-            )
-        }
+
 
         OutlinedTextField(
             modifier = Modifier
-                .padding(4.dp)
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
+                .padding(7.dp)
+                .fillMaxWidth(),
             value = viewModel.total,
-            onValueChange = viewModel::onTotalChanged,
-            singleLine = true,
-            enabled = false,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.TwoTone.Money,
-                    contentDescription = null,
-                    tint = Color(0xFF94B4F5),
-                    modifier = Modifier
-                        .size(33.dp)
-                        .padding(4.dp)
-                )
-            },
+            onValueChange = { viewModel.total = it },  // Total = Monto - Adelanto
             label = { Text("Total") },
-            isError = viewModel.totalError.isNotBlank(),
-            trailingIcon = {
-                if (viewModel.totalError.isNotBlank()) {
-                    Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
-                }
-            }
+            enabled = false,
         )
-        if (viewModel.totalError.isNotBlank()) {
-            Text(
-                text = viewModel.totalError,
-                color = MaterialTheme.colorScheme.error,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentSize(Alignment.Center)
-                    .align(Alignment.CenterHorizontally)
-            )
-        } else {
-            Text(
-                text = viewModel.totalError,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.wrapContentSize(Alignment.Center)
-            )
-        }
+
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(Shapes.medium)
-                .wrapContentSize(Alignment.BottomCenter)
+                .wrapContentSize(Alignment.Center),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
+
             ExtendedFloatingActionButton(
                 modifier = Modifier
-                    .size(120.dp, 120.dp)
-                    .clip(Shapes.medium)
+                    .size(124.dp, 124.dp)
                     .wrapContentSize(Alignment.Center),
+                shape = RoundedCornerShape(20.dp),
                 text = { Text("Guardar") },
-                containerColor = Color(0xFF1E88E5),
+                containerColor = Color(0xFF94B4F5),
                 contentColor = Color(0xFFFFFFFF),
-                icon = { Icon(imageVector = Icons.Filled.Save, contentDescription = "Save") },
+                icon = { Icon(imageVector = Icons.TwoTone.Save, contentDescription = "Save") },
                 onClick = {
-                    viewModel.postPagos()
+
+                    if (viewModel.HayErroresRegistrando()) {
+                        viewModel.fechaError = ""
+                        if (viewModel.fecha.isBlank()) {
+                            viewModel.fechaError = "  Debe indicar una fecha"
+                        }
+
+                        viewModel.personaIdError = ""
+                        if (viewModel.personaId.isBlank()) {
+                            viewModel.personaIdError = "  Debe seleccionar una persona"
+                        }
+
+                        viewModel.montoError = ""
+                        if (viewModel.monto.isBlank()) {
+                            viewModel.montoError = "  Debe ingresar el monto a pagar"
+                        }
+
+                    } else {
+                        viewModel.postPagos()
+                        viewModel.Limpiar()
+                    }
                 }
             )
         }
