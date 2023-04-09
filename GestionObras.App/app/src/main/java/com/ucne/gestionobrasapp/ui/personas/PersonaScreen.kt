@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.material3.*
@@ -52,7 +53,7 @@ private fun PersonasBody(
                 .size(50.dp, 50.dp)
                 .clickable {
                     scope.launch {
-                        navController.navigate(ScreenModuleProyectos.ProyectoList.route)
+                        navController.navigate(ScreenModuleProyectos.DetallesProyecto.route)
                     }
                 }
         )
@@ -154,7 +155,7 @@ private fun PersonasBody(
                 )
             },
             isError = viewModel.tiposTrabajoError.isNotBlank(),
-            label = { Text("Seleccionar trabajo") },
+            label = { Text("Trabajo") },
             trailingIcon = {
                 if (viewModel.tiposTrabajoError.isNotBlank()) {
                     Icon(
@@ -238,41 +239,49 @@ private fun PersonasBody(
             )
         }
 
-        ExtendedFloatingActionButton(
+        Row(
             modifier = Modifier
-                .size(124.dp, 124.dp)
+                .fillMaxWidth()
                 .wrapContentSize(Alignment.Center),
-            text = { Text("Add") },
-            contentColor = Color(0xFFFFFFFF),
-            containerColor = Color(0xFF3992CC),
-            icon = { Icon(imageVector = Icons.TwoTone.Save, contentDescription = "Save") },
-            onClick = {
-                if (viewModel.HayErroresRegistrando()) {
-                    viewModel.nombresError = ""
-                    if (viewModel.nombres.isBlank()) {
-                        viewModel.nombresError = "  Debe indicar el nombre de la persona"
-                    }
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
 
-                    viewModel.telefonoError = ""
-                    if (viewModel.telefono.isBlank()) {
-                        viewModel.telefonoError = "  Debe indicar el telefono de la persona"
-                    }
+            ExtendedFloatingActionButton(
+                modifier = Modifier
+                    .size(124.dp, 124.dp)
+                    .wrapContentSize(Alignment.Center),
+                shape = RoundedCornerShape(20.dp),
+                text = { Text("Añadir") },
+                contentColor = Color(0xFFFFFFFF),
+                containerColor = Color(0xFF94B4F5),
+                icon = { Icon(imageVector = Icons.TwoTone.PersonAdd, contentDescription = "Save") },
+                onClick = {
+                    if (viewModel.HayErroresRegistrando()) {
+                        viewModel.nombresError = ""
+                        if (viewModel.nombres.isBlank()) {
+                            viewModel.nombresError = "  Debe indicar el nombre de la persona"
+                        }
 
-                    viewModel.tiposTrabajoError = ""
-                    if (viewModel.tiposTrabajo.isBlank()) {
-                        viewModel.tiposTrabajoError = "  Debe seleccionar el tipo de trabajo"
-                    }
+                        viewModel.telefonoError = ""
+                        if (viewModel.telefono.isBlank()) {
+                            viewModel.telefonoError = "  Debe indicar el telefono de la persona"
+                        }
 
-                    viewModel.precioError = ""
-                    if (viewModel.precio.isBlank()) {
-                        viewModel.precioError = "  Debe indicar el precio del trabajo"
+                        viewModel.tiposTrabajoError = ""
+                        if (viewModel.tiposTrabajo.isBlank()) {
+                            viewModel.tiposTrabajoError = "  Debe seleccionar el tipo de trabajo"
+                        }
+
+                        viewModel.precioError = ""
+                        if (viewModel.precio.isBlank()) {
+                            viewModel.precioError = "  Debe indicar el precio del trabajo"
+                        }
+                    } else {
+                        viewModel.postPersonas()
+                        viewModel.Limpiar()
                     }
-                } else {
-                    viewModel.postPersonas()
-                    viewModel.Limpiar()
                 }
-            }
-        )
-
+            )
+        }
     }
 }
