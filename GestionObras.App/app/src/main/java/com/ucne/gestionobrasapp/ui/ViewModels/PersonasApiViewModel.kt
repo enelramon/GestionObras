@@ -107,7 +107,6 @@ class PersonasApiViewModel @Inject constructor(
                     nombres = uiStatePersonas.value.personas!!.nombres
                     telefono = uiStatePersonas.value.personas!!.telefono
                     tiposTrabajo
-                    precio = uiStatePersonas.value.personas!!.precio.toString()
                 }
                 is Resource.Error -> {
                     uiStatePersonas.update {
@@ -130,10 +129,8 @@ class PersonasApiViewModel @Inject constructor(
                             personaId = personaId,
                             nombres = nombres,
                             uiStatePersonas.value.personas!!.tipoTrabajoId,
-                            precio = precio.toDoubleOrNull() ?: 0.0,
-                            telefono = telefono,
-                            tiposTrabajo = tiposTrabajo,
-                            proyectoId = 0
+                            proyectoId = 0,
+                            telefono = telefono
                         )
                     )
                 } else {
@@ -155,10 +152,9 @@ class PersonasApiViewModel @Inject constructor(
                             personaId = personaId,
                             nombres = nombres,
                             uiStatePersonas.value.personas!!.tipoTrabajoId,
-                            precio = precio.toDoubleOrNull() ?: 0.0,
-                            telefono = telefono,
-                            tiposTrabajo = tiposTrabajo,
-                            proyectoId = 0
+                            proyectoId = 0,
+                            telefono = telefono
+
                         )
                     )
                 } else {
@@ -178,10 +174,8 @@ class PersonasApiViewModel @Inject constructor(
                         personaId = personaId,
                         nombres = nombres,
                         tipoTrabajoId = tipoTrabajoId.toIntOrNull() ?: 0,
-                        precio = precio.toDoubleOrNull() ?: 0.0,
-                        telefono = telefono,
-                        tiposTrabajo = tiposTrabajo,
-                        proyectoId = 0
+                        proyectoId = 0,
+                        telefono = telefono
                     )
                 )
                 Limpiar()
@@ -193,7 +187,7 @@ class PersonasApiViewModel @Inject constructor(
 
      fun Limpiar() {
         nombres = ""
-        tiposTrabajo = ""
+        tipoTrabajoId = ""
         precio = ""
         telefono = ""
     }

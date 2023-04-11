@@ -236,7 +236,7 @@ fun FabGroup(
                     ) * fastOutSlowIn.transform(0.1f, 0.9f, animationProgress)
                 ),
             onClick = {
-                navController.navigate(ScreenModuleNominas.Nominas.route)
+                navController.navigate(ScreenModuleNominas.NominasList.route)
             },
             opacity = linear.transform(0.3f, 0.8f, animationProgress),
             backgroundColor = Color(0xFFBC78FF)
