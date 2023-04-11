@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "apis1": {
+      "restored": true,
+      "restoreTime": "2023-04-11T00:52:52.5010649Z"
+    }
+  },
+  "parameters": {
+    "apis1.resourceGroupName": {
+      "Name": "apis1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "appsvc_windows_centralus"
+    },
+    "apis1.subscriptionId": {
+      "Name": "apis1.subscriptionId",
+      "Type": "subscription",
+      "Value": "cd800c6c-0cd1-4c8a-8591-2c9c249f6c8f"
+    }
+  }
+}

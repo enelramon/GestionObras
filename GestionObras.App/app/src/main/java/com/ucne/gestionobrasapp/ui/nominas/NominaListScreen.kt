@@ -27,10 +27,8 @@ import kotlinx.coroutines.launch
 fun NominaScreen(
     viewModel: NominasApiViewModel = hiltViewModel(),
     navController: NavController
-
 ) {
     val scope = rememberCoroutineScope()
-
 
     Column(
         modifier = Modifier
@@ -51,11 +49,7 @@ fun NominaScreen(
                     }
                 }
         )
-
-
         // Falta hacer la nomina
-
-
     }
 
 }

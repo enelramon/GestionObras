@@ -34,7 +34,10 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProyectosListScreen(navController: NavController, viewModel: ProyectosApiViewModel = hiltViewModel()) {
+fun ProyectosListScreen(
+    navController: NavController,
+    viewModel: ProyectosApiViewModel = hiltViewModel()
+) {
 
     Scaffold(
         topBar = {
@@ -43,7 +46,6 @@ fun ProyectosListScreen(navController: NavController, viewModel: ProyectosApiVie
 
             })
         },
-
 
         floatingActionButton = {
             FloatingActionButton(
@@ -72,21 +74,24 @@ fun ProyectosListScreen(navController: NavController, viewModel: ProyectosApiVie
                 .fillMaxSize()
                 .padding(it)
         ) {
-            ProyectoListBody(navController = navController, uiState.proyectos, Onclick = {}, viewModel)
+            ProyectoListBody(
+                navController = navController,
+                uiState.proyectos,
+                Onclick = {},
+                viewModel
+            )
         }
     }
 }
-
-
 @Composable
-fun  ProyectoListBody(
-    navController: NavController, proyectoList: List< ProyectosDto>, Onclick: ( ProyectosDto) -> Unit,
-    viewModel:  ProyectosApiViewModel = hiltViewModel()
+fun ProyectoListBody(
+    navController: NavController, proyectoList: List<ProyectosDto>, Onclick: (ProyectosDto) -> Unit,
+    viewModel: ProyectosApiViewModel = hiltViewModel()
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         LazyColumn {
-            items(proyectoList) {  proyectos ->
-                TicketRow(navController = navController,  proyectos, viewModel)
+            items(proyectoList) { proyectos ->
+                TicketRow(navController = navController, proyectos, viewModel)
             }
         }
     }
@@ -95,7 +100,9 @@ fun  ProyectoListBody(
 
 @Composable
 fun TicketRow(
-    navController: NavController,  proyecto:  ProyectosDto, viewModel:  ProyectosApiViewModel = hiltViewModel()
+    navController: NavController,
+    proyecto: ProyectosDto,
+    viewModel: ProyectosApiViewModel = hiltViewModel()
 ) {
     Spacer(modifier = Modifier.padding(10.dp))
 
