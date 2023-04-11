@@ -136,12 +136,12 @@ private fun PersonasBody(
         //-------------------------------------------------
 
         //Tipo de trabajo
-        OutlinedTextField(
+       /* OutlinedTextField(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
                 .clickable { expanded = true },
-            value = viewModel.tiposTrabajo,
+            value = viewModel.tipoTrabajoId,
             enabled = false, readOnly = true,
             onValueChange = viewModel::onTrabajosChanged,
             leadingIcon = {
@@ -203,11 +203,11 @@ private fun PersonasBody(
                         .padding(horizontal = 8.dp)
                 )
             }
-        }
+        }*/
 
         //-------------------------------------------------
 
-        OutlinedTextField(
+       /* OutlinedTextField(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
@@ -237,7 +237,7 @@ private fun PersonasBody(
                 text = viewModel.precioError,
                 color = MaterialTheme.colorScheme.error
             )
-        }
+        }*/
 
         Row(
             modifier = Modifier
@@ -267,15 +267,15 @@ private fun PersonasBody(
                             viewModel.telefonoError = "  Debe indicar el telefono de la persona"
                         }
 
-                        viewModel.tiposTrabajoError = ""
+                       /* viewModel.tiposTrabajoError = ""
                         if (viewModel.tiposTrabajo.isBlank()) {
                             viewModel.tiposTrabajoError = "  Debe seleccionar el tipo de trabajo"
                         }
 
-                        viewModel.precioError = ""
+                      viewModel.precioError = ""
                         if (viewModel.precio.isBlank()) {
                             viewModel.precioError = "  Debe indicar el precio del trabajo"
-                        }
+                        }*/
                     } else {
                         viewModel.postPersonas()
                         viewModel.Limpiar()

@@ -16,6 +16,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.adelantos.AdelantosScreen
 import com.ucne.gestionobrasapp.ui.nominas.NominaScreen
+import com.ucne.gestionobrasapp.ui.nominas.NominalistScreen
 import com.ucne.gestionobrasapp.ui.pagos.PagosScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonaScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
@@ -74,9 +75,13 @@ class MainActivity : ComponentActivity() {
                             PagosScreen(navController = navController) // Le falta asignarle el id
                         }
 
+                        composable(ScreenModuleNominas.NominasList.route) {
+                            NominalistScreen(navController = navController) // Le falta asignarle el id
+                        }
                         composable(ScreenModuleNominas.Nominas.route) {
                             NominaScreen(navController = navController) // Le falta asignarle el id
                         }
+
 
                         composable(ScreenModuleAcercade.Acercade.route) {
                             AcercadeScreen(navController = navController)

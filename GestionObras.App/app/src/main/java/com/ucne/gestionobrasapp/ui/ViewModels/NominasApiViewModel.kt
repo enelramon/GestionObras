@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ucne.gestionobrasapp.data.remote.dto.AdelantosDto
 import com.ucne.gestionobrasapp.data.remote.dto.NominasDto
 import com.ucne.gestionobrasapp.data.repositoy.nominas.NominasApiRepositoryImp
 import com.ucne.gestionobrasapp.util.Resource
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class NominasListState(
@@ -42,13 +44,17 @@ class NominasApiViewModel @Inject constructor(
 
     var estadonomina by mutableStateOf("")
     var estadonominaError by mutableStateOf("")
+    val tipoestado = listOf("Saldo", "No saldo")
 
     var proyectonominaId by mutableStateOf("")
-    var proyectoIdError by mutableStateOf("")
+    var proyectonominaIdError by mutableStateOf("")
+
+    var personanominaId by mutableStateOf("")
+    var personanominaIdError by mutableStateOf("")
 
     var uiState = MutableStateFlow(NominasListState())
         private set
-    var uiStateNominas = MutableStateFlow(NominasState())
+    var uiStateNomina = MutableStateFlow(NominasState())
         private set
 
     init {
@@ -75,17 +81,18 @@ class NominasApiViewModel @Inject constructor(
         nominasApiRepositoryImp.getNominasId(nominaId).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    uiStateNominas.update { it.copy(isLoading = true) }
+                    uiStateNomina.update { it.copy(isLoading = true) }
                 }
                 is Resource.Success -> {
-                    uiStateNominas.update { it.copy(nominas = result.data) }
-                    fechaNomina = uiStateNominas.value.nominas!!.fecha
-                    totalnomina = uiStateNominas.value.nominas!!.total.toString()
-                    estadonomina = uiStateNominas.value.nominas!!.estado
-                    proyectonominaId = uiStateNominas.value.nominas!!.proyectoId.toString()
+                    uiStateNomina.update { it.copy(nominas = result.data) }
+                    fechaNomina = uiStateNomina.value.nominas!!.fecha
+                    personanominaId = uiStateNomina.value.nominas!!.personaId.toString()
+                    proyectonominaId = uiStateNomina.value.nominas!!.proyectoId.toString()
+                    totalnomina = uiStateNomina.value.nominas!!.total.toString()
+                    estadonomina = uiStateNomina.value.nominas!!.estado
                 }
-                is Resource.Error ->{
-                    uiStateNominas.update { it.copy(error = result.message ?: "error desconocido") }
+                is Resource.Error -> {
+                    uiStateNomina.update { it.copy(error = result.message ?: "error desconocido") }
                 }
             }
         }
@@ -96,7 +103,95 @@ class NominasApiViewModel @Inject constructor(
 
     fun deleteNominas(id: Int) {}
 
-    fun postNominas() {}
+    fun postNominas() {
+        viewModelScope.launch {
+            try {
+                nominasApiRepositoryImp.postNominas(
+                    NominasDto(
+                        nominaId = uiStateNomina.value.nominas!!.nominaId,
+                        fecha = fechaNomina,
+                        personaId = personanominaId.toIntOrNull() ?: 0,
+                        proyectoId = proyectonominaId.toIntOrNull() ?: 0,
+                        total = totalnomina.toDoubleOrNull() ?: 0.0,
+                        estado = estadonomina
+                    )
+                )
+                Limpiar()
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
+        }
+    }
 
-    private fun Limpiar() {}
+    private fun Limpiar() {
+        fechaNomina = ""
+        totalnomina = ""
+        estadonomina = ""
+        proyectonominaId = ""
+        personanominaId = ""
+    }
+
+    fun onFechaChanged(fecha: String) {
+        this.fechaNomina = fecha
+        HayErroresRegistrando()
+    }
+
+    fun ontotalCanged(Total: String) {
+        this.totalnomina = Total
+        HayErroresRegistrando()
+    }
+
+    fun onProyectoIdCanged(proyectoId: String) {
+        this.proyectonominaId = proyectoId
+        HayErroresRegistrando()
+    }
+
+    fun onPersonaIdCanged(personaId: String) {
+        this.personanominaId = personaId
+        HayErroresRegistrando()
+    }
+
+    fun onEstadoCanged(estado: String) {
+        this.estadonomina = estado
+        HayErroresRegistrando()
+    }
+
+    fun HayErroresRegistrando(): Boolean {
+
+        var hayError = false
+
+        fechanominaError = ""
+        if (fechaNomina.isBlank()) {
+            hayError = true
+        }
+
+        totalnominaError = ""
+        if (totalnomina.isBlank()) {
+            hayError = true
+        }
+
+        proyectonominaIdError = ""
+        if (proyectonominaId.isBlank()) {
+            hayError = true
+        }
+
+        estadonominaError = ""
+        if (estadonomina.isBlank()) {
+            hayError = true
+        }
+        personanominaIdError = ""
+        if (personanominaId.isBlank()) {
+            hayError = true
+        }
+
+        return hayError
+    }
+
+    fun Clean() {
+        fechaNomina = ""
+        totalnomina = ""
+        estadonomina = ""
+        proyectonominaId = ""
+        personanominaId = ""
+    }
 }
