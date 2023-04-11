@@ -1,7 +1,6 @@
 package com.ucne.gestionobrasapp.ui.proyectos
 
-
-
+import android.graphics.ColorMatrix
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.twotone.*
@@ -36,14 +35,23 @@ import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import com.ucne.gestionobrasapp.data.remote.dto.ProyectosDto
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
-import com.ucne.gestionobrasapp.util.colorMatrix
 import com.ucne.gestionobrasapp.util.navigation.*
 import com.ucne.gestionobrasapp.util.times
 import com.ucne.gestionobrasapp.util.transform
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.sin
+
+val colorMatrix = ColorMatrix(
+    floatArrayOf(
+        1f, 0f, 0f, 0f, 0f,
+        0f, 1f, 0f, 0f, 0f,
+        0f, 0f, 1f, 0f, 0f,
+        0f, 0f, 0f, 50f, -5000f
+    )
+)
 
 @RequiresApi(Build.VERSION_CODES.S)
 fun getRenderEffect(): RenderEffect {
@@ -59,14 +67,18 @@ fun getRenderEffect(): RenderEffect {
 }
 
 @Composable
-fun DetallesProyectoScreen(navController: NavController) {
+fun DetallesProyectoScreen(
+    navController: NavController,
+) {
     val isMenuExtended = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+
 
     Column(
         Modifier
             .fillMaxWidth()
             .padding(8.dp)
+
     ) {
         Spacer(modifier = Modifier.padding(20.dp))
         Icon(
@@ -96,21 +108,19 @@ fun DetallesProyectoScreen(navController: NavController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Nombres",
+                    text = "",
                     style = MaterialTheme.typography.titleLarge,
                     color = Color(0xFF000000),
                     modifier = Modifier.weight(7f)
                 )
                 Text(
-                    text = "Adelanto",
-                    //text = proyecto_Adelanto,
+                    text = "",
                     style = MaterialTheme.typography.titleLarge,
                     color = Color(0xFF000000),
                     modifier = Modifier.weight(7f)
                 )
                 Text(
-                    text = "Pago",
-                    //text = proyecto_Pago,
+                    text = "",
                     style = MaterialTheme.typography.titleLarge,
                     color = Color(0xFF000000),
                     modifier = Modifier.weight(7f)
@@ -235,14 +245,14 @@ fun FabGroup(
                     ) * fastOutSlowIn.transform(0.1f, 0.9f, animationProgress)
                 ),
             onClick = {
-                navController.navigate(ScreenModuleNominas.Nominas.route)
+                navController.navigate(ScreenModuleNominas.NominasList.route)
             },
             opacity = linear.transform(0.3f, 0.8f, animationProgress),
-            backgroundColor = Color.Cyan
+            backgroundColor = Color(0xFFBC78FF)
         )
 
         AnimatedFab(
-            icon = Icons.Default.Person,
+            icon = Icons.Default.PersonAdd,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -254,7 +264,7 @@ fun FabGroup(
                 navController.navigate(ScreenModulePersonas.Personas.route)
             },
             opacity = linear.transform(0.2f, 0.7f, animationProgress),
-            backgroundColor = Color.Yellow
+            backgroundColor = Color(0xFF94B4F5)
         )
 
         AnimatedFab(
@@ -269,11 +279,11 @@ fun FabGroup(
                 navController.navigate(ScreenModuleAdelantos.Adelantos.route)
             },
             opacity = linear.transform(0.3f, 0.8f, animationProgress),
-            backgroundColor = Color.Green
+            backgroundColor = Color(0xFFB8E698)
         )
 
         AnimatedFab(
-            icon = Icons.Default.LocalAtm,
+            icon = Icons.Default.Savings,
             modifier = Modifier
                 .padding(
                 PaddingValues(
@@ -283,7 +293,7 @@ fun FabGroup(
             ),
             onClick = { navController.navigate(ScreenModulePagos.Pagos.route) },
             opacity = linear.transform(0.4f, 0.9f, animationProgress),
-            backgroundColor = Color.Blue
+            backgroundColor = Color(0xFFFF94A0)
         )
 
         AnimatedFab(
@@ -292,7 +302,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.RadioButtonChecked,
+            icon = Icons.Default.ArrowDropUp,
             modifier = Modifier
                 .rotate(
                     225 * fastOutSlowIn
@@ -309,7 +319,7 @@ fun AnimatedFab(
     modifier: Modifier,
     icon: ImageVector? = null,
     opacity: Float = 1f,
-    backgroundColor: Color = MaterialTheme.colorScheme.secondary,
+    backgroundColor: Color = Color(0xCDFFA185),
     tint: Color = LocalContentColor.current,
     onClick: () -> Unit = {}
 ) {

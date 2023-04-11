@@ -9,6 +9,6 @@ interface PagosApiRepository
     fun getPagos(): Flow<Resource<List<PagosDto>>>
     fun getPagosId(id: Int): Flow<Resource<PagosDto>>
     suspend fun putPagos(id: Int, pagosDto: PagosDto)
-    suspend fun deletePagos(id: Int, pagosDto: PagosDto)
+    suspend fun deletePagos(id: Int)
     suspend fun postPagos(pagosDto: PagosDto)
 }

@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.material3.*
@@ -30,7 +31,6 @@ fun NuevoProyectoScreen(
     viewModel: ProyectosApiViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
     ProyectosBody(viewModel, Modifier.fillMaxWidth(), navController)
 }
 
@@ -89,7 +89,7 @@ private fun ProyectosBody(
                         .padding(4.dp)
                 )
             },
-            label = { Text("Descripcion") },
+            label = { Text("Descripción") },
             isError = viewModel.descripcionError.isNotBlank(),
             trailingIcon = {
                 if (viewModel.descripcionError.isNotBlank()) {
@@ -114,9 +114,10 @@ private fun ProyectosBody(
                 modifier = Modifier
                     .size(124.dp, 124.dp)
                     .wrapContentSize(Alignment.Center),
+                shape = RoundedCornerShape(20.dp),
                 text = { Text("Guardar") },
                 contentColor = Color(0xFFFFFFFF),
-                containerColor = Color(0xFF3992CC),
+                containerColor = Color(0xFF94B4F5),
                 icon = { Icon(imageVector = Icons.TwoTone.Save, contentDescription = "Save") },
                 onClick = {
 

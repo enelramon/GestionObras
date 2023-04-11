@@ -16,8 +16,8 @@ class PersonasApiRepositoryImp @Inject constructor(
     override suspend fun putPersonas(id: Int, personasDto: PersonasDto) {
         gestionObrasApi.putPersonas(id, personasDto)
     }
-    override suspend fun deletePersonas(id: Int, personasDto: PersonasDto){
-        gestionObrasApi.deletePersonas(id, personasDto)
+    override suspend fun deletePersonas(id: Int){
+        gestionObrasApi.deletePersonas(id)
     }
     override suspend fun postPersonas(personasDto: PersonasDto) {
        gestionObrasApi.postPersonas(personasDto)

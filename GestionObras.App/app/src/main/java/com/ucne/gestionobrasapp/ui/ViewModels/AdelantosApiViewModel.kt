@@ -122,29 +122,17 @@ class AdelantosApiViewModel @Inject constructor(
         }
     }
 
-    fun deleteAdelantos(id: Int) {
-        viewModelScope.launch {
-            adelantoId = id!!
-            try {
-                if (adelantoId != null) {
-                    adelantosApiRepositoryImp.deleteAdelantos(
-                        adelantoId, AdelantosDto(
-                            adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
-                            fecha = fecha,
-                            personaId = personaId.toIntOrNull() ?: 0,
-                            monto = monto.toDoubleOrNull() ?: 0.0,
-                            balance = balance.toDoubleOrNull() ?: 0.0,
-                            proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
-                        )
-                    )
-                    Limpiar()
-                } else {
-                    throw NullPointerException("Value is null")
+    fun deleteAdelantos(id: Int?) {
+        id?.let {
+            viewModelScope.launch {
+                try {
+                    adelantosApiRepositoryImp.deleteAdelantos(id)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: NullPointerException) {
-                e.printStackTrace()
             }
+        } ?: kotlin.run {
+            throw NullPointerException("Value is null")
         }
     }
 
@@ -169,7 +157,8 @@ class AdelantosApiViewModel @Inject constructor(
         }
     }
 
-    private fun Limpiar() {
+    fun Limpiar() {
+        personaId = ""
         fecha = ""
         monto = ""
         balance = ""
@@ -199,30 +188,26 @@ class AdelantosApiViewModel @Inject constructor(
 
     fun HayErroresRegistrando(): Boolean {
 
-        var hayError = true
+        var hayError = false
 
         fechaError = ""
-        if (fecha.isNullOrBlank()) {
-            fechaError = "Seleccione una fecha"
-            hayError = false
+        if (fecha.isBlank()) {
+            hayError = true
         }
 
         personaIdError = ""
-        if (personaId.isNullOrBlank()) {
-            personaIdError = "Ingrese un Id"
-            hayError = false
+        if (personaId.isBlank()) {
+            hayError = true
         }
 
         montoError = ""
-        if (monto.isNullOrBlank()) {
-            montoError = "Ingrese un monto"
-            hayError = false
+        if (monto.isBlank()) {
+            hayError = true
         }
 
         balanceError = ""
-        if (balance.isNullOrBlank()) {
-            balanceError = "El balance es nulo"
-            hayError = false
+        if (balance.isBlank()) {
+            hayError = true
         }
 
         return hayError

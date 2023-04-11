@@ -19,6 +19,5 @@ interface PagosApi {
     suspend fun putPagos(@Path("id") id: Int, @Body pagosDto: PagosDto): Response<Unit>
 
     @DELETE("/api/Pagos/{id}")
-    suspend fun deletePagos(@Path("id") id: Int, @Body pagosDto: PagosDto): PagosDto
-
+    suspend fun deletePagos(@Path("id") id: Int): PagosDto
 }

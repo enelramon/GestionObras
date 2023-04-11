@@ -130,29 +130,17 @@ class PagosApiViewModel @Inject constructor(
         }
     }
 
-    fun deletePagos(id: Int) {
-        viewModelScope.launch {
-            pagoId = id!!
-            try {
-                if (pagoId != null) {
-                    pagosApiRepositoryImp.deletePagos(
-                        pagoId, PagosDto(
-                            pagoId = pagoId,
-                            fecha = fecha,
-                            personaId = personaId.toIntOrNull() ?: 0,
-                            monto = monto.toDoubleOrNull() ?: 0.0,
-                            adelanto = adelanto.toDoubleOrNull() ?: 0.0,
-                            total = total.toDoubleOrNull() ?: 0.0,
-                            proyectoId = uiStatePagos.value.pagos!!.proyectoId
-                        )
-                    )
-                    Limpiar()
-                } else {
-                    throw NullPointerException("Value is null")
+    fun deletePagos(id: Int?) {
+        id?.let {
+            viewModelScope.launch {
+                try {
+                   pagosApiRepositoryImp.deletePagos(id)
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            } catch (e: NullPointerException) {
-                e.printStackTrace()
             }
+        } ?: kotlin.run {
+            throw NullPointerException("Value is null")
         }
     }
 
@@ -177,7 +165,9 @@ class PagosApiViewModel @Inject constructor(
         }
     }
 
-    private fun Limpiar() {
+     fun Limpiar() {
+
+         personaId =""
         fecha = ""
         monto = ""
         adelanto = ""
@@ -201,48 +191,25 @@ class PagosApiViewModel @Inject constructor(
         HayErroresRegistrando()
     }
 
-    fun onAdelantosChanged(adelantos: String) {
-        this.adelanto = adelantos
-        HayErroresRegistrando()
-    }
-
-    fun onTotalChanged(total: String) {
-        this.total = total
-        HayErroresRegistrando()
-    }
 
     fun HayErroresRegistrando(): Boolean {
 
-        var hayError = true
+        var hayError = false
 
         fechaError = ""
-        if (fecha.isNullOrBlank()) {
-            fechaError = "Seleccione una fecha"
-            hayError = false
+        if (fecha.isBlank()) {
+            hayError = true
         }
 
-        pagoIdError = ""
-        if (pagoId == null) {
-            pagoIdError = "Ingrese un Id"
-            hayError = false
-        }
 
         personaIdError = ""
-        if (personaId.isNullOrBlank()) {
-            personaIdError = "Ingrese un Id"
-            hayError = false
+        if (personaId.isBlank()) {
+            hayError = true
         }
 
         montoError = ""
-        if (monto.isNullOrBlank()) {
-            montoError = "Ingrese un monto"
-            hayError = false
-        }
-
-        adelantoError = ""
-        if (total.isNullOrBlank()) {
-            adelantoError = "El total es nulo"
-            hayError = false
+        if (monto.isBlank()) {
+            hayError = true
         }
 
         return hayError

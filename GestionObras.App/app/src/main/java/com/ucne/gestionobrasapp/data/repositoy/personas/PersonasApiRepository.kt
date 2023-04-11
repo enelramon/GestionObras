@@ -9,6 +9,6 @@ interface PersonasApiRepository
     fun getPersonas(): Flow<Resource<List<PersonasDto>>>
     fun getPersonasId(id: Int): Flow<Resource<PersonasDto>>
     suspend fun putPersonas(id: Int, personasDto: PersonasDto)
-    suspend fun deletePersonas(id: Int, personasDto: PersonasDto)
+    suspend fun deletePersonas(id: Int)
     suspend fun postPersonas(personasDto: PersonasDto)
 }

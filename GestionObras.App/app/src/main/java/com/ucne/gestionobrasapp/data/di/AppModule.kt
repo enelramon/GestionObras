@@ -1,10 +1,7 @@
 package com.ucne.gestionobrasapp.data.di
 
-import android.content.Context
-import androidx.room.Room
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.ucne.gestionobrasapp.data.local.RoomGestionObrasDb
 import com.ucne.gestionobrasapp.data.remote.*
 import com.ucne.gestionobrasapp.data.repositoy.adelantos.AdelantosApiRepository
 import com.ucne.gestionobrasapp.data.repositoy.adelantos.AdelantosApiRepositoryImp
@@ -54,43 +51,6 @@ abstract class RepositoryModule{
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun providesDatabase(@ApplicationContext context: Context): RoomGestionObrasDb {
-        return Room.databaseBuilder(
-            context,
-            RoomGestionObrasDb::class.java,
-            "GestionObrasDb.db"
-        )
-        .fallbackToDestructiveMigration()
-        .build()
-    }
-
-    @Singleton
-    @Provides
-    fun providesProyectosDao(db: RoomGestionObrasDb) = db.proyectosDao
-
-    @Singleton
-    @Provides
-    fun providesPersonasDao(db: RoomGestionObrasDb) = db.personasDao
-
-    @Singleton
-    @Provides
-    fun provideNominasDao(db: RoomGestionObrasDb) = db.nominasDao
-
-    @Singleton
-    @Provides
-    fun providesTiposDao(db: RoomGestionObrasDb) = db.tiposDao
-
-    @Singleton
-    @Provides
-    fun providesAdelantosDao(db: RoomGestionObrasDb) = db.adelantosDao
-
-    @Singleton
-    @Provides
-    fun providesPagosDao(db: RoomGestionObrasDb) = db.pagosDao
-
 
     @Singleton
     @Provides

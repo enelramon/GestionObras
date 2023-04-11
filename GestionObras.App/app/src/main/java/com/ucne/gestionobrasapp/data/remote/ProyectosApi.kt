@@ -19,6 +19,6 @@ interface ProyectosApi {
     suspend fun putProyectos(@Path("id") id: Int, @Body proyectosDto: ProyectosDto): Response<Unit>
 
     @DELETE("/api/Proyectos/{id}")
-    suspend fun deleteProyectos(@Path("id") id: Int, @Body proyectosDto: ProyectosDto): ProyectosDto
+    suspend fun deleteProyectos(@Path("id") id: Int): ProyectosDto
 
 }

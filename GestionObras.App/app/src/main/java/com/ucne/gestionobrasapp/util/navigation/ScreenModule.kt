@@ -4,11 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.ui.graphics.vector.ImageVector
 
-sealed class ScreenModuleStart(val route: String) { // Proyecto
-    object Start : ScreenModuleProyectos("start")
-}
 sealed class ScreenModuleProyectos(val route: String) { // Proyecto
-
     object Proyectos : ScreenModuleProyectos("proyectos")
     object ProyectoList : ScreenModuleProyectos("proyectos_list")
     object DetallesProyecto : ScreenModuleProyectos("detalles_proyecto")
@@ -33,6 +29,10 @@ sealed class ScreenModulePagos(val route: String) { // Pagos
 sealed class ScreenModuleNominas(val route: String) { // Nominas
     object Nominas : ScreenModuleNominas("nominas")
     object NominasList : ScreenModuleNominas("nominas_list")
+}
+
+sealed class ScreenModuleAcercade(val route: String) { // Acerca de
+    object Acercade : ScreenModuleAcercade("acercade")
 }
 
 
