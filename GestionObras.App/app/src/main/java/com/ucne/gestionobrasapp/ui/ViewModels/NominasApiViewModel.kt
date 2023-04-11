@@ -99,8 +99,6 @@ class NominasApiViewModel @Inject constructor(
 
     }
 
-    fun putNominas(id: Int) {}
-
     fun deleteNominas(id: Int) {}
 
     fun postNominas() {
