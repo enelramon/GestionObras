@@ -10,6 +10,5 @@ namespace GestionObras.Api.Models
         public int TipoTrabajoId { get; set; }
         public int ProyectoId { get; set; }
         public string? Telefono { get; set; }
-        public double Precio { get; set; }
     }
 }

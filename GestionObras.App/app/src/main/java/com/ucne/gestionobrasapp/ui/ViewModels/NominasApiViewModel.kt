@@ -1,5 +1,8 @@
 package com.ucne.gestionobrasapp.ui.nominas
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucne.gestionobrasapp.data.remote.dto.NominasDto
@@ -17,15 +20,31 @@ data class NominasListState(
     val nominas: List<NominasDto> = emptyList(),
     val error: String = ""
 )
+
 data class NominasState(
     val isLoading: Boolean = false,
     val nominas: NominasDto? = null,
     val error: String = ""
 )
+
 @HiltViewModel
 class NominasApiViewModel @Inject constructor(
     private val nominasApiRepositoryImp: NominasApiRepositoryImp
 ) : ViewModel() {
+    var nominaId by mutableStateOf(0)
+    var nominaIdError by mutableStateOf("")
+
+    var fechaNomina by mutableStateOf("")
+    var fechanominaError by mutableStateOf("")
+
+    var totalnomina by mutableStateOf("")
+    var totalnominaError by mutableStateOf("")
+
+    var estadonomina by mutableStateOf("")
+    var estadonominaError by mutableStateOf("")
+
+    var proyectonominaId by mutableStateOf("")
+    var proyectoIdError by mutableStateOf("")
 
     var uiState = MutableStateFlow(NominasListState())
         private set
@@ -33,7 +52,7 @@ class NominasApiViewModel @Inject constructor(
         private set
 
     init {
-       nominasApiRepositoryImp.getNominas().onEach { result ->
+        nominasApiRepositoryImp.getNominas().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     uiState.update { it.copy(isLoading = true) }
@@ -50,7 +69,28 @@ class NominasApiViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun NominasbyId(id: Int) {}
+    fun NominasbyId(id: Int) {
+        nominaId = id
+        Limpiar()
+        nominasApiRepositoryImp.getNominasId(nominaId).onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    uiStateNominas.update { it.copy(isLoading = true) }
+                }
+                is Resource.Success -> {
+                    uiStateNominas.update { it.copy(nominas = result.data) }
+                    fechaNomina = uiStateNominas.value.nominas!!.fecha
+                    totalnomina = uiStateNominas.value.nominas!!.total.toString()
+                    estadonomina = uiStateNominas.value.nominas!!.estado
+                    proyectonominaId = uiStateNominas.value.nominas!!.proyectoId.toString()
+                }
+                is Resource.Error ->{
+                    uiStateNominas.update { it.copy(error = result.message ?: "error desconocido") }
+                }
+            }
+        }
+
+    }
 
     fun putNominas(id: Int) {}
 

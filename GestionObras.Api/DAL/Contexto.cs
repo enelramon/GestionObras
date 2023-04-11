@@ -12,7 +12,6 @@ namespace GestionObras.Api.DAL
 
         public DbSet<Adelantos> Adelantos => Set<Adelantos>();
         public DbSet<Nominas> Nominas => Set<Nominas>();
-        public DbSet<NominasDetalle> NominasDetalle => Set<NominasDetalle>();
         public DbSet<Pagos> Pagos => Set<Pagos>();
         public DbSet<Personas> Personas => Set<Personas>();
         public DbSet<Proyectos> Proyectos => Set<Proyectos>();
@@ -26,43 +25,15 @@ namespace GestionObras.Api.DAL
                 new Proyectos
                 {
                     ProyectoId = 1,
-                    Descripcion = "Casa de Enel",
+                    Descripcion = "Casa de Enel"
+                },
+                new Proyectos
+                {
+                    ProyectoId = 2,
+                    Descripcion = "Casa jose"
                 }
             );
-
-            modelBuilder.Entity<Personas>().HasData(
-               new Personas
-               {
-                   PersonaId = 1,
-                   Nombres = "Manuel",
-                   Telefono = "829-811-4569"
-               },
-               new Personas
-               {
-                   PersonaId = 2,
-                   Nombres = "Samuel",
-                   Telefono = "829-846-5619"
-               },
-               new Personas
-               {
-                   PersonaId = 3,
-                   Nombres = "Juan",
-                   Telefono = "809-578-1978"
-               },
-               new Personas
-               {
-                   PersonaId = 4,
-                   Nombres = "Ana",
-                   Telefono = "849-678-6719"
-               },
-               new Personas
-               {
-                   PersonaId = 5,
-                   Nombres = "Josefa",
-                   Telefono = "849-789-1290"
-               }
-            );
-
+        
             modelBuilder.Entity<TiposTrabajos>().HasData(
                 new TiposTrabajos
                 {
