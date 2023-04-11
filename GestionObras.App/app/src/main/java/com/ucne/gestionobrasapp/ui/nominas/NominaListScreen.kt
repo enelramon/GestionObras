@@ -22,7 +22,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.data.remote.dto.NominasDto
 import com.ucne.gestionobrasapp.ui.personas.PersonasApiViewModel
-import com.ucne.gestionobrasapp.ui.proyectos.ProyectoListBody
 import com.ucne.gestionobrasapp.ui.theme.Shapes
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleNominas
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos

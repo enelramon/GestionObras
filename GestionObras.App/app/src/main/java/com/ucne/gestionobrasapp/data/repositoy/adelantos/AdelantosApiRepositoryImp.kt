@@ -16,8 +16,8 @@ class AdelantosApiRepositoryImp @Inject constructor(
     override suspend fun putAdelantos(id: Int, adelantosDto: AdelantosDto) {
         gestionObrasApi.putAdelantos(id, adelantosDto)
     }
-    override suspend fun deleteAdelantos(id: Int, adelantosDto: AdelantosDto){
-        gestionObrasApi.deleteAdelantos(id, adelantosDto)
+    override suspend fun deleteAdelantos(id: Int){
+        gestionObrasApi.deleteAdelantos(id)
     }
     override suspend fun postAdelantos(adelantosDto: AdelantosDto) {
        gestionObrasApi.postAdelantos(adelantosDto)

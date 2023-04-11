@@ -9,6 +9,6 @@ interface NominasApiRepository
     fun getNominas(): Flow<Resource<List<NominasDto>>>
     fun getNominasId(id: Int): Flow<Resource<NominasDto>>
     suspend fun putNominas(id: Int, nominasDto: NominasDto)
-    suspend fun deleteNominas(id: Int,  nominasDto: NominasDto)
+    suspend fun deleteNominas(id: Int)
     suspend fun postNominas( nominasDto: NominasDto)
 }

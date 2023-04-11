@@ -31,7 +31,6 @@ fun NuevoProyectoScreen(
     viewModel: ProyectosApiViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
     ProyectosBody(viewModel, Modifier.fillMaxWidth(), navController)
 }
 
