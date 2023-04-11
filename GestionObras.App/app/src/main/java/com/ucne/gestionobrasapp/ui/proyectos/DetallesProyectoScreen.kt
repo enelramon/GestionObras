@@ -2,6 +2,7 @@ package com.ucne.gestionobrasapp.ui.proyectos
 
 
 
+import android.graphics.ColorMatrix
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.twotone.*
@@ -37,13 +38,21 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
-import com.ucne.gestionobrasapp.util.colorMatrix
 import com.ucne.gestionobrasapp.util.navigation.*
 import com.ucne.gestionobrasapp.util.times
 import com.ucne.gestionobrasapp.util.transform
 import java.util.*
 import kotlin.math.PI
 import kotlin.math.sin
+
+val colorMatrix = ColorMatrix(
+    floatArrayOf(
+        1f, 0f, 0f, 0f, 0f,
+        0f, 1f, 0f, 0f, 0f,
+        0f, 0f, 1f, 0f, 0f,
+        0f, 0f, 0f, 50f, -5000f
+    )
+)
 
 @RequiresApi(Build.VERSION_CODES.S)
 fun getRenderEffect(): RenderEffect {

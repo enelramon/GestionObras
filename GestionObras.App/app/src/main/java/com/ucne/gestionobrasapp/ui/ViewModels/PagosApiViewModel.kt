@@ -106,7 +106,7 @@ class PagosApiViewModel @Inject constructor(
 
     fun putPagos(id: Int) {
         viewModelScope.launch {
-            pagoId = id!!
+            pagoId = id
             try {
                 if (pagoId != null) {
                     pagosApiRepositoryImp.putPagos(

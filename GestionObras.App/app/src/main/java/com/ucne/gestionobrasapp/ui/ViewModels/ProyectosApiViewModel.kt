@@ -110,7 +110,7 @@ class ProyectosApiViewModel @Inject constructor(
 
     fun putProyectos(id: Int) {
         viewModelScope.launch {
-            proyectoId = id!!
+            proyectoId = id
             try {
                 if (proyectoId != null) {
                     proyectosApiRepositoryImp.putProyectos(
