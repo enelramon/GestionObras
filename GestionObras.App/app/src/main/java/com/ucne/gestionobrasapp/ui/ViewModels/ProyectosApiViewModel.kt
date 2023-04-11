@@ -83,7 +83,16 @@ class ProyectosApiViewModel @Inject constructor(
 
     fun deleteProyectos(id: Int) {}
 
-    fun postProyectos() {}
+    fun postProyectos() {
+        viewModelScope.launch {
+            proyectosApiRepositoryImp.postProyectos(
+                ProyectosDto(
+                    descripcion = descripcion,
+                    proyectoId = proyectoId
+                )
+            )
+        }
+    }
 
     private fun Limpiar() {}
 }

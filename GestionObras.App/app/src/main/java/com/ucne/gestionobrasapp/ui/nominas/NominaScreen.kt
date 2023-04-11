@@ -244,7 +244,7 @@ fun NominaBody(
             singleLine = true,
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.TwoTone.MonetizationOn,
+                    imageVector = Icons.TwoTone.AccountTree,
                     contentDescription = null,
                     tint = Color(0xFF1F1F1F),
                     modifier = Modifier
@@ -276,7 +276,7 @@ fun NominaBody(
             singleLine = true,
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.TwoTone.MonetizationOn,
+                    imageVector = Icons.TwoTone.Person,
                     contentDescription = null,
                     tint = Color(0xFF1F1F1F),
                     modifier = Modifier
