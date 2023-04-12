@@ -31,8 +31,6 @@ data class PersonasState(
     val error: String = ""
 )
 
-
-
 @HiltViewModel
 class PersonasApiViewModel @Inject constructor(
     private val personasApiRepositoryImp: PersonasApiRepositoryImp
@@ -74,6 +72,35 @@ class PersonasApiViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     uiState.update { it.copy(error = result.message ?: "Error desconocido") }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun setPersona(id: Int) {
+        personaId = id
+        Limpiar()
+        personasApiRepositoryImp.getPersonasId(personaId).onEach { result ->
+            when (result) {
+                is Resource.Loading -> {
+                    uiStatePersonas.update { it.copy(isLoading = true) }
+                }
+                is Resource.Success -> {
+                    uiStatePersonas.update {
+                        it.copy(personas = result.data)
+                    }
+                    nombres = uiStatePersonas.value.personas!!.nombres
+                    telefono = uiStatePersonas.value.personas!!.telefono
+                    projectoId = uiStatePersonas.value.personas!!.proyectoId.toString()
+                    tipoTrabajoId = uiStatePersonas.value.personas!!.tipoTrabajoId.toString()
+
+                }
+                is Resource.Error -> {
+                    uiStatePersonas.update {
+                        it.copy(
+                            error = result.message ?: "Error desconocido"
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
@@ -230,3 +257,4 @@ class PersonasApiViewModel @Inject constructor(
         return hayError
     }
 }
+//

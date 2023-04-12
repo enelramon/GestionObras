@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.ucne.gestionobrasapp.ui.personas.PersonasApiViewModel
 import com.ucne.gestionobrasapp.ui.theme.Shapes
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleAdelantos
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
@@ -36,9 +37,18 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AdelantosScreen(
+    adelantoId: Int,
+    personaId: Int,
     viewModel: AdelantosApiViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+    onSaveClick: () -> Unit
 ) {
+
+    remember {
+        viewModel.AdelantosbyId(adelantoId)
+        0
+    }
+    //
 
     var expanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -129,6 +139,7 @@ fun AdelantosScreen(
                 .padding(7.dp)
                 .fillMaxWidth(),
             value = viewModel.personaId,
+            enabled = false,
             onValueChange = viewModel::onPersonaIdChanged,
             singleLine = true,
             leadingIcon = {

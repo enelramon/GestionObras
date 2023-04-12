@@ -10,9 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,13 +24,21 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ucne.gestionobrasapp.data.remote.dto.PersonasDto
 import com.ucne.gestionobrasapp.ui.theme.Shapes
+import com.ucne.gestionobrasapp.util.navigation.ScreenModuleAcercade
+import com.ucne.gestionobrasapp.util.navigation.ScreenModuleAdelantos
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PersonasListScreen(
+
     navController: NavController,
-    viewModel: PersonasApiViewModel = hiltViewModel()
+    viewModel: PersonasApiViewModel = hiltViewModel(),
+
 ) {
+
+
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.padding(20.dp))
         Scaffold(
@@ -83,6 +89,8 @@ fun PersonasRow(personas: PersonasDto) {
     val viewModel: PersonasApiViewModel = hiltViewModel()
     val navController = rememberNavController()
 
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -94,7 +102,7 @@ fun PersonasRow(personas: PersonasDto) {
                 .padding(5.dp)
                 .wrapContentSize(Alignment.Center)
                 .border(
-                    2.dp, Color(0xA88E24AA),
+                    2.dp, Color(0xFF94B4F5),
                     shape = RoundedCornerShape(5.dp)
                 )
         ) {
@@ -112,6 +120,7 @@ fun PersonasRow(personas: PersonasDto) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentSize(Alignment.CenterEnd)
+
                     ) {
                         Text(
                             text = personas.nombres, fontSize = 25.sp,
@@ -120,20 +129,34 @@ fun PersonasRow(personas: PersonasDto) {
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.weight(7f)
                         )
-                        Text(
-                            text = personas.telefono, fontSize = 17.sp,
-                            style = MaterialTheme.typography.titleSmall,
-                            color = Color(0xD0000000),
+
+                        Icon(
+                            imageVector = Icons.TwoTone.PriceChange,
+                            tint = Color(0xFF272727),
+                            contentDescription = "Icon",
                             modifier = Modifier
-                                .weight(2.5f)
-                                .border(
-                                    2.dp, Color(0x56808080),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
+                                .size(20.dp, 20.dp)
+                                .weight(9f)
+                                .clickable(onClick = { navController.navigate(ScreenModuleAdelantos.Adelantos.route + "/${personas.personaId}") })
+                        )
+
+                        Icon(
+                            imageVector = Icons.TwoTone.Phone,
+                            tint = Color(0xCD161616),
+                            contentDescription = "Icon",
+                            modifier = Modifier
+                                .size(20.dp, 20.dp)
+                        )
+
+                        Text(
+                            text = " "+ personas.telefono, fontSize = 14.sp,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color(0xD0000000)
                         )
                     }
                 }
             }
         }
     }
+    //
 }

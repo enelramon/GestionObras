@@ -21,7 +21,6 @@ sealed class ScreenModuleAdelantos(val route: String) { // Adelantos
     object AdelantosList : ScreenModuleAdelantos("adelantos_list")
 }
 
-
 sealed class ScreenModulePagos(val route: String) { // Pagos
     object Pagos : ScreenModulePagos("pagos")
     object PagosList : ScreenModulePagos("pagos_list")
@@ -33,7 +32,10 @@ sealed class ScreenModuleNominas(val route: String) { // Nominas
 }
 
 sealed class ScreenModuleAcercade(val route: String) { // Acerca de
-    object Acercade : ScreenModuleAcercade("acercade")
+
+    object InfoInicio : ScreenModuleAcercade("info_inicio")
+
+    object InfoDetallesProyecto : ScreenModuleAcercade("info_detalles_proyecto")
 }
 
 

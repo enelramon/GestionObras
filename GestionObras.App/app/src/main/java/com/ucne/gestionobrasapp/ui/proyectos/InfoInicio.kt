@@ -23,7 +23,7 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun InfoDetallesProyectoScreen(viewModel: ProyectosApiViewModel = hiltViewModel(), navController: NavController) {
+fun InfoInicioScreen(viewModel: ProyectosApiViewModel = hiltViewModel(), navController: NavController) {
 
     val scope = rememberCoroutineScope()
 
@@ -38,12 +38,11 @@ fun InfoDetallesProyectoScreen(viewModel: ProyectosApiViewModel = hiltViewModel(
                 .size(50.dp, 50.dp)
                 .clickable {
                     scope.launch {
-                        navController.navigate(ScreenModuleProyectos.DetallesProyecto.route)
+                        navController.navigate(ScreenModuleProyectos.ProyectoList.route)
                     }
                 }
         )
         Spacer(modifier = Modifier.padding(20.dp))
-
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -52,13 +51,13 @@ fun InfoDetallesProyectoScreen(viewModel: ProyectosApiViewModel = hiltViewModel(
             Spacer(modifier = Modifier.padding(34.dp))
             Icon(
                 modifier = Modifier.size(40.dp, 40.dp).weight(1f),
-                imageVector = Icons.TwoTone.ArrowDropUp,
-                tint = Color(0xCDFFA185),
+                imageVector = Icons.TwoTone.Key,
+                tint = Color(0xFFE01010),
                 contentDescription = null,
 
                 )
             Text(
-                text = ": Icono para abrir menu de opciones.", fontSize = 12.sp,
+                text = ": Indica el codigo del proyecto.", fontSize = 12.sp,
                 modifier = Modifier.weight(7f),
                 color = Color(0xFFD1808C)
             )
@@ -68,101 +67,49 @@ fun InfoDetallesProyectoScreen(viewModel: ProyectosApiViewModel = hiltViewModel(
                 .fillMaxWidth()
                 .wrapContentSize(Alignment.TopEnd)
         ) {
-
             Spacer(modifier = Modifier.padding(34.dp))
             Icon(
                 modifier = Modifier.size(40.dp, 40.dp).weight(1f),
-                imageVector = Icons.TwoTone.PersonAdd,
+                imageVector = Icons.TwoTone.KeyboardDoubleArrowRight,
+                tint = Color(0xFF1D1D1D),
+                contentDescription = null,
+
+                )
+            Text(
+                text = ": Swipe para eliminar un proyecto.", fontSize = 12.sp,
+                modifier = Modifier.weight(7f),
+                color = Color(0xFFD1808C)
+            )
+        }
+
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.TopEnd)
+        ) {
+            Spacer(modifier = Modifier.padding(34.dp))
+            Icon(
+                modifier = Modifier.size(40.dp, 40.dp).weight(1f),
+                imageVector = Icons.TwoTone.AddCircle,
                 tint = Color(0xFF94B4F5),
                 contentDescription = null,
 
                 )
             Text(
-                text = ": Icono para añadir trabajores.", fontSize = 12.sp,
+                text = ": Icono para registrar nuevo proyecto.", fontSize = 12.sp,
                 modifier = Modifier.weight(7f),
                 color = Color(0xFFD1808C)
             )
-
         }
 
-        //---------------------------
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.TopEnd)
-        ) {
-
-            Spacer(modifier = Modifier.padding(34.dp))
-            Icon(
-                modifier = Modifier.size(40.dp, 40.dp).weight(1f),
-                imageVector = Icons.TwoTone.StickyNote2,
-                tint = Color(0xFFBC78FF),
-                contentDescription = null,
-
-                )
-            Text(
-                text = ": Icono para consultar nomina.", fontSize = 12.sp,
-                modifier = Modifier.weight(7f),
-                color = Color(0xFFD1808C)
-            )
-
-        }
-
-        //---------------------------
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.TopEnd)
-        ) {
-
-            Spacer(modifier = Modifier.padding(34.dp))
-            Icon(
-                modifier = Modifier.size(40.dp, 40.dp).weight(1f),
-                imageVector = Icons.TwoTone.PriceChange,
-                tint = Color(0xFFB8E698),
-                contentDescription = null,
-
-                )
-            Text(
-                text = ": Icono para realizar adelantos.", fontSize = 12.sp,
-                modifier = Modifier.weight(7f),
-                color = Color(0xFFD1808C)
-            )
-
-        }
-
-        //---------------------------
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.TopEnd)
-        ) {
-
-            Spacer(modifier = Modifier.padding(34.dp))
-            Icon(
-                modifier = Modifier.size(40.dp, 40.dp).weight(1f),
-                imageVector = Icons.TwoTone.Savings,
-                tint = Color(0xFFFF94A0),
-                contentDescription = null,
-
-                )
-            Text(
-                text = ": Icono para realizar pagos.", fontSize = 12.sp,
-                modifier = Modifier.weight(7f),
-                color = Color(0xFFD1808C)
-            )
-
-        }
 
         //---------------------------
 
 
         Spacer(modifier = Modifier.padding(12.dp))
         Text(
-            text = " Nota: Necesitas conección a internet para el funcionamiento de la aplicacion.", fontSize = 10.sp,
+            text = " Nota: Necesitas conección a internet para obtener la lista de proyectos.", fontSize = 10.sp,
             modifier = Modifier.align(Alignment.CenterHorizontally)
 
         )

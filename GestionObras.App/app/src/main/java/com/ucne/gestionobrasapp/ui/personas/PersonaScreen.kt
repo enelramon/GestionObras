@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.*
 import androidx.compose.material3.*
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,9 +26,12 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PersonaScreen(
+
     viewModel: PersonasApiViewModel = hiltViewModel(),
-    navController: NavController
+    navController: NavController,
+
 ) {
+
     PersonasBody(viewModel, Modifier.fillMaxWidth(), navController)
 }
 
@@ -120,6 +125,7 @@ private fun PersonasBody(
             },
             label = { Text("Telefono") },
             isError = viewModel.telefonoError.isNotBlank(),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
             trailingIcon = {
                 if (viewModel.telefonoError.isNotBlank()) {
                     Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
@@ -146,7 +152,7 @@ private fun PersonasBody(
                 Icon(
                     imageVector = Icons.TwoTone.Construction,
                     contentDescription = null,
-                    tint = Color(0xFF1F1F1F),
+                    tint = Color(0xFFFFF072),
                     modifier = Modifier
                         .size(33.dp)
                         .padding(4.dp)
@@ -180,7 +186,7 @@ private fun PersonasBody(
                 Icon(
                     imageVector = Icons.TwoTone.Engineering,
                     contentDescription = null,
-                    tint = Color(0xFF1F1F1F),
+                    tint = Color(0xFFF74747),
                     modifier = Modifier
                         .size(33.dp)
                         .padding(4.dp)
@@ -244,9 +250,11 @@ private fun PersonasBody(
                     } else {
                         viewModel.postPersonas()
                         viewModel.Limpiar()
+                        navController.navigate(ScreenModuleProyectos.DetallesProyecto.route)
                     }
                 }
             )
         }
     }
+    //
 }

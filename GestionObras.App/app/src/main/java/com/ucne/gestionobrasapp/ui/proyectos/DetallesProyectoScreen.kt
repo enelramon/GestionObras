@@ -35,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
@@ -74,10 +75,10 @@ fun DetallesProyectoScreen(
     val isMenuExtended = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    Column(
+    Row(
         Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(12.dp)
     ) {
         Spacer(modifier = Modifier.padding(20.dp))
         Icon(
@@ -92,7 +93,29 @@ fun DetallesProyectoScreen(
                     }
                 }
         )
-        Spacer(modifier = Modifier.padding(20.dp))
+        Icon(
+            imageVector = Icons.TwoTone.Lightbulb,
+            contentDescription = null,
+            tint = Color(0xCDFFDE09),
+            modifier = Modifier
+                .wrapContentSize(Alignment.CenterEnd)
+                .size(34.dp, 34.dp)
+                .clickable {
+                    scope.launch {
+                        navController.navigate(ScreenModuleAcercade.InfoDetallesProyecto.route)
+                    }
+                }
+        )
+
+    }
+
+
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Spacer(modifier = Modifier.padding(30.dp))
         PersonasListScreen(navController = navController)
     }
     val fabAnimationProgress by animateFloatAsState(
@@ -203,7 +226,7 @@ fun FabGroup(
     ) {
 
         AnimatedFab(
-            icon = Icons.Default.StickyNote2,
+            icon = Icons.TwoTone.StickyNote2,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -218,7 +241,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.PersonAdd,
+            icon = Icons.TwoTone.PersonAdd,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -234,7 +257,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.PriceChange,
+            icon = Icons.TwoTone.PriceChange,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -249,7 +272,7 @@ fun FabGroup(
         )
 
         AnimatedFab(
-            icon = Icons.Default.Savings,
+            icon = Icons.TwoTone.Savings,
             modifier = Modifier
                 .padding(
                     PaddingValues(
@@ -305,4 +328,5 @@ fun AnimatedFab(
             )
         }
     }
+    //
 }
