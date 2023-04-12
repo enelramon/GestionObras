@@ -34,7 +34,6 @@ class NominasApiViewModel @Inject constructor(
     private val nominasApiRepositoryImp: NominasApiRepositoryImp
 ) : ViewModel() {
     var nominaId by mutableStateOf(0)
-    var nominaIdError by mutableStateOf("")
 
     var fechaNomina by mutableStateOf("")
     var fechanominaError by mutableStateOf("")
@@ -56,6 +55,7 @@ class NominasApiViewModel @Inject constructor(
         private set
     var uiStateNomina = MutableStateFlow(NominasState())
         private set
+
 
     init {
         nominasApiRepositoryImp.getNominas().onEach { result ->
@@ -99,17 +99,15 @@ class NominasApiViewModel @Inject constructor(
 
     }
 
-    fun deleteNominas(id: Int) {}
-
     fun postNominas() {
         viewModelScope.launch {
             try {
                 nominasApiRepositoryImp.postNominas(
                     NominasDto(
-                        nominaId = uiStateNomina.value.nominas!!.nominaId,
+                        nominaId = nominaId,
                         fecha = fechaNomina,
                         personaId = personanominaId.toIntOrNull() ?: 0,
-                        proyectoId = proyectonominaId.toIntOrNull() ?: 0,
+                        proyectoId =proyectonominaId.toIntOrNull() ?: 0 ,
                         total = totalnomina.toDoubleOrNull() ?: 0.0,
                         estado = estadonomina
                     )

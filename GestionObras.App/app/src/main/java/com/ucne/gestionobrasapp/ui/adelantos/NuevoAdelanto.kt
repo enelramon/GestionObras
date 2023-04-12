@@ -96,20 +96,19 @@ fun AdelantosScreen(
             value = viewModel.fecha,
             onValueChange = viewModel::onFechaChanged,
             singleLine = true,
-            readOnly = false,
             leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Filled.DateRange,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(33.dp)
-                            .padding(4.dp)
-                            .wrapContentSize(Alignment.CenterEnd)
-                            .clickable {
-                                mDatePickerDialog.show()
-                            }
-                    )
-                },
+                Icon(
+                    imageVector = Icons.Filled.DateRange,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(33.dp)
+                        .padding(4.dp)
+                        .wrapContentSize(Alignment.CenterEnd)
+                        .clickable {
+                            mDatePickerDialog.show()
+                        }
+                )
+            },
             label = { Text("Fecha") },
             isError = viewModel.fechaError.isNotBlank(),
             trailingIcon = {

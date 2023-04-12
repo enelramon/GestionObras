@@ -135,109 +135,73 @@ private fun PersonasBody(
 
         //-------------------------------------------------
 
-        //Tipo de trabajo
-       /* OutlinedTextField(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .clickable { expanded = true },
-            value = viewModel.tipoTrabajoId,
-            enabled = false, readOnly = true,
-            onValueChange = viewModel::onTrabajosChanged,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.TwoTone.ContentPasteGo,
-                    contentDescription = null,
-                    tint = Color(0xFFF89945),
-                    modifier = Modifier
-                        .size(33.dp)
-                        .padding(4.dp)
-                )
-            },
-            isError = viewModel.tiposTrabajoError.isNotBlank(),
-            label = { Text("Trabajo") },
-            trailingIcon = {
-                if (viewModel.tiposTrabajoError.isNotBlank()) {
-                    Icon(
-                        imageVector = Icons.TwoTone.ArrowDropDown, contentDescription = "error",
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
-                if (viewModel.tiposTrabajoError.isBlank()) {
-                    Icon(
-                        imageVector = Icons.TwoTone.ArrowDropDown, contentDescription = "error",
-                        tint = Color(0xFF8A8A8A)
-                    )
-                }
-
-            }
-        )
-
-        if (viewModel.tiposTrabajoError.isNotBlank()) {
-            Text(
-                text = viewModel.tiposTrabajoError,
-                color = MaterialTheme.colorScheme.error,
-
-                )
-        }
-
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp)
-
-        ) {
-            viewModel.tiposDeTrabajo.forEach { opcion ->
-                DropdownMenuItem(
-                    text = {
-                        Text(text = opcion, textAlign = TextAlign.Center)
-                    },
-                    onClick = {
-                        expanded = false
-                        viewModel.tiposTrabajo = opcion
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                )
-            }
-        }*/
-
-        //-------------------------------------------------
-
-       /* OutlinedTextField(
+        OutlinedTextField(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
-            value = viewModel.precio,
-            onValueChange = viewModel::onPrecioChanged,
+            value = viewModel.tipoTrabajoId,
+            onValueChange = viewModel::onTipoChanged,
             singleLine = true,
             leadingIcon = {
                 Icon(
-                    imageVector = Icons.TwoTone.Money,
+                    imageVector = Icons.TwoTone.Construction,
                     contentDescription = null,
-                    tint = Color(0xFF85A773),
+                    tint = Color(0xFF1F1F1F),
                     modifier = Modifier
                         .size(33.dp)
                         .padding(4.dp)
                 )
             },
-            label = { Text("Precio") },
-            isError = viewModel.precioError.isNotBlank(),
+            label = { Text("TipoTrabajoId") },
+            isError = viewModel.tipoIdError.isNotBlank(),
             trailingIcon = {
-                if (viewModel.precioError.isNotBlank()) {
+                if (viewModel.tipoIdError.isNotBlank()) {
                     Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
                 }
             }
         )
-        if (viewModel.precioError.isNotBlank()) {
+        if (viewModel.tipoIdError.isNotBlank()) {
             Text(
-                text = viewModel.precioError,
+                text = viewModel.tipoIdError,
                 color = MaterialTheme.colorScheme.error
             )
-        }*/
+        }
+
+        //-------------------------------------------------
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            value = viewModel.projectoId,
+            onValueChange = viewModel::onProjecChanged,
+            singleLine = true,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.TwoTone.Engineering,
+                    contentDescription = null,
+                    tint = Color(0xFF1F1F1F),
+                    modifier = Modifier
+                        .size(33.dp)
+                        .padding(4.dp)
+                )
+            },
+            label = { Text("ProjectoId") },
+            isError = viewModel.projectoIdError.isNotBlank(),
+            trailingIcon = {
+                if (viewModel.projectoIdError.isNotBlank()) {
+                    Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
+                }
+            }
+        )
+        if (viewModel.projectoIdError.isNotBlank()) {
+            Text(
+                text = viewModel.projectoIdError,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
+        //------------------------------------------------------------
 
         Row(
             modifier = Modifier
@@ -267,15 +231,16 @@ private fun PersonasBody(
                             viewModel.telefonoError = "  Debe indicar el telefono de la persona"
                         }
 
-                       /* viewModel.tiposTrabajoError = ""
-                        if (viewModel.tiposTrabajo.isBlank()) {
-                            viewModel.tiposTrabajoError = "  Debe seleccionar el tipo de trabajo"
+                        viewModel.tipoIdError = ""
+                        if (viewModel.tipoTrabajoId.isBlank()) {
+                            viewModel.tipoIdError = "  Debe indicar el Id Tipo de trabajo"
                         }
 
-                      viewModel.precioError = ""
-                        if (viewModel.precio.isBlank()) {
-                            viewModel.precioError = "  Debe indicar el precio del trabajo"
-                        }*/
+                        viewModel.projectoIdError = ""
+                        if (viewModel.projectoId.isBlank()) {
+                            viewModel.projectoIdError = "  Debe indicar el Id del Projecto"
+                        }
+
                     } else {
                         viewModel.postPersonas()
                         viewModel.Limpiar()

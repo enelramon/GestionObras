@@ -23,6 +23,7 @@ data class PersonasListState(
     val tipos: List<TiposDto> = emptyList(),
     val error: String = ""
 )
+
 data class PersonasState(
     val isLoading: Boolean = false,
     val personas: PersonasDto? = null,
@@ -30,16 +31,7 @@ data class PersonasState(
     val error: String = ""
 )
 
-data class TiposListState(
-    val isLoading: Boolean = false,
-    val tipos: List<TiposDto> = emptyList(),
-    val error: String = ""
-)
-data class TiposState(
-    val isLoading: Boolean = false,
-    val tipos: TiposDto? = null,
-    val error: String = ""
-)
+
 
 @HiltViewModel
 class PersonasApiViewModel @Inject constructor(
@@ -50,6 +42,7 @@ class PersonasApiViewModel @Inject constructor(
 
     var personaId by mutableStateOf(0)
     var tipoTrabajoId by mutableStateOf("")
+    var tipoIdError by mutableStateOf("")
 
     var nombres by mutableStateOf("")
     var nombresError by mutableStateOf("")
@@ -57,25 +50,19 @@ class PersonasApiViewModel @Inject constructor(
     var telefono by mutableStateOf("")
     var telefonoError by mutableStateOf("")
 
-    var tiposTrabajo by mutableStateOf("")
-    var tiposTrabajoError by mutableStateOf("")
-    val tiposDeTrabajo = listOf("Carpintero", "Ingeniero Civil", "Arquitecto", "Proveedor de materiales", "")
-
-    var precio by mutableStateOf("")
-    var precioError by mutableStateOf("")
+    var projectoId by mutableStateOf("")
+    var projectoIdError by mutableStateOf("")
 
     var uiState = MutableStateFlow(PersonasListState())
         private set
     var uiStatePersonas = MutableStateFlow(PersonasState())
         private set
 
-    var uiStateTipos = MutableStateFlow(TiposListState())
-        private set
-    var uiStateTiposT = MutableStateFlow(TiposState())
+    var personasL = personasApiRepositoryImp.getPersonas()
         private set
 
     init {
-       personasApiRepositoryImp.getPersonas().onEach { result ->
+        personasApiRepositoryImp.getPersonas().onEach { result ->
             when (result) {
                 is Resource.Loading -> {
                     uiState.update { it.copy(isLoading = true) }
@@ -106,7 +93,9 @@ class PersonasApiViewModel @Inject constructor(
                     }
                     nombres = uiStatePersonas.value.personas!!.nombres
                     telefono = uiStatePersonas.value.personas!!.telefono
-                    tiposTrabajo
+                    projectoId = uiStatePersonas.value.personas!!.proyectoId.toString()
+                    tipoTrabajoId = uiStatePersonas.value.personas!!.tipoTrabajoId.toString()
+
                 }
                 is Resource.Error -> {
                     uiStatePersonas.update {
@@ -129,7 +118,7 @@ class PersonasApiViewModel @Inject constructor(
                             personaId = personaId,
                             nombres = nombres,
                             uiStatePersonas.value.personas!!.tipoTrabajoId,
-                            proyectoId = 0,
+                            uiStatePersonas.value.personas!!.proyectoId,
                             telefono = telefono
                         )
                     )
@@ -152,7 +141,7 @@ class PersonasApiViewModel @Inject constructor(
                             personaId = personaId,
                             nombres = nombres,
                             uiStatePersonas.value.personas!!.tipoTrabajoId,
-                            proyectoId = 0,
+                            uiStatePersonas.value.personas!!.proyectoId,
                             telefono = telefono
 
                         )
@@ -169,12 +158,12 @@ class PersonasApiViewModel @Inject constructor(
     fun postPersonas() {
         viewModelScope.launch {
             try {
-                personasApiRepositoryImp.deletePersonas(
-                    personaId, PersonasDto(
+                personasApiRepositoryImp.postPersonas(
+                     PersonasDto(
                         personaId = personaId,
                         nombres = nombres,
                         tipoTrabajoId = tipoTrabajoId.toIntOrNull() ?: 0,
-                        proyectoId = 0,
+                        proyectoId = projectoId.toIntOrNull() ?: 0,
                         telefono = telefono
                     )
                 )
@@ -185,10 +174,10 @@ class PersonasApiViewModel @Inject constructor(
         }
     }
 
-     fun Limpiar() {
+    fun Limpiar() {
         nombres = ""
         tipoTrabajoId = ""
-        precio = ""
+        projectoId = ""
         telefono = ""
     }
 
@@ -199,20 +188,21 @@ class PersonasApiViewModel @Inject constructor(
         HayErroresRegistrando()
     }
 
+    fun onTipoChanged(tipo: String) {
+        this.tipoTrabajoId = tipo
+        HayErroresRegistrando()
+    }
+
+    fun onProjecChanged(project: String) {
+        this.projectoId = project
+        HayErroresRegistrando()
+    }
+
     fun onTelefonoChanged(telefono: String) {
         this.telefono = telefono
         HayErroresRegistrando()
     }
 
-    fun onTrabajosChanged(tiposTrabajo: String) {
-        this.tiposTrabajo = tiposTrabajo
-        HayErroresRegistrando()
-    }
-
-    fun onPrecioChanged(precio: String) {
-        this.precio = precio
-        HayErroresRegistrando()
-    }
 
     fun HayErroresRegistrando(): Boolean {
 
@@ -228,13 +218,12 @@ class PersonasApiViewModel @Inject constructor(
             hayError = true
         }
 
-        fun onTrabajosChanged(tiposTrabajo: String) {
-            this.tiposTrabajo = tiposTrabajo
-            HayErroresRegistrando()
+        tipoIdError = ""
+        if (tipoTrabajoId.isBlank()) {
+            hayError = true
         }
-
-        precioError = ""
-        if (precio.isBlank()) {
+        projectoIdError = ""
+        if (projectoId.isBlank()) {
             hayError = true
         }
 

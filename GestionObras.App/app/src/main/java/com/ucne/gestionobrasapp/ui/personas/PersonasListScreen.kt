@@ -17,8 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.modifier.modifierLocalConsumer
+
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -32,10 +31,9 @@ import com.ucne.gestionobrasapp.ui.theme.Shapes
 @Composable
 fun PersonasListScreen(
     navController: NavController,
-    viewModel: PersonasApiViewModel = hiltViewModel(),
-    onPersonasClick: (Int) -> Unit
+    viewModel: PersonasApiViewModel = hiltViewModel()
 ) {
-    Column( modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth()) {
         Spacer(modifier = Modifier.padding(20.dp))
         Scaffold(
             modifier = Modifier
@@ -53,20 +51,7 @@ fun PersonasListScreen(
                         )
                     }
                 )
-            },
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = {},
-                    shape = Shapes.extraLarge
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = "Save",
-                        modifier = Modifier.clip(Shapes.extraLarge)
-                    )
-                }
-            },
-            floatingActionButtonPosition = FabPosition.End
+            }
         ) {
             val uiState by viewModel.uiState.collectAsState()
             Box(
@@ -75,35 +60,28 @@ fun PersonasListScreen(
                     .padding(it)
             )
             {
-                PersonasListBody(uiState.personas) {
-                    onPersonasClick(it)
-                }
+                PersonasListBody(uiState.personas)
             }
         }
     }
 }
 
 @Composable
-fun PersonasListBody(personasList: List<PersonasDto>, onPersonasClick: (Int) -> Unit) {
+fun PersonasListBody(personasList: List<PersonasDto>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         LazyColumn {
-            items(personasList) {personas ->
+            items(personasList) { personas ->
                 PersonasRow(personas)
-                {
-                    onPersonasClick(it)
-                }
             }
         }
     }
 }
 
 @Composable
-fun PersonasRow(personas: PersonasDto, onPersonasClick: (Int) -> Unit) {
+fun PersonasRow(personas: PersonasDto) {
 
     val viewModel: PersonasApiViewModel = hiltViewModel()
     val navController = rememberNavController()
-
-    Spacer(modifier = Modifier.padding(5.dp))
 
     Column(
         modifier = Modifier
@@ -127,7 +105,7 @@ fun PersonasRow(personas: PersonasDto, onPersonasClick: (Int) -> Unit) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp)
-                        .clickable(onClick = { onPersonasClick(personas.personaId) })
+                        .clickable(onClick = { })
                 ) {
 
                     Row(
@@ -147,7 +125,7 @@ fun PersonasRow(personas: PersonasDto, onPersonasClick: (Int) -> Unit) {
                             style = MaterialTheme.typography.titleSmall,
                             color = Color(0xD0000000),
                             modifier = Modifier
-                                .weight(1.5f)
+                                .weight(2.5f)
                                 .border(
                                     2.dp, Color(0x56808080),
                                     shape = RoundedCornerShape(4.dp)

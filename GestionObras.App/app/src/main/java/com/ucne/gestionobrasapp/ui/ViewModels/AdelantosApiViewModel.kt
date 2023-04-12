@@ -35,7 +35,6 @@ class AdelantosApiViewModel @Inject constructor(
 ) : ViewModel() {
 
     var adelantoId by mutableStateOf(0)
-    var adelantoIdError by mutableStateOf("")
 
     var fecha by mutableStateOf("")
     var fechaError by mutableStateOf("")
@@ -104,7 +103,6 @@ class AdelantosApiViewModel @Inject constructor(
                     adelantosApiRepositoryImp.putAdelantos(
                         adelantoId, AdelantosDto(
                             adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
                             fecha = fecha,
                             personaId = personaId.toIntOrNull() ?: 0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
@@ -130,7 +128,6 @@ class AdelantosApiViewModel @Inject constructor(
                     adelantosApiRepositoryImp.deleteAdelantos(
                         adelantoId, AdelantosDto(
                             adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
                             fecha = fecha,
                             personaId = personaId.toIntOrNull() ?: 0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
@@ -153,13 +150,12 @@ class AdelantosApiViewModel @Inject constructor(
             try {
                 adelantosApiRepositoryImp.postAdelantos(
                     AdelantosDto(
-                        adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                        pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
+                        adelantoId = adelantoId,
                         fecha = fecha,
                         personaId = personaId.toIntOrNull() ?: 0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
                         balance = balance.toDoubleOrNull() ?: 0.0,
-                        proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
+                        proyectoId = 1
                     )
                 )
                 Limpiar()
