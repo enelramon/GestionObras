@@ -16,8 +16,8 @@ class TiposApiRepositoryImp @Inject constructor(
     override suspend fun putTipos(id: Int, tiposDto: TiposDto) {
         gestionObrasApi.putTipos(id, tiposDto)
     }
-    override suspend fun deleteTipos(id: Int){
-        gestionObrasApi.deleteTipos(id)
+    override suspend fun deleteTipos(id: Int, tiposDto: TiposDto){
+        gestionObrasApi.deleteTipos(id, tiposDto)
     }
     override suspend fun postTipos(tiposDto: TiposDto) {
        gestionObrasApi.postTipos(tiposDto)

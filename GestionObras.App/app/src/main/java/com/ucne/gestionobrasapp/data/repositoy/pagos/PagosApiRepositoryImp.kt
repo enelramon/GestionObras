@@ -18,8 +18,8 @@ class PagosApiRepositoryImp @Inject constructor(
     override suspend fun putPagos(id: Int, pagosDto: PagosDto) {
         gestionObrasApi.putPagos(id, pagosDto)
     }
-    override suspend fun deletePagos(id: Int){
-        gestionObrasApi.deletePagos(id)
+    override suspend fun deletePagos(id: Int, pagosDto: PagosDto){
+        gestionObrasApi.deletePagos(id, pagosDto)
     }
     override suspend fun postPagos(pagosDto: PagosDto) {
        gestionObrasApi.postPagos(pagosDto)

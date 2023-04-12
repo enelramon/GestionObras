@@ -15,8 +15,8 @@ class NominasApiRepositoryImp @Inject constructor(
     override suspend fun putNominas(id: Int, nominasDto: NominasDto) {
         gestionObrasApi.putNominas(id, nominasDto)
     }
-    override suspend fun deleteNominas(id: Int){
-        gestionObrasApi.deleteNominas(id)
+    override suspend fun deleteNominas(id: Int, nominasDto: NominasDto){
+        gestionObrasApi.deleteNominas(id, nominasDto)
     }
     override suspend fun postNominas(nominasDto: NominasDto) {
        gestionObrasApi.postNominas(nominasDto)

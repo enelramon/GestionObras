@@ -17,8 +17,8 @@ class ProyectosApiRepositoryImp @Inject constructor(
     override suspend fun putProyectos(id: Int, proyectosDto: ProyectosDto) {
         gestionObrasApi.putProyectos(id, proyectosDto)
     }
-    override suspend fun deleteProyectos(id: Int){
-        gestionObrasApi.deleteProyectos(id)
+    override suspend fun deleteProyectos(id: Int, proyectosDto: ProyectosDto){
+        gestionObrasApi.deleteProyectos(id, proyectosDto)
     }
     override suspend fun postProyectos(proyectosDto: ProyectosDto) {
        gestionObrasApi.postProyectos(proyectosDto)

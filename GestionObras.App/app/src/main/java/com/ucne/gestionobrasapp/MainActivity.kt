@@ -16,9 +16,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.adelantos.AdelantosScreen
 import com.ucne.gestionobrasapp.ui.nominas.NominaScreen
+import com.ucne.gestionobrasapp.ui.nominas.NominalistScreen
 import com.ucne.gestionobrasapp.ui.pagos.PagosScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonaScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
+import com.ucne.gestionobrasapp.ui.proyectos.AcercadeScreen
 import com.ucne.gestionobrasapp.ui.proyectos.DetallesProyectoScreen
 import com.ucne.gestionobrasapp.ui.proyectos.NuevoProyectoScreen
 import com.ucne.gestionobrasapp.ui.proyectos.ProyectosListScreen
@@ -42,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     NavHost(
                         navController = navController,
-                        startDestination = ScreenModuleProyectos.DetallesProyecto.route
+                        startDestination = ScreenModuleProyectos.ProyectoList.route
                     ) {
 
                         composable(ScreenModuleStart.Start.route) {
@@ -73,8 +75,16 @@ class MainActivity : ComponentActivity() {
                             PagosScreen(navController = navController) // Le falta asignarle el id
                         }
 
+                        composable(ScreenModuleNominas.NominasList.route) {
+                            NominalistScreen(navController = navController) // Le falta asignarle el id
+                        }
                         composable(ScreenModuleNominas.Nominas.route) {
                             NominaScreen(navController = navController) // Le falta asignarle el id
+                        }
+
+
+                        composable(ScreenModuleAcercade.Acercade.route) {
+                            AcercadeScreen(navController = navController)
                         }
                     }
                 }
