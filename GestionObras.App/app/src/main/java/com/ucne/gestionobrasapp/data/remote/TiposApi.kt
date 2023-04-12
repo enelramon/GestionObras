@@ -19,5 +19,5 @@ interface TiposApi {
     suspend fun putTipos(@Path("id") id: Int, @Body tiposDto: TiposDto): Response<Unit>
 
     @DELETE("/api/Tipos/{id}")
-    suspend fun deleteTipos(@Path("id") id: Int): TiposDto
+    suspend fun deleteTipos(@Path("id") id: Int, @Body tiposDto: TiposDto): TiposDto
 }

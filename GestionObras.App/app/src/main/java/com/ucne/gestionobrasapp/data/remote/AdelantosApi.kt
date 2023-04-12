@@ -5,6 +5,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface AdelantosApi {
+
     @GET("/api/Adelantos")
     suspend fun getAdelantos(): List<AdelantosDto>
 
@@ -18,5 +19,6 @@ interface AdelantosApi {
     suspend fun putAdelantos(@Path("id") id: Int, @Body adelantosDto: AdelantosDto): Response<Unit>
 
     @DELETE("/api/Adelantos/{id}")
-    suspend fun deleteAdelantos(@Path("id") id: Int): AdelantosDto
+    suspend fun deleteAdelantos(@Path("id") id: Int, @Body adelantosDto: AdelantosDto): AdelantosDto
+
 }

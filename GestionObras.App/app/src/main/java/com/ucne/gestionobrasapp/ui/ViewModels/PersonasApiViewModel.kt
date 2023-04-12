@@ -10,8 +10,10 @@ import com.ucne.gestionobrasapp.data.remote.dto.TiposDto
 import com.ucne.gestionobrasapp.data.repositoy.personas.PersonasApiRepositoryImp
 import com.ucne.gestionobrasapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,9 +64,6 @@ class PersonasApiViewModel @Inject constructor(
     var precio by mutableStateOf("")
     var precioError by mutableStateOf("")
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading = _isLoading.asStateFlow()
-
     var uiState = MutableStateFlow(PersonasListState())
         private set
     var uiStatePersonas = MutableStateFlow(PersonasState())
@@ -91,14 +90,6 @@ class PersonasApiViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-    }
-
-    fun reload(){
-        viewModelScope.launch {
-            _isLoading.value = true
-            delay(3000L)
-            _isLoading.value = false
-        }
     }
 
     fun PersonasbyId(id: Int) {
@@ -151,30 +142,40 @@ class PersonasApiViewModel @Inject constructor(
         }
     }
 
-    fun deletePersonas(id: Int?) {
-        id?.let {
-            viewModelScope.launch {
-                try {
-                    personasApiRepositoryImp.deletePersonas(id)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+    fun deletePersonas(id: Int) {
+        viewModelScope.launch {
+            personaId = id!!
+            try {
+                if (personaId != null) {
+                    personasApiRepositoryImp.deletePersonas(
+                        personaId, PersonasDto(
+                            personaId = personaId,
+                            nombres = nombres,
+                            uiStatePersonas.value.personas!!.tipoTrabajoId,
+                            proyectoId = 0,
+                            telefono = telefono
+
+                        )
+                    )
+                } else {
+                    throw NullPointerException("Value is null")
                 }
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
             }
-        } ?: kotlin.run {
-            throw NullPointerException("Value is null")
         }
     }
 
     fun postPersonas() {
         viewModelScope.launch {
             try {
-                personasApiRepositoryImp.postPersonas(
-                    PersonasDto(
+                personasApiRepositoryImp.deletePersonas(
+                    personaId, PersonasDto(
                         personaId = personaId,
                         nombres = nombres,
                         tipoTrabajoId = tipoTrabajoId.toIntOrNull() ?: 0,
-                        telefono = telefono,
-                        proyectoId = 0
+                        proyectoId = 0,
+                        telefono = telefono
                     )
                 )
                 Limpiar()

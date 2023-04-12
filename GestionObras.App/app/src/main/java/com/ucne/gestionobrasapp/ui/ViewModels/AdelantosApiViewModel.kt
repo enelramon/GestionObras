@@ -122,17 +122,29 @@ class AdelantosApiViewModel @Inject constructor(
         }
     }
 
-    fun deleteAdelantos(id: Int?) {
-        id?.let {
-            viewModelScope.launch {
-                try {
-                    adelantosApiRepositoryImp.deleteAdelantos(id)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+    fun deleteAdelantos(id: Int) {
+        viewModelScope.launch {
+            adelantoId = id!!
+            try {
+                if (adelantoId != null) {
+                    adelantosApiRepositoryImp.deleteAdelantos(
+                        adelantoId, AdelantosDto(
+                            adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
+                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
+                            fecha = fecha,
+                            personaId = personaId.toIntOrNull() ?: 0,
+                            monto = monto.toDoubleOrNull() ?: 0.0,
+                            balance = balance.toDoubleOrNull() ?: 0.0,
+                            proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
+                        )
+                    )
+                    Limpiar()
+                } else {
+                    throw NullPointerException("Value is null")
                 }
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
             }
-        } ?: kotlin.run {
-            throw NullPointerException("Value is null")
         }
     }
 
