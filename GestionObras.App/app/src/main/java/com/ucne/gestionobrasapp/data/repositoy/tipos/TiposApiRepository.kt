@@ -9,6 +9,6 @@ interface TiposApiRepository
     fun getTipos(): Flow<Resource<List<TiposDto>>>
     fun getTiposId(id: Int): Flow<Resource<TiposDto>>
     suspend fun putTipos(id: Int, tiposDto: TiposDto)
-    suspend fun deleteTipos(id: Int)
+    suspend fun deleteTipos(id: Int, tiposDto: TiposDto)
     suspend fun postTipos(tiposDto: TiposDto)
 }

@@ -130,17 +130,29 @@ class PagosApiViewModel @Inject constructor(
         }
     }
 
-    fun deletePagos(id: Int?) {
-        id?.let {
-            viewModelScope.launch {
-                try {
-                   pagosApiRepositoryImp.deletePagos(id)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+    fun deletePagos(id: Int) {
+        viewModelScope.launch {
+            pagoId = id!!
+            try {
+                if (pagoId != null) {
+                    pagosApiRepositoryImp.deletePagos(
+                        pagoId, PagosDto(
+                            pagoId = pagoId,
+                            fecha = fecha,
+                            personaId = personaId.toIntOrNull() ?: 0,
+                            monto = monto.toDoubleOrNull() ?: 0.0,
+                            adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                            total = total.toDoubleOrNull() ?: 0.0,
+                            proyectoId = uiStatePagos.value.pagos!!.proyectoId
+                        )
+                    )
+                    Limpiar()
+                } else {
+                    throw NullPointerException("Value is null")
                 }
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
             }
-        } ?: kotlin.run {
-            throw NullPointerException("Value is null")
         }
     }
 

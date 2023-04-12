@@ -5,6 +5,7 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface NominasApi {
+
     @GET("/api/Nominas")
     suspend fun getNominas(): List<NominasDto>
 
@@ -18,5 +19,6 @@ interface NominasApi {
     suspend fun putNominas(@Path("id") id: Int, @Body nominasDto: NominasDto): Response<Unit>
 
     @DELETE("/api/Nominas/{id}")
-    suspend fun deleteNominas(@Path("id") id: Int): NominasDto
+    suspend fun deleteNominas(@Path("id") id: Int, @Body nominasDto: NominasDto): NominasDto
+
 }

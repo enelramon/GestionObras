@@ -19,5 +19,6 @@ interface PersonasApi {
     suspend fun putPersonas(@Path("id") id: Int, @Body personasDto: PersonasDto): Response<Unit>
 
     @DELETE("/api/Personas/{id}")
-    suspend fun deletePersonas(@Path("id") id: Int): PersonasDto
+    suspend fun deletePersonas(@Path("id") id: Int, @Body personasDto: PersonasDto): PersonasDto
+
 }
