@@ -130,4 +130,5 @@ fun InfoInicioScreen(viewModel: ProyectosApiViewModel = hiltViewModel(), navCont
         )
 
     }
+    //
 }

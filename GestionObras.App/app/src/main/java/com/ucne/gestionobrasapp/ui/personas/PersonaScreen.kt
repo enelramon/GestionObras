@@ -32,10 +32,8 @@ fun PersonaScreen(
 
 ) {
 
-
     PersonasBody(viewModel, Modifier.fillMaxWidth(), navController)
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -258,4 +256,5 @@ private fun PersonasBody(
             )
         }
     }
+    //
 }

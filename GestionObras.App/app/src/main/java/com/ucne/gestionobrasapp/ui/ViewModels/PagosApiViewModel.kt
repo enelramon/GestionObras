@@ -22,7 +22,6 @@ data class PagosListState(
     val pagos: List<PagosDto> = emptyList(),
     val error: String = ""
 )
-
 data class PagosState(
     val isLoading: Boolean = false,
     val pagos: PagosDto? = null,

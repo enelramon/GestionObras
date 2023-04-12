@@ -183,4 +183,5 @@ fun InfoDetallesProyectoScreen(viewModel: ProyectosApiViewModel = hiltViewModel(
         )
 
     }
+    //
 }

@@ -48,8 +48,7 @@ fun AdelantosScreen(
         viewModel.AdelantosbyId(adelantoId)
         0
     }
-
-
+    //
 
     var expanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()

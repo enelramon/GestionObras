@@ -22,7 +22,6 @@ data class NominasListState(
     val nominas: List<NominasDto> = emptyList(),
     val error: String = ""
 )
-
 data class NominasState(
     val isLoading: Boolean = false,
     val nominas: NominasDto? = null,

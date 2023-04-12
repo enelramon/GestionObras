@@ -1,5 +1,5 @@
 package com.ucne.gestionobrasapp.data.remote.dto
-
+//
 data class PagosDto(
     val pagoId: Int = 0,
     val fecha: String = "",

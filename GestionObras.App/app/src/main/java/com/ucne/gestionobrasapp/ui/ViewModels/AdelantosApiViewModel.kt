@@ -220,4 +220,5 @@ class AdelantosApiViewModel @Inject constructor(
 
         return hayError
     }
+    //
 }

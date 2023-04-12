@@ -21,7 +21,6 @@ sealed class ScreenModuleAdelantos(val route: String) { // Adelantos
     object AdelantosList : ScreenModuleAdelantos("adelantos_list")
 }
 
-
 sealed class ScreenModulePagos(val route: String) { // Pagos
     object Pagos : ScreenModulePagos("pagos")
     object PagosList : ScreenModulePagos("pagos_list")
