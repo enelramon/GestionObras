@@ -121,7 +121,7 @@ class PersonasApiViewModel @Inject constructor(
 
     fun putPersonas(id: Int) {
         viewModelScope.launch {
-            personaId = id!!
+            personaId = id
             try {
                 if (personaId != null) {
                     personasApiRepositoryImp.putPersonas(

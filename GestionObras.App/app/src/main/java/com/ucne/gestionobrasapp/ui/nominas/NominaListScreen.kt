@@ -38,7 +38,7 @@ fun NominalistScreen(
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text(text = "Proyectos", fontWeight = FontWeight.Bold);
+                Text(text = "Proyectos", fontWeight = FontWeight.Bold)
 
             })
         },

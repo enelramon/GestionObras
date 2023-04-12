@@ -98,7 +98,7 @@ class AdelantosApiViewModel @Inject constructor(
 
     fun putAdelantos(id: Int) {
         viewModelScope.launch {
-            adelantoId = id!!
+            adelantoId = id
             try {
                 if (adelantoId != null) {
                     adelantosApiRepositoryImp.putAdelantos(
