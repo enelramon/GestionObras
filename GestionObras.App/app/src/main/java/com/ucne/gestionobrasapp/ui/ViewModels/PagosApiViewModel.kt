@@ -37,7 +37,7 @@ class PagosApiViewModel @Inject constructor(
     var pagoId by mutableStateOf(0)
     var pagoIdError by mutableStateOf("")
 
-    var fecha by mutableStateOf("")
+    var fecha by mutableStateOf("2023-04-01")
     var fechaError by mutableStateOf("")
 
     var personaId by mutableStateOf("")
@@ -46,7 +46,7 @@ class PagosApiViewModel @Inject constructor(
     var monto by mutableStateOf("")
     var montoError by mutableStateOf("")
 
-    var adelanto by mutableStateOf("")
+    var adelantoId by mutableStateOf("")
     var adelantoError by mutableStateOf("")
 
     var total by mutableStateOf("")
@@ -94,7 +94,7 @@ class PagosApiViewModel @Inject constructor(
                     fecha = uiStatePagos.value.pagos!!.fecha
                     personaId = uiStatePagos.value.pagos!!.personaId.toString()
                     monto = uiStatePagos.value.pagos!!.monto.toString()
-                    adelanto = uiStatePagos.value.pagos!!.adelanto.toString()
+                    adelantoId = uiStatePagos.value.pagos!!.adelantoId.toString()
                     total = uiStatePagos.value.pagos!!.total.toString()
                 }
                 is Resource.Error -> {
@@ -113,9 +113,9 @@ class PagosApiViewModel @Inject constructor(
                         pagoId, PagosDto(
                             pagoId = pagoId,
                             fecha = fecha,
-                            personaId = personaId.toIntOrNull() ?: 0,
+                            personaId = uiStatePagos.value.pagos!!.personaId,
                             monto = monto.toDoubleOrNull() ?: 0.0,
-                            adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                            adelantoId = uiStatePagos.value.pagos!!.proyectoId,
                             total = total.toDoubleOrNull() ?: 0.0,
                             proyectoId = uiStatePagos.value.pagos!!.proyectoId
                         )
@@ -139,9 +139,9 @@ class PagosApiViewModel @Inject constructor(
                         pagoId, PagosDto(
                             pagoId = pagoId,
                             fecha = fecha,
-                            personaId = personaId.toIntOrNull() ?: 0,
+                            personaId = uiStatePagos.value.pagos!!.personaId,
                             monto = monto.toDoubleOrNull() ?: 0.0,
-                            adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                            adelantoId = uiStatePagos.value.pagos!!.proyectoId,
                             total = total.toDoubleOrNull() ?: 0.0,
                             proyectoId = uiStatePagos.value.pagos!!.proyectoId
                         )
@@ -162,12 +162,12 @@ class PagosApiViewModel @Inject constructor(
                 pagosApiRepositoryImp.postPagos(
                     PagosDto(
                         pagoId = pagoId,
-                        fecha = fecha,
+                        fecha = "2023-04-01",
                         personaId = personaId.toIntOrNull() ?: 0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
-                        adelanto = adelanto.toDoubleOrNull() ?: 0.0,
+                        adelantoId = 1,
                         total = total.toDoubleOrNull() ?: 0.0,
-                        proyectoId = uiStatePagos.value.pagos!!.proyectoId
+                        proyectoId = 1
                     )
                 )
                 Limpiar()
@@ -177,13 +177,13 @@ class PagosApiViewModel @Inject constructor(
         }
     }
 
-     fun Limpiar() {
-
-         personaId =""
+    fun Limpiar() {
+        personaId = ""
         fecha = ""
         monto = ""
-        adelanto = ""
+        adelantoId = ""
         total = ""
+
     }
 
 

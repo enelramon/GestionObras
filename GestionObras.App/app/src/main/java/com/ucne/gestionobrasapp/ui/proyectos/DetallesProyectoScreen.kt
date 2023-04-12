@@ -1,7 +1,6 @@
 package com.ucne.gestionobrasapp.ui.proyectos
 
 
-
 import android.graphics.ColorMatrix
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -37,6 +36,7 @@ import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
 import com.ucne.gestionobrasapp.util.navigation.*
 import com.ucne.gestionobrasapp.util.times
@@ -68,7 +68,9 @@ fun getRenderEffect(): RenderEffect {
 }
 
 @Composable
-fun DetallesProyectoScreen(navController: NavController) {
+fun DetallesProyectoScreen(
+    navController: NavController
+) {
     val isMenuExtended = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
@@ -91,74 +93,38 @@ fun DetallesProyectoScreen(navController: NavController) {
                 }
         )
         Spacer(modifier = Modifier.padding(20.dp))
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentSize(Alignment.Center),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "Personas", // <--- eso se debe quitar
-                    //text = proyecto_Personas, // <--- esto es lo que se debe mostrar
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color(0xFF000000),
-                    modifier = Modifier.weight(7f)
-                )
-                Text(
-                    text = "Adelantos", // <--- eso se debe quitar
-                    //text = proyecto_Adelanto, // <--- esto es lo que se debe mostrar el adelanto del proyecto seleccionado
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color(0xFF000000),
-                    modifier = Modifier.weight(7f)
-                )
-                Text(
-                    text = "Pagos", // <--- eso se debe quitar
-                    //text = proyecto_Pago, // <--- esto es lo que se debe mostrar
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color(0xFF000000),
-                    modifier = Modifier.weight(7f)
-                )
-            }
-        }
-        val fabAnimationProgress by animateFloatAsState(
-            targetValue = if (isMenuExtended.value) 1f else 0f,
-            animationSpec = tween(
-                durationMillis = 1000,
-                easing = LinearEasing
-            )
+        PersonasListScreen(navController = navController)
+    }
+    val fabAnimationProgress by animateFloatAsState(
+        targetValue = if (isMenuExtended.value) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 1000,
+            easing = LinearEasing
         )
+    )
 
-        val clickAnimationProgress by animateFloatAsState(
-            targetValue = if (isMenuExtended.value) 1f else 0f,
-            animationSpec = tween(
-                durationMillis = 400,
-                easing = LinearEasing
-            )
+    val clickAnimationProgress by animateFloatAsState(
+        targetValue = if (isMenuExtended.value) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 400,
+            easing = LinearEasing
         )
+    )
 
-        val renderEffect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            getRenderEffect().asComposeRenderEffect()
-        } else {
-            null
-        }
-
-        MainScreen(
-            renderEffect = renderEffect,
-            fabAnimationProgress = fabAnimationProgress,
-            navController = navController,
-            clickAnimationProgress = clickAnimationProgress
-        ) {
-            isMenuExtended.value = isMenuExtended.value.not()
-        }
+    val renderEffect = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        getRenderEffect().asComposeRenderEffect()
+    } else {
+        null
     }
 
+    MainScreen(
+        renderEffect = renderEffect,
+        fabAnimationProgress = fabAnimationProgress,
+        navController = navController,
+        clickAnimationProgress = clickAnimationProgress
+    ) {
+        isMenuExtended.value = isMenuExtended.value.not()
+    }
 }
 
 @Composable
@@ -286,11 +252,11 @@ fun FabGroup(
             icon = Icons.Default.Savings,
             modifier = Modifier
                 .padding(
-                PaddingValues(
-                    bottom = 72.dp,
-                    start = 210.dp
-                ) * fastOutSlowIn.transform(0.2f, 1.0f, animationProgress)
-            ),
+                    PaddingValues(
+                        bottom = 72.dp,
+                        start = 210.dp
+                    ) * fastOutSlowIn.transform(0.2f, 1.0f, animationProgress)
+                ),
             onClick = { navController.navigate(ScreenModulePagos.Pagos.route) },
             opacity = linear.transform(0.4f, 0.9f, animationProgress),
             backgroundColor = Color(0xFFFF94A0)

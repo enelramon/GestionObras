@@ -35,9 +35,8 @@ class AdelantosApiViewModel @Inject constructor(
 ) : ViewModel() {
 
     var adelantoId by mutableStateOf(0)
-    var adelantoIdError by mutableStateOf("")
 
-    var fecha by mutableStateOf("")
+    var fecha by mutableStateOf("2023-04-01")
     var fechaError by mutableStateOf("")
 
     var personaId by mutableStateOf("")
@@ -155,7 +154,7 @@ class AdelantosApiViewModel @Inject constructor(
                     AdelantosDto(
                         adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
                         pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
-                        fecha = fecha,
+                        fecha = "2023-04-01",
                         personaId = personaId.toIntOrNull() ?: 0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
                         balance = balance.toDoubleOrNull() ?: 0.0,

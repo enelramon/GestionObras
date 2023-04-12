@@ -96,7 +96,7 @@ fun AdelantosScreen(
             value = viewModel.fecha,
             onValueChange = viewModel::onFechaChanged,
             singleLine = true,
-            readOnly = false,
+            readOnly = true,
             leadingIcon = {
                     Icon(
                         imageVector = Icons.Filled.DateRange,

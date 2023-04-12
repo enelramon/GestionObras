@@ -103,7 +103,7 @@ fun NominaBody(
             value = viewModel.fechaNomina,
             onValueChange = viewModel::onFechaChanged,
             singleLine = true,
-            readOnly = false,
+            readOnly = true,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.DateRange,
@@ -252,7 +252,7 @@ fun NominaBody(
                         .padding(4.dp)
                 )
             },
-            label = { Text("Total") },
+            label = { Text("ProjectoId") },
             isError = viewModel.proyectonominaIdError.isNotBlank(),
             trailingIcon = {
                 if (viewModel.proyectonominaIdError.isNotBlank()) {
@@ -284,7 +284,7 @@ fun NominaBody(
                         .padding(4.dp)
                 )
             },
-            label = { Text("Total") },
+            label = { Text("PersonaId") },
             isError = viewModel.personanominaIdError.isNotBlank(),
             trailingIcon = {
                 if (viewModel.personanominaIdError.isNotBlank()) {

@@ -2,26 +2,25 @@ package com.ucne.gestionobrasapp.data.repositoy.proyectos
 
 import com.ucne.gestionobrasapp.data.remote.ProyectosApi
 import com.ucne.gestionobrasapp.data.remote.dto.ProyectosDto
-import com.ucne.gestionobrasapp.data.repositoy.proyectos.ProyectosApiRepository
+
 import com.ucne.gestionobrasapp.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-
-class ProyectosApiRepositoryImp @Inject constructor(
+ class ProyectosApiRepositoryImp @Inject constructor(
     private val gestionObrasApi: ProyectosApi
 ): ProyectosApiRepository {
 
     override suspend fun putProyectos(id: Int, proyectosDto: ProyectosDto) {
         gestionObrasApi.putProyectos(id, proyectosDto)
     }
-    override suspend fun deleteProyectos(id: Int, proyectosDto: ProyectosDto){
-        gestionObrasApi.deleteProyectos(id, proyectosDto)
+    override suspend fun deleteProyectos(id: Int){
+        gestionObrasApi.deleteProyectos(id)
     }
     override suspend fun postProyectos(proyectosDto: ProyectosDto) {
-       gestionObrasApi.postProyectos(proyectosDto)
+        gestionObrasApi.postProyectos(proyectosDto)
     }
 
     override fun getProyectos(): Flow<Resource<List<ProyectosDto>>> = flow{

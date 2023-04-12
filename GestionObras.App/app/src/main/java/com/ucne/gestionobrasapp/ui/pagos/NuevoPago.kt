@@ -91,41 +91,7 @@ fun PagosScreen(
         )
         Spacer(modifier = Modifier.padding(10.dp))
 
-        OutlinedTextField(
-            modifier = Modifier
-                .padding(7.dp)
-                .fillMaxWidth(),
-            value = viewModel.fecha,
-            onValueChange = viewModel::onFechaChanged,
-            singleLine = true,
-            readOnly = false,
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.DateRange,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(33.dp)
-                        .padding(4.dp)
-                        .wrapContentSize(Alignment.CenterEnd)
-                        .clickable {
-                            mDatePickerDialog.show()
-                        }
-                )
-            },
-            label = { Text("Fecha") },
-            isError = viewModel.fechaError.isNotBlank(),
-            trailingIcon = {
-                if (viewModel.fechaError.isNotBlank()) {
-                    Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
-                }
-            }
-        )
-        if (viewModel.fechaError.isNotBlank()) {
-            Text(
-                text = viewModel.fechaError,
-                color = MaterialTheme.colorScheme.error
-            )
-        }
+
 
         OutlinedTextField(
             modifier = Modifier
@@ -175,6 +141,43 @@ fun PagosScreen(
             modifier = Modifier
                 .padding(7.dp)
                 .fillMaxWidth(),
+            value = viewModel.fecha,
+            onValueChange = viewModel::onFechaChanged,
+            singleLine = true,
+            readOnly = true,
+            enabled = false,
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.DateRange,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(33.dp)
+                        .padding(4.dp)
+                        .wrapContentSize(Alignment.CenterEnd)
+                        .clickable {
+                            mDatePickerDialog.show()
+                        }
+                )
+            },
+            label = { Text("Fecha") },
+            isError = viewModel.fechaError.isNotBlank(),
+            trailingIcon = {
+                if (viewModel.fechaError.isNotBlank()) {
+                    Icon(imageVector = Icons.TwoTone.Error, contentDescription = "error")
+                }
+            }
+        )
+        if (viewModel.fechaError.isNotBlank()) {
+            Text(
+                text = viewModel.fechaError,
+                color = MaterialTheme.colorScheme.error
+            )
+        }
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(7.dp)
+                .fillMaxWidth(),
             value = viewModel.monto,
             onValueChange = viewModel::onMontoChanged,
             singleLine = true,
@@ -207,8 +210,8 @@ fun PagosScreen(
             modifier = Modifier
                 .padding(7.dp)
                 .fillMaxWidth(),
-            value = viewModel.adelanto,
-            onValueChange = { viewModel.adelanto = it }, // Debe rellenarse cuando seleccionen la persona
+            value = viewModel.adelantoId,
+            onValueChange = { viewModel.adelantoId = it }, // Debe rellenarse cuando seleccionen la persona
             label = { Text("Adelanto") },
             enabled = false,
         )
