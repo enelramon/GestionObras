@@ -27,14 +27,13 @@ sealed class ScreenModulePagos(val route: String) { // Pagos
 }
 
 sealed class ScreenModuleNominas(val route: String) { // Nominas
+    object NuevaNominas : ScreenModuleNominas("nueva_nominas")
     object Nominas : ScreenModuleNominas("nominas")
     object NominasList : ScreenModuleNominas("nominas_list")
 }
 
 sealed class ScreenModuleAcercade(val route: String) { // Acerca de
-
     object InfoInicio : ScreenModuleAcercade("info_inicio")
-
     object InfoDetallesProyecto : ScreenModuleAcercade("info_detalles_proyecto")
 }
 

@@ -7,10 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucne.gestionobrasapp.data.remote.dto.AdelantosDto
 import com.ucne.gestionobrasapp.data.remote.dto.PagosDto
+import com.ucne.gestionobrasapp.data.remote.dto.PersonasDto
 import com.ucne.gestionobrasapp.data.remote.dto.TiposDto
 import com.ucne.gestionobrasapp.data.repositoy.adelantos.AdelantosApiRepositoryImp
+import com.ucne.gestionobrasapp.data.repositoy.personas.PersonasApiRepositoryImp
 import com.ucne.gestionobrasapp.data.repositoy.tipos.TiposApiRepositoryImp
 import com.ucne.gestionobrasapp.util.Resource
+import com.ucne.gestionobrasapp.util.navigation.ScreenModulePersonas
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -22,11 +25,13 @@ import javax.inject.Inject
 data class AdelantosListState(
     val isLoading: Boolean = false,
     val adelantos: List<AdelantosDto> = emptyList(),
+    val personas: List<PersonasDto> = emptyList(),
     val error: String = ""
 )
 data class AdelantosState(
     val isLoading: Boolean = false,
     val adelantos: AdelantosDto? = null,
+    val personas: PersonasDto? = null,
     val error: String = ""
 )
 @HiltViewModel
@@ -35,11 +40,11 @@ class AdelantosApiViewModel @Inject constructor(
 ) : ViewModel() {
 
     var adelantoId by mutableStateOf(0)
+    var personaId by mutableStateOf("")
 
     var fecha by mutableStateOf("")
     var fechaError by mutableStateOf("")
 
-    var personaId by mutableStateOf("")
     var personaIdError by mutableStateOf("")
 
     var monto by mutableStateOf("")
@@ -62,6 +67,7 @@ class AdelantosApiViewModel @Inject constructor(
                 is Resource.Success -> {
                     uiState.update {
                         it.copy(adelantos = result.data ?: emptyList())
+                        it.copy(personas = (result.data ?: emptyList()) as List<PersonasDto>)
                     }
                 }
                 is Resource.Error -> {
@@ -84,7 +90,7 @@ class AdelantosApiViewModel @Inject constructor(
                         it.copy(adelantos = result.data)
                     }
                     fecha = uiStateAdelantos.value.adelantos!!.fecha
-                    personaId = uiStateAdelantos.value.adelantos!!.personaId.toString()
+                    uiStateAdelantos.value.personas!!.personaId == uiStateAdelantos.value.adelantos!!.personaId
                     monto = uiStateAdelantos.value.adelantos!!.monto.toString()
                     balance = uiStateAdelantos.value.adelantos!!.balance.toString()
                 }
@@ -104,7 +110,7 @@ class AdelantosApiViewModel @Inject constructor(
                         adelantoId, AdelantosDto(
                             adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
                             fecha = fecha,
-                            personaId = personaId.toIntOrNull() ?: 0,
+                            personaId = personaId.toIntOrNull()?:0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
                             balance = balance.toDoubleOrNull() ?: 0.0,
                             proyectoId = uiStateAdelantos.value.adelantos!!.proyectoId
@@ -129,7 +135,7 @@ class AdelantosApiViewModel @Inject constructor(
                         adelantoId, AdelantosDto(
                             adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
                             fecha = fecha,
-                            personaId = personaId.toIntOrNull() ?: 0,
+                            personaId = personaId.toIntOrNull()?:0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
                             balance = balance.toDoubleOrNull() ?: 0.0,
                             proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
@@ -152,7 +158,7 @@ class AdelantosApiViewModel @Inject constructor(
                     AdelantosDto(
                         adelantoId = adelantoId,
                         fecha = fecha,
-                        personaId = personaId.toIntOrNull() ?: 0,
+                        personaId = personaId.toIntOrNull()?:0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
                         balance = balance.toDoubleOrNull() ?: 0.0,
                         proyectoId = 1
@@ -166,7 +172,6 @@ class AdelantosApiViewModel @Inject constructor(
     }
 
     fun Limpiar() {
-        personaId = ""
         fecha = ""
         monto = ""
         balance = ""
@@ -204,7 +209,7 @@ class AdelantosApiViewModel @Inject constructor(
         }
 
         personaIdError = ""
-        if (personaId.isBlank()) {
+        if (personaId.toString().isBlank()) {
             hayError = true
         }
 

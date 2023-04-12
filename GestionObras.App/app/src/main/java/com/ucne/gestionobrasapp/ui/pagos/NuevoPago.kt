@@ -2,7 +2,6 @@
 
 package com.ucne.gestionobrasapp.ui.pagos
 
-
 import android.app.DatePickerDialog
 import android.os.Build
 import android.widget.DatePicker
@@ -41,8 +40,6 @@ fun PagosScreen(
     viewModel: PagosApiViewModel = hiltViewModel(),
     navController: NavController
 ) {
-
-    var expanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val anio: Int
     val mes: Int

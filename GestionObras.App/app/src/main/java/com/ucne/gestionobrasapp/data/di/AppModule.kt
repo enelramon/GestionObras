@@ -104,7 +104,7 @@ object AppModule {
     @Provides
     fun providesProyectosApi(moshi: Moshi): ProyectosApi {
         return Retrofit.Builder()
-            .baseUrl("https://gestionobraswebapi.azurewebsites.net")
+            .baseUrl("https://gestionobraswebapi1.azurewebsites.net")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(ProyectosApi::class.java)
@@ -116,7 +116,7 @@ object AppModule {
     @Provides
     fun providesPersonasApi(moshi: Moshi): PersonasApi {
         return Retrofit.Builder()
-            .baseUrl("https://gestionobraswebapi.azurewebsites.net")
+            .baseUrl("https://gestionobraswebapi1.azurewebsites.net")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(PersonasApi::class.java)
@@ -128,7 +128,7 @@ object AppModule {
     @Provides
     fun providesNominasApi(moshi: Moshi): NominasApi {
         return Retrofit.Builder()
-            .baseUrl("https://gestionobraswebapi.azurewebsites.net")
+            .baseUrl("https://gestionobraswebapi1.azurewebsites.net")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(NominasApi::class.java)
@@ -140,7 +140,7 @@ object AppModule {
     @Provides
     fun providesTiposApi(moshi: Moshi): TiposApi {
         return Retrofit.Builder()
-            .baseUrl("https://gestionobraswebapi.azurewebsites.net")
+            .baseUrl("https://gestionobraswebapi1.azurewebsites.net")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(TiposApi::class.java)
@@ -152,7 +152,7 @@ object AppModule {
     @Provides
     fun providesAdelantosApi(moshi: Moshi): AdelantosApi {
         return Retrofit.Builder()
-            .baseUrl("https://gestionobraswebapi.azurewebsites.net")
+            .baseUrl("https://gestionobraswebapi1.azurewebsites.net")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(AdelantosApi::class.java)
@@ -164,7 +164,7 @@ object AppModule {
     @Provides
     fun providesPagosApi(moshi: Moshi): PagosApi {
         return Retrofit.Builder()
-            .baseUrl("https://gestionobraswebapi.azurewebsites.net")
+            .baseUrl("https://gestionobraswebapi1.azurewebsites.net")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
             .create(PagosApi::class.java)

@@ -19,12 +19,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.adelantos.AdelantosScreen
 import com.ucne.gestionobrasapp.ui.nominas.NominaScreen
-import com.ucne.gestionobrasapp.ui.nominas.NominalistScreen
 import com.ucne.gestionobrasapp.ui.pagos.PagosScreen
 import com.ucne.gestionobrasapp.ui.personas.PersonaScreen
 import com.ucne.gestionobrasapp.ui.proyectos.*
 import kotlinx.coroutines.delay
 import com.ucne.gestionobrasapp.R
+import com.ucne.gestionobrasapp.ui.nominas.NominasListScreen
+import com.ucne.gestionobrasapp.ui.nominas.NuevaNominaScreen
+import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalAnimationApi
@@ -46,6 +48,12 @@ fun NavigationGraph() {
             }
         }
 
+        composable(ScreenModulePersonas.PersonasList.route) {
+            PersonasListScreen(navController = navController) { id ->
+                navController.navigate(ScreenModulePersonas.PersonasList.route + "/${id}")
+            }
+        }
+
         composable(ScreenModuleProyectos.Proyectos.route) {
             NuevoProyectoScreen(navController = navController)
         }
@@ -58,31 +66,33 @@ fun NavigationGraph() {
             PersonaScreen(navController = navController) // Le falta asignarle el id
         }
 
-        composable(route = ScreenModuleAdelantos.Adelantos.route + "/{id}",
-            arguments = listOf(navArgument("id") { type = NavType.IntType })
-            ) { capturar ->
-            val personaId = capturar.arguments?.getInt("id") ?: 0
-            val adelantoId = capturar.arguments?.getInt("id") ?: 0
-
-            AdelantosScreen(personaId = personaId, adelantoId = adelantoId, navController = navController) {
+        composable(route = ScreenModuleAdelantos.Adelantos.route){
+            AdelantosScreen(navController = navController) {
                 navController.navigate(ScreenModuleAdelantos.Adelantos.route)
             }
         }
-          // Ese de abajo es como estaba por si le quitan el id al de arriba
 
-       /* composable(ScreenModuleAdelantos.Adelantos.route) {
-            AdelantosScreen(navController = navController) // Le falta asignarle el id
-        } */
+        composable(ScreenModuleNominas.NuevaNominas.route) {
+            NuevaNominaScreen(navController = navController)
+        }
 
         composable(ScreenModulePagos.Pagos.route) {
             PagosScreen(navController = navController) // Le falta asignarle el id
         }
 
         composable(ScreenModuleNominas.NominasList.route) {
-            NominalistScreen(navController = navController) // Le falta asignarle el id
+            NominasListScreen(navController = navController){ id ->
+                navController.navigate(ScreenModuleNominas.Nominas.route + "/${id}")
+            }
         }
-        composable(ScreenModuleNominas.Nominas.route) {
-            NominaScreen(navController = navController) // Le falta asignarle el id
+
+        composable(route = ScreenModuleNominas.Nominas.route + "/{id}",
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+        ) { capturar ->
+            val nominaId = capturar.arguments?.getInt("id") ?: 0
+            NominaScreen(nominaId = nominaId, navController = navController){
+                navController.navigate(ScreenModuleNominas.Nominas.route)
+            }
         }
 
         composable(ScreenModuleAcercade.InfoInicio.route) {
@@ -99,7 +109,7 @@ fun NavigationGraph() {
 fun SplashScreen(navController: NavController) {
 
     LaunchedEffect(key1 = true) {
-        delay(3000L)
+        delay(2000L)
         navController.navigate(ScreenModuleProyectos.ProyectoList.route)
     }
 

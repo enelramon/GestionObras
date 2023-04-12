@@ -30,18 +30,11 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NominaScreen(
-    nominaId : Int,
+fun NuevaNominaScreen(
     viewModel: NominasApiViewModel = hiltViewModel(),
-    navController: NavController,
-    onNominaClick: () -> Unit
+    navController: NavController
 ) {
     val scope = rememberCoroutineScope()
-
-    remember {
-        viewModel.NominasbyId(nominaId)
-        0
-    }
 
     val anio: Int
     val mes: Int
@@ -339,7 +332,7 @@ fun NominaScreen(
                         }
 
                     } else {
-                        viewModel.putNominas(nominaId)
+                        viewModel.postNominas()
                         navController.navigate(ScreenModuleNominas.NominasList.route)
                     }
                 }

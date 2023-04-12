@@ -5,7 +5,7 @@ data class AdelantosDto(
     val fecha: String,
     val monto: Double,
     val balance: Double,
-    val personaId: Int,
+    var personaId: Int,
     val proyectoId: Int,
 )
 

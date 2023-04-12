@@ -26,12 +26,9 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun PersonaScreen(
-
     viewModel: PersonasApiViewModel = hiltViewModel(),
-    navController: NavController,
-
+    navController: NavController
 ) {
-
     PersonasBody(viewModel, Modifier.fillMaxWidth(), navController)
 }
 
@@ -40,11 +37,7 @@ fun PersonaScreen(
 private fun PersonasBody(
     viewModel: PersonasApiViewModel, modifier: Modifier, navController: NavController
 ) {
-
     val scope = rememberCoroutineScope()
-    var expanded by remember {
-        mutableStateOf(false)
-    }
 
     Column(modifier = Modifier.fillMaxWidth())
     {
@@ -192,7 +185,7 @@ private fun PersonasBody(
                         .padding(4.dp)
                 )
             },
-            label = { Text("ProjectoId") },
+            label = { Text("ProyectoId") },
             isError = viewModel.projectoIdError.isNotBlank(),
             trailingIcon = {
                 if (viewModel.projectoIdError.isNotBlank()) {

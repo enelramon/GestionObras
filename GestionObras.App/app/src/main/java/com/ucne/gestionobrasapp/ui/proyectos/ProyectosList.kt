@@ -64,7 +64,13 @@ fun ProyectosListScreen(
                         text = "                  Lista de Proyectos",
                         style = MaterialTheme.typography.titleLarge,
                         color = Color(0xFF000000),
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .clickable {
+                                scope.launch {
+                                    navController.navigate(ScreenModuleProyectos.ProyectoList.route)
+                                }
+                            }
                     )
                     Icon(
                         imageVector = Icons.TwoTone.Lightbulb,
@@ -74,7 +80,7 @@ fun ProyectosListScreen(
                             .size(34.dp, 34.dp)
                             .clickable {
                                 scope.launch {
-                                    navController.navigate(ScreenModuleAcercade.InfoInicio.route)
+                                    navController.navigate(ScreenModuleProyectos.ProyectoList.route)
                                 }
                             }
                     )

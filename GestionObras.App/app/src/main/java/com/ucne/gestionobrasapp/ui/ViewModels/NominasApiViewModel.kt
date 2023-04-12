@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucne.gestionobrasapp.data.remote.dto.AdelantosDto
 import com.ucne.gestionobrasapp.data.remote.dto.NominasDto
+import com.ucne.gestionobrasapp.data.remote.dto.PersonasDto
 import com.ucne.gestionobrasapp.data.repositoy.nominas.NominasApiRepositoryImp
 import com.ucne.gestionobrasapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,7 +43,7 @@ class NominasApiViewModel @Inject constructor(
 
     var estadonomina by mutableStateOf("")
     var estadonominaError by mutableStateOf("")
-    val tipoestado = listOf("Saldo", "No saldo")
+    val tipoestado = listOf("En proceso", "Finalizado")
 
     var proyectonominaId by mutableStateOf("")
     var proyectonominaIdError by mutableStateOf("")
@@ -112,6 +113,31 @@ class NominasApiViewModel @Inject constructor(
                     )
                 )
                 Limpiar()
+            } catch (e: NullPointerException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun putNominas(id: Int) {
+        viewModelScope.launch {
+            nominaId = id
+            try {
+                if (nominaId != null) {
+                    nominasApiRepositoryImp.putNominas(
+                        nominaId, NominasDto(
+                            nominaId = nominaId,
+                            fecha = fechaNomina,
+                            personaId = personanominaId.toIntOrNull() ?: 0,
+                            proyectoId =proyectonominaId.toIntOrNull() ?: 0 ,
+                            total = totalnomina.toDoubleOrNull() ?: 0.0,
+                            estado = estadonomina
+                        )
+                    )
+                    Limpiar()
+                } else {
+                    throw NullPointerException("Value is null")
+                }
             } catch (e: NullPointerException) {
                 e.printStackTrace()
             }
