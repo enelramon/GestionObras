@@ -37,19 +37,10 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AdelantosScreen(
-    adelantoId: Int,
-    personaId: Int,
     viewModel: AdelantosApiViewModel = hiltViewModel(),
     navController: NavController,
     onSaveClick: () -> Unit
 ) {
-
-    remember {
-        viewModel.AdelantosbyId(adelantoId)
-        0
-    }
-    //
-
     var expanded by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val anio: Int
@@ -268,7 +259,7 @@ fun AdelantosScreen(
                         }
 
                         viewModel.personaIdError = ""
-                        if (viewModel.personaId.isBlank()) {
+                        if (viewModel.personaId.toString().isBlank()) {
                             viewModel.personaIdError = "  Debe seleccionar una persona"
                         }
 

@@ -37,6 +37,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.ucne.gestionobrasapp.ui.personas.PersonasListScreen
 import com.ucne.gestionobrasapp.ui.theme.DEFAULT_PADDING
 import com.ucne.gestionobrasapp.util.navigation.*
@@ -93,6 +96,7 @@ fun DetallesProyectoScreen(
                     }
                 }
         )
+        Spacer(modifier = Modifier.padding(20.dp))
         Icon(
             imageVector = Icons.TwoTone.Lightbulb,
             contentDescription = null,
@@ -106,7 +110,6 @@ fun DetallesProyectoScreen(
                     }
                 }
         )
-
     }
 
 
@@ -116,7 +119,18 @@ fun DetallesProyectoScreen(
                 .padding(8.dp)
         ) {
             Spacer(modifier = Modifier.padding(30.dp))
-        PersonasListScreen(navController = navController)
+            val navController = rememberNavController()
+
+            NavHost(
+                navController = navController,
+                startDestination = ScreenModulePersonas.PersonasList.route
+            ) {
+                composable(ScreenModulePersonas.PersonasList.route) {
+                    PersonasListScreen(navController = navController) { id ->
+                        navController.navigate(ScreenModulePersonas.PersonasList.route + "/${id}")
+                    }
+                }
+            }
     }
     val fabAnimationProgress by animateFloatAsState(
         targetValue = if (isMenuExtended.value) 1f else 0f,

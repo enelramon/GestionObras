@@ -162,7 +162,7 @@ class PagosApiViewModel @Inject constructor(
                     PagosDto(
                         pagoId = pagoId,
                         fecha = fecha,
-                        personaId = personaId,
+                        personaId = personaId.toIntOrNull()?:0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
                         adelantoId = 1,
                         total = total.toDoubleOrNull() ?: 0.0,
@@ -177,16 +177,14 @@ class PagosApiViewModel @Inject constructor(
     }
 
     fun Limpiar() {
-        personaId = ""
         fecha = ""
         monto = ""
         adelantoId = ""
         total = ""
-
     }
 
-
     /* -------------------------------------- Validaciones --------------------------------------- */
+
     fun onFechaChanged(fecha: String) {
         this.fecha = fecha
         HayErroresRegistrando()
@@ -202,7 +200,6 @@ class PagosApiViewModel @Inject constructor(
         HayErroresRegistrando()
     }
 
-
     fun HayErroresRegistrando(): Boolean {
 
         var hayError = false
@@ -212,9 +209,8 @@ class PagosApiViewModel @Inject constructor(
             hayError = true
         }
 
-
         personaIdError = ""
-        if (personaId.isBlank()) {
+        if (personaId.toString().isBlank()) {
             hayError = true
         }
 
