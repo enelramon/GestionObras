@@ -10,7 +10,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.twotone.Key
+import androidx.compose.material.icons.twotone.Lightbulb
 import androidx.compose.material.icons.twotone.RoomPreferences
+import androidx.compose.material.icons.twotone.VpnKey
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,6 +27,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.ucne.gestionobrasapp.data.remote.dto.ProyectosDto
 import com.ucne.gestionobrasapp.ui.theme.Shapes
+import com.ucne.gestionobrasapp.util.navigation.ScreenModuleAcercade
 import com.ucne.gestionobrasapp.util.navigation.ScreenModuleProyectos
 import kotlinx.coroutines.launch
 import me.saket.swipe.SwipeAction
@@ -57,18 +61,25 @@ fun ProyectosListScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Listado de Proyectos",
+                        text = "                  Lista de Proyectos",
                         style = MaterialTheme.typography.titleLarge,
                         color = Color(0xFF000000),
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.wrapContentSize(Alignment.TopCenter)
-                            .clickable {
-                            scope.launch {
-                                navController.navigate(ScreenModuleProyectos.ProyectoList.route)
-                            }
-                        }
+                        fontWeight = FontWeight.Bold
                     )
-                })
+                    Icon(
+                        imageVector = Icons.TwoTone.Lightbulb,
+                        tint = Color(0xCDFFDE09),
+                        contentDescription = "Icon",
+                        modifier = Modifier.wrapContentSize(Alignment.TopEnd)
+                            .size(34.dp, 34.dp)
+                            .clickable {
+                                scope.launch {
+                                    navController.navigate(ScreenModuleAcercade.InfoInicio.route)
+                                }
+                            }
+                    )
+                }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
@@ -199,11 +210,18 @@ fun ProyectosRow(
                     )
 
                     Icon(
-                        imageVector = Icons.TwoTone.RoomPreferences,
-                        tint = Color(0xCDFFA185),
+                        imageVector = Icons.TwoTone.Key,
+                        tint = Color(0xCDFF0909),
                         contentDescription = "Icon",
                         modifier = Modifier
-                            .size(40.dp, 40.dp)
+                            .size(24.dp, 24.dp)
+                    )
+
+                    Text(
+                        text = " "+ proyectos.proyectoId.toString(),
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color(0xFF000000)
+
                     )
                 }
             }

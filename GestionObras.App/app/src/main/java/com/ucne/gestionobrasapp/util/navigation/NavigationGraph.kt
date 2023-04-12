@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ucne.gestionobrasapp.ui.adelantos.AdelantosScreen
 import com.ucne.gestionobrasapp.ui.nominas.NominaScreen
 import com.ucne.gestionobrasapp.ui.nominas.NominalistScreen
@@ -56,9 +58,21 @@ fun NavigationGraph() {
             PersonaScreen(navController = navController) // Le falta asignarle el id
         }
 
-        composable(ScreenModuleAdelantos.Adelantos.route) {
-            AdelantosScreen(navController = navController) // Le falta asignarle el id
+        composable(route = ScreenModuleAdelantos.Adelantos.route + "/{id}",
+            arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) { capturar ->
+            val personaId = capturar.arguments?.getInt("id") ?: 0
+            val adelantoId = capturar.arguments?.getInt("id") ?: 0
+
+            AdelantosScreen(personaId = personaId, adelantoId = adelantoId, navController = navController) {
+                navController.navigate(ScreenModuleAdelantos.Adelantos.route)
+            }
         }
+          // Ese de abajo es como estaba por si le quitan el id al de arriba
+
+       /* composable(ScreenModuleAdelantos.Adelantos.route) {
+            AdelantosScreen(navController = navController) // Le falta asignarle el id
+        } */
 
         composable(ScreenModulePagos.Pagos.route) {
             PagosScreen(navController = navController) // Le falta asignarle el id
@@ -71,8 +85,12 @@ fun NavigationGraph() {
             NominaScreen(navController = navController) // Le falta asignarle el id
         }
 
-        composable(ScreenModuleAcercade.Acercade.route) {
-            AcercadeScreen(navController = navController)
+        composable(ScreenModuleAcercade.InfoInicio.route) {
+            InfoInicioScreen(navController = navController)
+        }
+
+        composable(ScreenModuleAcercade.InfoDetallesProyecto.route) {
+            InfoDetallesProyectoScreen(navController = navController)
         }
     }
 }

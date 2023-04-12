@@ -7,7 +7,6 @@ data class NominasDto(
     val proyectoId: Int = 0,
     val total: Double = 0.0,
     val estado: String = "",
-
 )
 
 

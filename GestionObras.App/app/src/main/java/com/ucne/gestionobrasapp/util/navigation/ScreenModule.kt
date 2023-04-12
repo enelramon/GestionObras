@@ -33,7 +33,10 @@ sealed class ScreenModuleNominas(val route: String) { // Nominas
 }
 
 sealed class ScreenModuleAcercade(val route: String) { // Acerca de
-    object Acercade : ScreenModuleAcercade("acercade")
+
+    object InfoInicio : ScreenModuleAcercade("info_inicio")
+
+    object InfoDetallesProyecto : ScreenModuleAcercade("info_detalles_proyecto")
 }
 
 
