@@ -103,7 +103,6 @@ fun NominaBody(
             value = viewModel.fechaNomina,
             onValueChange = viewModel::onFechaChanged,
             singleLine = true,
-            readOnly = true,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.DateRange,

@@ -36,7 +36,7 @@ class AdelantosApiViewModel @Inject constructor(
 
     var adelantoId by mutableStateOf(0)
 
-    var fecha by mutableStateOf("2023-04-01")
+    var fecha by mutableStateOf("")
     var fechaError by mutableStateOf("")
 
     var personaId by mutableStateOf("")
@@ -103,7 +103,6 @@ class AdelantosApiViewModel @Inject constructor(
                     adelantosApiRepositoryImp.putAdelantos(
                         adelantoId, AdelantosDto(
                             adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
                             fecha = fecha,
                             personaId = personaId.toIntOrNull() ?: 0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
@@ -129,7 +128,6 @@ class AdelantosApiViewModel @Inject constructor(
                     adelantosApiRepositoryImp.deleteAdelantos(
                         adelantoId, AdelantosDto(
                             adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                            pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
                             fecha = fecha,
                             personaId = personaId.toIntOrNull() ?: 0,
                             monto = monto.toDoubleOrNull() ?: 0.0,
@@ -152,13 +150,12 @@ class AdelantosApiViewModel @Inject constructor(
             try {
                 adelantosApiRepositoryImp.postAdelantos(
                     AdelantosDto(
-                        adelantoId = uiStateAdelantos.value.adelantos!!.adelantoId,
-                        pagoId = uiStateAdelantos.value.adelantos!!.pagoId,
-                        fecha = "2023-04-01",
+                        adelantoId = adelantoId,
+                        fecha = fecha,
                         personaId = personaId.toIntOrNull() ?: 0,
                         monto = monto.toDoubleOrNull() ?: 0.0,
                         balance = balance.toDoubleOrNull() ?: 0.0,
-                        proyectoId = uiStateAdelantos.value.adelantos!!.adelantoId
+                        proyectoId = 1
                     )
                 )
                 Limpiar()

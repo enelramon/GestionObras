@@ -35,7 +35,7 @@ class NominasApiViewModel @Inject constructor(
 ) : ViewModel() {
     var nominaId by mutableStateOf(0)
 
-    var fechaNomina by mutableStateOf("2023-04-01")
+    var fechaNomina by mutableStateOf("")
     var fechanominaError by mutableStateOf("")
 
     var totalnomina by mutableStateOf("")
@@ -104,10 +104,10 @@ class NominasApiViewModel @Inject constructor(
             try {
                 nominasApiRepositoryImp.postNominas(
                     NominasDto(
-                        nominaId = uiStateNomina.value.nominas!!.nominaId,
-                        fecha = "2023-04-01",
+                        nominaId = nominaId,
+                        fecha = fechaNomina,
                         personaId = personanominaId.toIntOrNull() ?: 0,
-                        proyectoId = proyectonominaId.toIntOrNull() ?: 0,
+                        proyectoId =proyectonominaId.toIntOrNull() ?: 0 ,
                         total = totalnomina.toDoubleOrNull() ?: 0.0,
                         estado = estadonomina
                     )

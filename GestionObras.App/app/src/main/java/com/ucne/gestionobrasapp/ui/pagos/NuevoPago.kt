@@ -144,8 +144,6 @@ fun PagosScreen(
             value = viewModel.fecha,
             onValueChange = viewModel::onFechaChanged,
             singleLine = true,
-            readOnly = true,
-            enabled = false,
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.DateRange,

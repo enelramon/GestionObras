@@ -13,7 +13,7 @@ data class PagosEntity(
     val adelantoId: Int,
     val total: Double,
     val proyectoId: Int,
-    val personaId: Int,
+    val personaId: String,
     val enviado: Boolean = false
 )
 

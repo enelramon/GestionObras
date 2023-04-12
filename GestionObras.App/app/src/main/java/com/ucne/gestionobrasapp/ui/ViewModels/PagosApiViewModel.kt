@@ -37,7 +37,7 @@ class PagosApiViewModel @Inject constructor(
     var pagoId by mutableStateOf(0)
     var pagoIdError by mutableStateOf("")
 
-    var fecha by mutableStateOf("2023-04-01")
+    var fecha by mutableStateOf("")
     var fechaError by mutableStateOf("")
 
     var personaId by mutableStateOf("")
@@ -162,8 +162,8 @@ class PagosApiViewModel @Inject constructor(
                 pagosApiRepositoryImp.postPagos(
                     PagosDto(
                         pagoId = pagoId,
-                        fecha = "2023-04-01",
-                        personaId = personaId.toIntOrNull() ?: 0,
+                        fecha = fecha,
+                        personaId = personaId,
                         monto = monto.toDoubleOrNull() ?: 0.0,
                         adelantoId = 1,
                         total = total.toDoubleOrNull() ?: 0.0,
